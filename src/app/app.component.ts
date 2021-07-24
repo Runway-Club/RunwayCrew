@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NbMenuItem } from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,34 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'RunwayCrew';
+  menuItems: NbMenuItem[] = [
+    {
+      title: "Profile của bạn",
+      icon: 'file-text-outline',
+      link: 'profile'
+    },
+    {
+      title: "Cộng đồng",
+      icon: 'globe-outline',
+      link: 'members'
+    },
+    {
+      title: "ATC Zone",
+      icon: 'flash-outline',
+      children: [
+        {
+          title: "Quản lý Crew Member",
+          icon: 'people-outline'
+        },
+        {
+          title: "Quản lý các Vai trò",
+          icon: 'briefcase-outline'
+        },
+        {
+          title: "Quản lý Achievement",
+          icon: 'award-outline'
+        },
+      ]
+    }
+  ]
 }
