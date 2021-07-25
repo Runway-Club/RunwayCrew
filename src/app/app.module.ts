@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbSidebarModule, NbMenuModule, NbSidebarService, NbMenuService, NbIconModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbSidebarModule, NbMenuModule, NbSidebarService, NbMenuService, NbIconModule, NbDialogModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
@@ -30,6 +30,7 @@ import { environment } from '../environments/environment';
     NbSidebarModule,
     NbMenuModule.forRoot(),
     NbIconModule,
+    NbDialogModule.forRoot(),
     SharedModule
   ],
   providers: [NbSidebarService, NbMenuService],

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
+import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { FileUploadComponent } from './shared/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-root',
@@ -32,10 +33,23 @@ export class AppComponent {
           icon: 'briefcase-outline'
         },
         {
+          title: "Quản lý các Kỹ năng",
+          icon: 'activity-outline'
+        },
+        {
           title: "Quản lý Achievement",
           icon: 'award-outline'
         },
+        {
+          title: "Xử lý phản hồi",
+          icon: 'message-circle-outline'
+        }
       ]
     }
-  ]
+  ];
+  constructor(private dialog: NbDialogService) { }
+
+  openDialog() {
+    this.dialog.open(FileUploadComponent);
+  }
 }

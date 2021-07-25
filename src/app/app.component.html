@@ -1,17 +1,19 @@
 <nb-layout>
 
   <nb-layout-header fixed>
-    <button nbButton style="margin:5px;">
-      <nb-icon icon="menu-outline"></nb-icon>
-    </button>
-    <h1 style="font-size: x-large;">Runway Crew</h1>
+
+    <img src='./assets/images/runway-512-logo.png' style="width: 3rem;">
+    <h1 style="font-size: 1.2rem">Runway Crew</h1>
     <div style="flex:1 auto;"></div>
-    <button nbButton style="margin-right:5px;">
+    <button nbButton style="margin-right:5px;" ghost>
       <nb-icon icon="globe-outline"></nb-icon>
     </button>
-    <button nbButton>
+    <button nbButton (click)="openDialog()">
       <img src="https://image.flaticon.com/icons/png/512/281/281764.png" style="width: 16px;margin-right: 5px;">
-      Đăng nhập với Google
+      Login
+    </button>
+    <button nbButton style="margin:5px;" ghost>
+      <nb-icon icon="menu-outline"></nb-icon>
     </button>
   </nb-layout-header>
 
@@ -19,7 +21,7 @@
     <router-outlet></router-outlet>
   </nb-layout-column>
 
-  <nb-sidebar>
+  <nb-sidebar responsive containerFixed>
     <nb-menu [items]="menuItems"></nb-menu>
   </nb-sidebar>
 
