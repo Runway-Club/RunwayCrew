@@ -6,5 +6,5 @@ export interface Skill {
   description: string,
   image: string,
   levels: number[],
-  metadata: Metadata
+  metadata?: Metadata
 }

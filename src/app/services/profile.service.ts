@@ -10,7 +10,7 @@ export class ProfileService {
 
   constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
 
-  public async createProfile(registration: RegistrationProfile) {
+  public async create(registration: RegistrationProfile) {
     let currentUser = await this.auth.currentUser;
     let currentTime = Date.now();
     // Prepare user data
@@ -46,7 +46,7 @@ export class ProfileService {
     await this.db.collection("contributions").doc(currentUser.uid).set(contribution);
   }
 
-  public async updateProfile(registration: RegistrationProfile) {
+  public async update(registration: RegistrationProfile) {
     let currentUser = await this.auth.currentUser;
     let currentTime = Date.now();
     // Prepare user data
@@ -58,12 +58,38 @@ export class ProfileService {
     updated = {
       ...updated,
       ...registration,
+      photoUrl: currentUser.photoURL ?? "",
       profileMetadata: {
         updated: currentTime
       }
     };
 
     await this.db.collection("profiles").doc(currentUser.uid).update(updated);
+  }
+
+  public async get(): Promise<UserProfile> {
+    let currentUser = await this.auth.currentUser;
+    if (!currentUser) {
+      throw "Unauthenticated"
+    }
+    let profile = await this.db.collection("profiles").doc(currentUser.uid).get().toPromise();
+    return <UserProfile>profile.data();
+  }
+
+  public async isATC(): Promise<Boolean> {
+    let currentUser = await this.auth.currentUser;
+    if (!currentUser) {
+      return false;
+    }
+    return (await this.db.collection("atc").doc(currentUser.uid).get().toPromise()).exists
+  }
+
+  public async isRegistrated(): Promise<Boolean> {
+    let currentUser = await this.auth.currentUser;
+    if (!currentUser) {
+      throw "Unauthenticated"
+    }
+    return (await this.db.collection("profiles").doc(currentUser.uid).get().toPromise()).exists
   }
 
 }

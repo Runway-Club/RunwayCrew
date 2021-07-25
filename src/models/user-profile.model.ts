@@ -24,5 +24,5 @@ export interface UserContribution {
   email: string,
   credit: number,
   skills: AchievedSkill[],
-  achievements?: Achievement[], // Get in subcollection 'achievements'
+  achievements?: Achievement[],
 }

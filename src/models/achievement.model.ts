@@ -12,5 +12,5 @@ export interface Achievement {
   exp: number,
   skills: AchievedSkill[],
   credit: number,
-  metadata: Metadata
+  metadata?: Metadata
 }
