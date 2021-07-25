@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbUserModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 
 
@@ -19,7 +19,10 @@ import { FormsModule } from '@angular/forms';
     NbFormFieldModule,
     NbButtonModule,
     NbIconModule,
-    NbCardModule
+    NbCardModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbUserModule
   ]
 })
 export class ProfileModule { }

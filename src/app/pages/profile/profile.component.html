@@ -1,35 +1,59 @@
-<div style="display: grid; grid-template-rows: auto 1fr auto;">
-  <h2>Đăng ký thành viên</h2>
-  <div>
-    <nb-card>
-      <nb-card-header>
-        Thông tin cá nhân
-      </nb-card-header>
-      <nb-card-body>
-        <form>
-          <nb-form-field>
-            <label>Email</label>
-            <input type='email' nbInput>
-          </nb-form-field>
-          <nb-form-field>
-            <label>Họ tên (*)</label>
-            <input type='text' nbInput>
-          </nb-form-field>
-          <nb-form-field>
-            <label>Ngày sinh</label>
-            <input type='date' nbInput>
-          </nb-form-field>
-          <nb-form-field>
-            <label>Số điện thoại</label>
-            <input type="tel" nbInput>
-          </nb-form-field>
-          <nb-form-field>
-            <label>Địa chỉ nhận quà</label>
-            <input type="text" nbInput>
-          </nb-form-field>
-        </form>
-      </nb-card-body>
-    </nb-card>
-
+<div class='parent' style="background-image: url(./assets/images/background_01.svg);">
+  <div style="min-width: 500px;max-width: 70vw;  margin:0 auto;">
+    <form class="form-registration">
+      <h2 style="text-align: center;">Đăng ký thành viên</h2>
+      <nb-form-field>
+        <label>Email</label>
+        <input type='email' nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Họ tên*</label>
+        <input type='text' nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Giới tính*</label>
+        <nb-select fullWidth>
+          <nb-option>Nam</nb-option>
+          <nb-option>Nữ</nb-option>
+          <nb-option>Không chia sẻ</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Ngày sinh*</label>
+        <input type='date' nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Số điện thoại*</label>
+        <input type="tel" nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Địa chỉ nhận quà</label>
+        <input type="text" nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Facebook</label>
+        <input type='url' nbInput fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Linkedin</label>
+        <input type='url' nbInput fullWidth>
+      </nb-form-field>
+      <hr style="border-top: 1px solid">
+      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Vai trò của bạn</p>
+      <p>Chọn ít nhất 1</p>
+      <button *ngFor="let role of roles" [ngStyle]="{backgroundColor:role.selected?'#426EF0':'#fff'}"
+        (click)="role.selected=!role.selected"
+        style="background: none;border: none;border-radius: 5px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 10px; margin:10px; text-align: start;">
+        <nb-user [name]='role.name' [title]='role.description' [picture]='role.image'></nb-user>
+      </button>
+      <hr style="border-top: 1px solid">
+      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Nguyên tắc cộng đồng</p>
+      <p style="font-family: 'Maven Pro'" *ngFor="let rule of rules">{{rule}}</p>
+      <p style="color:red;font-family: 'Maven Pro';">Nhấn nút đăng ký tham gia đồng nghĩa với việc chấp nhận các
+        nguyên tắc trên</p>
+      <nb-form-field>
+        <input nbInput type="button" status='primary' value='Đăng ký tham gia'>
+      </nb-form-field>
+    </form>
   </div>
 </div>
