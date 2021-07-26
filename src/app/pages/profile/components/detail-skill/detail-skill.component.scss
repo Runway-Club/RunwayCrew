@@ -1,4 +1,4 @@
 .grid {
   display: grid;
-  grid-template-columns: minmax(70px, 15%) 1fr;
+  grid-template-columns: minmax(70px, 15%) 1fr minmax(70px, 15%);
 }
