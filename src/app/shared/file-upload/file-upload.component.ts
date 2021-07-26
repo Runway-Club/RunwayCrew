@@ -15,13 +15,16 @@ export class FileUploadComponent implements OnInit {
   public percentage = 0;
   public fileList: any[] = [];
   public selectedId = 0;
+
+  public isFinish = true;
+
   ngOnInit(): void {
     this.getFiles();
   }
 
   async getFiles() {
     let user = await this.auth.currentUser;
-    this.db.collection(`files/${user?.uid ?? 'default'}`).snapshotChanges().subscribe((snapshots) => {
+    this.db.collection(`storage`).doc(`${user?.uid ?? 'default'}`).collection('files').snapshotChanges().subscribe((snapshots) => {
       this.fileList = [];
       for (let s of snapshots) {
         this.fileList.push(s.payload.doc.data());
@@ -32,7 +35,7 @@ export class FileUploadComponent implements OnInit {
   async select() {
     let user = await this.auth.currentUser;
     let file = this.fileList[this.selectedId];
-    let url = await this.storage.ref((user?.uid ?? "default") + "/" + file.timestamp).getDownloadURL().toPromise();
+    let url = await this.storage.ref((user?.uid ?? "default") + "/" + file.id).getDownloadURL().toPromise();
     this.dialogRef.close({ url: url });
   }
 
@@ -48,9 +51,14 @@ export class FileUploadComponent implements OnInit {
 
     task.percentageChanges().subscribe((percentage) => this.percentage = percentage ?? 0);
     task.snapshotChanges().subscribe((t) => {
-      console.log(t);
+      if (t?.state == 'running') {
+        this.isFinish = false;
+      }
+      else {
+        this.isFinish = true;
+      }
     });
-    this.db.collection(`files/${user?.uid ?? 'default'}`).doc(timestamp).set({
+    await this.db.collection(`storage`).doc(`${user?.uid ?? 'default'}`).collection('files').doc(timestamp).set({
       name: file.name,
       type: file.type,
       size: file.size,

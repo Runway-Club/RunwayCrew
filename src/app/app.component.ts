@@ -38,6 +38,7 @@ export class AppComponent {
         {
           title: 'Quản lý các Kỹ năng',
           icon: 'activity-outline',
+          link: 'atc/skills'
         },
         {
           title: 'Quản lý Achievement',

@@ -16,7 +16,10 @@ export class RoleComponent implements OnInit {
   public roles: Role[] = [];
 
   ngOnInit(): void {
-    this.roleService.getAll().subscribe((roles) => { this.roles = roles });
+    this.roleService.getAll().subscribe((roles) => {
+      this.roles.length = 0;
+      this.roles.push(...roles);
+    });
   }
 
   public addEmptyRole() {
@@ -29,14 +32,15 @@ export class RoleComponent implements OnInit {
     });
   }
 
-  public uploadImage() {
+  public uploadImage(i: number) {
     this.dialog.open(FileUploadComponent).onClose.subscribe((data) => {
-      console.log(data);
+      this.roles[i].image = data.url;
     })
   }
 
   public async deleteRole(id: string) {
     await this.roleService.delete(id);
+    window.location.reload();
   }
 
   public async saveRole(i: number) {

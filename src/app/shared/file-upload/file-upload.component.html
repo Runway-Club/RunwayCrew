@@ -5,7 +5,7 @@
   <nb-card-body>
     <nb-list style="min-height: 40vh;width: 100%;height: 100%;">
       <nb-list-item *ngFor="let file of fileList; let i = index">
-        <button style="border: none;" [ngStyle]="{backgroundColor:selectedId==i?'#426EF0':'none'}"
+        <button style="border: none;" [ngStyle]="{backgroundColor:selectedId==i?'#426EF0':'#fff'}"
           (click)="selectedId=i">
           <p style="font-size: 1rem;">{{file.name}}</p>
           <p style="font-size: 0.7rem;">{{file.type}} - {{file.size/1024}}KB</p>
@@ -17,7 +17,7 @@
     </nb-list>
   </nb-card-body>
   <nb-card-footer>
-    <input nbInput type='file' status='primary' value="Upload" (change)="upload($event)">
-    <button nbButton style="float: right;" status='primary'>Select</button>
+    <input *ngIf="isFinish" nbInput type='file' status='primary' value="Upload" (change)="upload($event)">
+    <button nbButton style="float: right;" status='primary' (click)="select()">Select</button>
   </nb-card-footer>
 </nb-card>
