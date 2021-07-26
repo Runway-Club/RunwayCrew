@@ -31,12 +31,14 @@ export class AppComponent {
           icon: 'people-outline',
         },
         {
-          title: 'Quản lý các Vai trò',
+          title: "Quản lý các Vai trò",
           icon: 'briefcase-outline',
+          link: 'atc/roles'
         },
         {
           title: 'Quản lý các Kỹ năng',
           icon: 'activity-outline',
+          link: 'atc/skills'
         },
         {
           title: 'Quản lý Achievement',

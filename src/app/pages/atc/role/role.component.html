@@ -1,0 +1,45 @@
+<h1>Quản lý các Vai trò</h1>
+<nb-card status='primary'>
+    <nb-card-header>
+        Các vai trò trong hệ thống
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let role of roles; let i = index" style="width: 100%;">
+                <nb-accordion style="width: 100%;">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header *ngIf="role.name==''">
+                            <i>Vai trò chưa được đặt tên</i>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-header *ngIf="role.name!=''">{{role.name}}</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <img [src]='role.image' style="width:100px;" />
+                            <br>
+                            <button nbButton (click)="uploadImage(i)">Thêm ảnh</button>
+                            <p>Id:</p>
+                            <input nbInput [(ngModel)]='role.id' fullWidth>
+                            <p>Tên</p>
+                            <input nbInput [(ngModel)]='role.name' fullWidth>
+                            <p>Mô tả</p>
+                            <input nbInput [(ngModel)]='role.description' fullWidth>
+                            <p>Tạo ngày: {{role.metadata.created}}</p>
+                            <p>Cập nhật ngày: {{role.metadata.updated}}</p>
+                            <p>Tác giả: {{role.metadata.actor}}</p>
+                        </nb-accordion-item-body>
+                        <nb-accordion-item-body>
+                            <button nbButton style="float:left;" status='danger'
+                                (click)="deleteRole(role.id)">Xoá</button>
+                            <button nbButton style="float: right;" (click)="saveRole(i)" status='primary'>Lưu</button>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton (click)="addEmptyRole()">
+            <nb-icon icon='plus-outline'></nb-icon>
+            Thêm vai trò
+        </button>
+    </nb-card-footer>
+</nb-card>
