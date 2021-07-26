@@ -12,6 +12,7 @@ import {
   NbInputModule,
   NbLayoutModule,
   NbListModule,
+  NbProgressBarModule,
   NbSelectModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -34,6 +35,7 @@ import { DetailSkillComponent } from './components/detail-skill/detail-skill.com
     NbCheckboxModule,
     NbListModule,
     NbLayoutModule,
+    NbProgressBarModule,
     NbUserModule,
   ],
 })

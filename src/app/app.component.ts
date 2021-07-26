@@ -54,7 +54,11 @@ export class AppComponent {
   constructor(
     private dialog: NbDialogService,
     private auth: AuthenticationService
-  ) { }
+  ) {
+    setTimeout(() => {
+      console.log(this.auth.user);
+    }, 2000);
+  }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {
       console.log(data);

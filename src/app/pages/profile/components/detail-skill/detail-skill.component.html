@@ -1,6 +1,14 @@
 <nb-card>
-    <nb-card-body>
-        <img width="50px" src="https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png">
-        <p>{{item}}</p>
+    <nb-card-body class="grid">
+        <div class="image" style="width: 70px">
+            <img width="50px" src="https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png">
+        </div>
+        <div class="content">
+            <p style="padding: 0;margin:0"><strong>{{this.item.name}}</strong></p>
+            <p style="padding: 0;margin:0">{{this.item.description}}</p>
+            <nb-progress-bar style="width:280px" [value]="this.skillCalculate(this.item.exp)" [status]="checkStatus()"></nb-progress-bar>
+
+        </div>
+
     </nb-card-body>
 </nb-card>
