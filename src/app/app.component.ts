@@ -30,7 +30,8 @@ export class AppComponent {
         },
         {
           title: "Quản lý các Vai trò",
-          icon: 'briefcase-outline'
+          icon: 'briefcase-outline',
+          link: 'atc/roles'
         },
         {
           title: "Quản lý các Kỹ năng",
