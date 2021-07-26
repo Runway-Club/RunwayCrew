@@ -3,14 +3,24 @@ import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbUserModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbListModule,
+  NbSelectModule,
+  NbUserModule,
+} from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
-
+import { SkillsComponent } from './components/skills/skills.component';
+import { DetailSkillComponent } from './components/detail-skill/detail-skill.component';
 
 @NgModule({
-  declarations: [
-    ProfileComponent
-  ],
+  declarations: [ProfileComponent, SkillsComponent, DetailSkillComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -22,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     NbCardModule,
     NbSelectModule,
     NbCheckboxModule,
-    NbUserModule
-  ]
+    NbListModule,
+    NbLayoutModule,
+    NbUserModule,
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}
