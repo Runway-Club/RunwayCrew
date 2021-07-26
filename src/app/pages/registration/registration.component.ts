@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -6,8 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+  selectedGender = '';
+  selectedRoles: any = [];
 
-  constructor() { }
+  regisForm = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+    ]),
+    fullName: new FormControl(),
+    gender: new FormControl(this.selectedGender),
+    dob: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required),
+    address: new FormControl(''),
+    fb: new FormControl(''),
+    linkIn: new FormControl(''),
+    role: new FormControl(this.selectedRoles, Validators.required)
+  })
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
 
 
   rules = [
@@ -46,4 +65,13 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  onRoleSelected(role: any) {
+    role.selected = !role.selected;
+    this.selectedRoles.push(role["name"]);
+  }
+
+  onRegistration() {
+    this.regisForm.reset();
+  }
 }
