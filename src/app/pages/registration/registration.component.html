@@ -1,18 +1,18 @@
 <div class='parent' style="background-image: url(./assets/images/background_01.svg);">
   <div style="max-width: 70vw;  margin:0 auto;">
-    <form class="form-registration" [formGroup]="regisForm" (ngSubmit)="onRegistration()">
+    <form class="form-registration" (ngSubmit)="onRegistration()">
       <h2 style="text-align: center;">Đăng ký thành viên</h2>
       <nb-form-field>
         <label>Email*</label>
-        <input type='email' nbInput fullWidth formControlName="email">
+        <input type='email' nbInput fullWidth [formControl]="emailControl">
       </nb-form-field>
       <nb-form-field>
         <label>Họ tên*</label>
-        <input type='text' nbInput fullWidth formControlName="fullName">
+        <input type='text' nbInput fullWidth [formControl]="nameControl">
       </nb-form-field>
       <nb-form-field>
         <label>Giới tính</label>
-        <nb-select [(selected)]="selectedGender" fullWidth formControlName="gender">
+        <nb-select [(selected)]="selectedGender" fullWidth [formControl]="genderControl">
           <nb-option value="Male">Nam</nb-option>
           <nb-option value="Female">Nữ</nb-option>
           <nb-option value="Not share">Không chia sẻ</nb-option>
@@ -20,23 +20,23 @@
       </nb-form-field>
       <nb-form-field>
         <label>Ngày sinh*</label>
-        <input type='date' nbInput fullWidth formControlName="dob">
+        <input type='date' nbInput fullWidth [formControl]="dobControl">
       </nb-form-field>
       <nb-form-field>
         <label>Số điện thoại*</label>
-        <input type="tel" nbInput fullWidth formControlName="phone">
+        <input type="tel" nbInput fullWidth [formControl]="phoneNumberControl">
       </nb-form-field>
       <nb-form-field>
         <label>Địa chỉ nhận quà</label>
-        <input type="text" nbInput fullWidth formControlName="address">
+        <input type="text" nbInput fullWidth [formControl]="addressControl">
       </nb-form-field>
       <nb-form-field>
         <label>Facebook</label>
-        <input type='url' nbInput fullWidth formControlName="fb">
+        <input type='url' nbInput fullWidth [formControl]="facebookControl">
       </nb-form-field>
       <nb-form-field>
         <label>Linkedin</label>
-        <input type='url' nbInput fullWidth formControlName="linkIn">
+        <input type='url' nbInput fullWidth [formControl]="linkInControl">
       </nb-form-field>
       <hr style="border-top: 1px solid">
       <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Vai trò của bạn</p>

@@ -8,7 +8,10 @@ export interface RegistrationProfile {
   gender: string,
   phoneNumber: string,
   address: string,
-  selectedRoles: string[]
+  selectedRoles: string[],
+  facebook?: string,
+  linkIn?: string,
+  email: string
 }
 export interface UserProfile extends RegistrationProfile {
   uid: string,
