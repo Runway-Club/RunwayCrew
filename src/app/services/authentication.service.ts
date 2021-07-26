@@ -7,15 +7,13 @@ import * as firebase from 'firebase';
 export class AuthenticationService {
   public user!: firebase.default.User;
   constructor(private auth: AngularFireAuth) {
-    setTimeout(() => {
-      this.auth.authState.subscribe((user) => {
-        if (this.user == null && user != null) {
-          this.user = user;
-        } else {
-          alert(`Hello + ${this.user.displayName}`);
-        }
-      });
-    }, 2000);
+    this.auth.authState.subscribe((user) => {
+      if (this.user == null && user != null) {
+        this.user = user;
+      } else if (this.user != null) {
+        console.log(`Hello + ${this.user.displayName}`);
+      }
+    });
   }
   public async signInWithGoogle() {
     let provider = new firebase.default.auth.GoogleAuthProvider();
