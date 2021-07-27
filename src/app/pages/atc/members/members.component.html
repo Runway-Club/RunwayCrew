@@ -6,12 +6,26 @@
     <nb-card-body>
         <nb-list style="width: 100%;">
             <nb-list-item *ngFor="let profile of profiles">
-                <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'></nb-user>
-                <div style="flex:1 auto;"></div>
-                <p>Ngày tham gia: {{getDate(profile.profileMetadata?.created??0)}}</p>
-                <div style="flex:1 auto;"></div>
-                <p>Đóng góp lần cuối: {{getDate(profile.contribMetadata?.updated??0)}}</p>
-                <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a>
+                <div class="parent">
+                    <div class="box">
+                        <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'>
+                        </nb-user>
+
+                    </div>
+                    <div class="box">
+                        <p>Ngày tham gia: {{getDate(profile.profileMetadata?.created??0)}}</p>
+
+                    </div>
+                    <div class="box">
+                        <p>Đóng góp lần cuối: {{getDate(profile.contribMetadata?.updated??0)}}</p>
+
+                    </div>
+                    <div class="box">
+                        <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a>
+
+                    </div>
+                </div>
+
             </nb-list-item>
         </nb-list>
     </nb-card-body>

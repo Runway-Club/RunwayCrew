@@ -11,7 +11,7 @@
       <img src="https://image.flaticon.com/icons/png/512/281/281764.png" style="width: 16px;margin-right: 5px;">
       Login
     </button>
-    <button nbButton style="margin:5px;" ghost>
+    <button nbButton style="margin:5px;" ghost (click)="toggleSidebar()">
       <nb-icon icon="menu-outline"></nb-icon>
     </button>
   </nb-layout-header>
@@ -20,7 +20,7 @@
     <router-outlet></router-outlet>
   </nb-layout-column>
 
-  <nb-sidebar responsive containerFixed>
+  <nb-sidebar responsive containerFixed #mainSidebar>
     <nb-menu [items]="menuItems"></nb-menu>
   </nb-sidebar>
 

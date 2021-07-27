@@ -1,0 +1,12 @@
+
+  .member .parent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .member .box {
+    flex: 1 1 500px; /*  Stretching: */
+    flex: 0 1 200px; /*  No stretching: */
+    margin: 5px;
+  }

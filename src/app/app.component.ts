@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { AfterViewInit, Component } from '@angular/core';
+import { NbDialogService, NbMenuItem, NbSidebarService } from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ProfileService } from './services/profile.service';
@@ -10,7 +10,7 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'RunwayCrew';
 
   atcMenu = {
@@ -60,16 +60,21 @@ export class AppComponent {
   constructor(
     private dialog: NbDialogService,
     private auth: AuthenticationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private sidebarService: NbSidebarService
   ) {
     setTimeout(() => {
-      console.log(this.auth.user);
-    }, 2000);
+
+    }, 500);
     this.profileService.isATC().then((isAtc) => {
       if (isAtc) {
         this.menuItems.push(this.atcMenu);
       }
     })
+
+  }
+  ngAfterViewInit(): void {
+    this.sidebarService.collapse('mainSidebar');
   }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {
@@ -79,5 +84,9 @@ export class AppComponent {
   }
   openDialog() {
     this.dialog.open(FileUploadComponent);
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggle(false, 'mainSidebar');
   }
 }
