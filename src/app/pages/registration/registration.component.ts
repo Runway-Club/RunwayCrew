@@ -50,10 +50,13 @@ export class RegistrationComponent implements OnInit {
     private router: Router,
     private auth: AngularFireAuth
   ) {
-    setTimeout(async () => {
-      let currentUser = await this.auth.currentUser;
-      this.defaultEmail = currentUser?.email;
-    }, 500);
+    this.auth.authState.subscribe((state) => {
+      if (state) {
+        this.defaultEmail = state.email;
+        console.log(this.defaultEmail);
+      }
+    })
+
   }
 
   rules = [
@@ -63,7 +66,7 @@ export class RegistrationComponent implements OnInit {
   ];
 
   roles = [
-    { 
+    {
       name: 'Runway ATC',
       description: 'Điều hành và kiểm soát sự hoạt động',
       image: '',
@@ -125,10 +128,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   async onRegistration() {
-    // if (this.emailControl.invalid || this.nameControl.invalid || this.dobControl.invalid || this.phoneNumberControl.invalid || this.selectedRolesControl.invalid) {
-    //   this.toast.danger("Please re-check required fields in your form", "Submit Rejected");
-    //   return;
-    // }
+    if (this.emailControl.invalid || this.nameControl.invalid || this.dobControl.invalid || this.phoneNumberControl.invalid || this.selectedRolesControl.invalid) {
+      this.toast.danger("Please re-check required fields in your form", "Submit Rejected");
+      return;
+    }
     try {
       await this.profileService.create({
         address: this.addressControl.value,
