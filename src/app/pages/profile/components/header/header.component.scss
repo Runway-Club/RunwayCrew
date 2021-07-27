@@ -1,0 +1,12 @@
+.header-container{
+    background-color: '#426EF0'; 
+    color: white; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+}
+.header-right{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+}

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationComponent } from './registration.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbUserModule } from '@nebular/theme';
 
 
@@ -22,7 +22,8 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIc
     NbCardModule,
     NbSelectModule,
     NbCheckboxModule,
-    NbUserModule
+    NbUserModule,
+    ReactiveFormsModule
   ]
 })
 export class RegistrationModule { }
