@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RegistrationProfile } from 'src/models/user-profile.model';
 
@@ -13,6 +16,7 @@ import { RegistrationProfile } from 'src/models/user-profile.model';
 export class RegistrationComponent implements OnInit {
   selectedGender = '';
   selectedRoles: any = [];
+  usr: string = "Hello World";
 
   emailControl!: FormControl;
   nameControl!: FormControl;
@@ -37,10 +41,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
     private profileService: ProfileService,
     private toast: NbToastrService,
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService,
+    private auth: AngularFireAuth,
+    private cookieService: CookieService
   ) { }
 
   rules = [
@@ -76,10 +82,10 @@ export class RegistrationComponent implements OnInit {
     }
   ]
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
     this.emailControl = new FormControl(this.registration.email, [
       Validators.required,
-      // Validators.pattern(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
     ]);
     this.nameControl = new FormControl(this.registration.name, Validators.required);
     this.addressControl = new FormControl(this.registration.address);
@@ -89,6 +95,9 @@ export class RegistrationComponent implements OnInit {
     this.selectedRolesControl = new FormControl(this.selectedRoles, Validators.required);
     this.facebookControl = new FormControl(this.registration.facebook);
     this.linkInControl = new FormControl(this.registration.linkIn);
+    // });
+
+
   }
 
 

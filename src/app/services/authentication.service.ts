@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   public user!: firebase.default.User;
-  constructor(private auth: AngularFireAuth) {
+  constructor(private auth: AngularFireAuth, private cookieService: CookieService) {
     this.auth.authState.subscribe((user) => {
       if (this.user == null && user != null) {
         this.user = user;
       } else if (this.user != null) {
         console.log(`Hello + ${this.user.displayName}`);
+        this.cookieService.set('email', user?.email ?? "", { expires: 1 });
       }
     });
   }
