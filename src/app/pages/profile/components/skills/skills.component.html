@@ -1,10 +1,8 @@
-<nb-card [size]="'medium'">
+<nb-card>
   <nb-card-header>Skills</nb-card-header>
   <nb-card-body>
-    <nb-list>
-      <nb-list-item *ngFor="let skill of skills">
-        <app-detail-skill [item]="skill"></app-detail-skill>
-      </nb-list-item>
-    </nb-list>
+    <div *ngFor="let skill of skills">
+      <app-detail-skill [item]="skill"></app-detail-skill>
+    </div>
   </nb-card-body>
 </nb-card>
