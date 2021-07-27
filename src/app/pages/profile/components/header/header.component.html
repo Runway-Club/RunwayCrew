@@ -1,9 +1,10 @@
 <div class="header-container">
-    <nb-user size="giant" name="John Doe" title="EXP: {{exp}}" color='white'>
+    <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}} title="EXP: {{exp}}" color='white'>
     </nb-user>
     <div class="header-right">
-        <span style="font-size: 1.3rem;">Avgas: {{avgas}}</span>
-        <span style="font-size: 1.3rem;">Rank: {{rank}}</span>
+        <span style="font-size: 1.2rem;">Avgas: {{avgas}}</span>
+        <span style="font-size: 1.2rem; margin-top: 5px;">Rank: <span
+                style="font-size: 2rem; color: tomato;">{{rank}}</span> </span>
     </div>
 
 </div>
