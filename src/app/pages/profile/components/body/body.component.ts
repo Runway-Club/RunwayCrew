@@ -11,17 +11,7 @@ import { RegistrationProfile, UserProfile } from 'src/models/user-profile.model'
 export class BodyComponent implements OnInit {
   isUpdate: boolean = true;
   updateBtn: string = 'Update';
-  userProfile: UserProfile | undefined;
-
-  // email?: string = this.userProfile?.email;
-  // name?: string = this.userProfile?.name;
-  // address?: string = this.userProfile?.address;
-  // gender?: string = this.userProfile?.gender;
-  // dob?: number = this.userProfile?.dob;
-  // phoneNumber?: string = this.userProfile?.phoneNumber;
-  // selectedRoles?: Array<string> = this.userProfile?.selectedRoles;
-  // facebook?: string = this.userProfile?.facebook;
-  // linkIn?: string = this.userProfile?.linkIn;
+  userProfile?: RegistrationProfile;
 
 
   roles = [
@@ -65,9 +55,22 @@ export class BodyComponent implements OnInit {
 
   }
 
-  onUpdate() {
+  async onUpdate() {
+    if (this.userProfile === undefined) {
+      return;
+    } else {
+      if (this.updateBtn == "Confirm") {
+        await this.profileService.update(this.userProfile)
+        this.isUpdate = !this.isUpdate;
+        this.updateBtn = 'Update'
+        console.log("Hi");
+      }
+
+    }
+
+  }
+  onEdit() {
     this.isUpdate = false;
     this.updateBtn = "Confirm"
-    console.log(this.userProfile)
   }
 }
