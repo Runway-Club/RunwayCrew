@@ -10,63 +10,70 @@ import { UtilsService } from './utils.service';
 })
 export class ProfileService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private utils: UtilsService) { }
+  private currentUser?: firebase.default.User;
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private utils: UtilsService) {
+    this.auth.authState.subscribe((state) => {
+      if (state != null) {
+        this.currentUser = state;
+      }
+    });
+  }
 
   public async create(registration: RegistrationProfile) {
-    let currentUser = await this.auth.currentUser;
+
     let currentTime = Date.now();
     // Prepare user data
-    if (!currentUser) {
+    if (!this.currentUser) {
       throw "Unauthenticated"
     }
     let profile: UserProfile = {
       ...registration,
-      uid: currentUser.uid,
-      email: currentUser.email ?? "",
-      photoUrl: currentUser.photoURL ?? "",
+      uid: this.currentUser.uid,
+      email: this.currentUser.email ?? "",
+      photoUrl: this.currentUser.photoURL ?? "",
       roles: [],
       profileMetadata: {
         created: currentTime,
         updated: currentTime,
-        actor: currentUser.email ?? ""
+        actor: this.currentUser.email ?? ""
       },
       contribMetadata: {
         created: currentTime,
         updated: currentTime,
-        actor: currentUser.email ?? ""
+        actor: this.currentUser.email ?? ""
       }
     }
     let contribution: UserContribution = {
-      uid: currentUser.uid,
-      email: currentUser.email ?? "",
+      uid: this.currentUser.uid,
+      email: this.currentUser.email ?? "",
       credit: 0,
       skills: []
     }
     // Create data
 
-    await this.db.collection("profiles").doc(currentUser.uid).set(profile);
-    await this.db.collection("contributions").doc(currentUser.uid).set(contribution);
+    await this.db.collection("profiles").doc(this.currentUser.uid).set(profile);
+    await this.db.collection("contributions").doc(this.currentUser.uid).set(contribution);
   }
 
   public async update(registration: RegistrationProfile) {
-    let currentUser = await this.auth.currentUser;
+
     let currentTime = Date.now();
     // Prepare user data
-    if (!currentUser) {
+    if (!this.currentUser) {
       throw "Unauthenticated"
     }
-    let currentProfile = await this.db.collection("profiles").doc(currentUser.uid).get().toPromise();
+    let currentProfile = await this.db.collection("profiles").doc(this.currentUser.uid).get().toPromise();
     let updated: UserProfile = <UserProfile>currentProfile.data();
     updated = {
       ...updated,
       ...registration,
-      photoUrl: currentUser.photoURL ?? "",
+      photoUrl: this.currentUser.photoURL ?? "",
       profileMetadata: {
         updated: currentTime
       }
     };
 
-    await this.db.collection("profiles").doc(currentUser.uid).update(updated);
+    await this.db.collection("profiles").doc(this.currentUser.uid).update(updated);
   }
 
   public async updateProfile(profile: UserProfile) {
@@ -80,11 +87,11 @@ export class ProfileService {
   }
 
   public async get(): Promise<UserProfile> {
-    let currentUser = await this.auth.currentUser;
-    if (!currentUser) {
+
+    if (!this.currentUser) {
       throw "Unauthenticated"
     }
-    let profile = await this.db.collection("profiles").doc(currentUser.uid).get().toPromise();
+    let profile = await this.db.collection("profiles").doc(this.currentUser.uid).get().toPromise();
     return <UserProfile>profile.data();
   }
 
@@ -93,19 +100,19 @@ export class ProfileService {
   }
 
   public async isATC(): Promise<boolean> {
-    let currentUser = await this.auth.currentUser;
-    if (!currentUser) {
+
+    if (!this.currentUser) {
       return false;
     }
-    return (await this.db.collection("atc").doc(currentUser.uid).get().toPromise()).exists
+    return (await this.db.collection("atc").doc(this.currentUser.uid).get().toPromise()).exists
   }
 
   public async isRegistrated(): Promise<boolean> {
-    let currentUser = await this.auth.currentUser;
-    if (!currentUser) {
+
+    if (!this.currentUser) {
       throw "Unauthenticated"
     }
-    return (await this.db.collection("profiles").doc(currentUser.uid).get().toPromise()).exists
+    return (await this.db.collection("profiles").doc(this.currentUser.uid).get().toPromise()).exists
   }
 
   public async addToATC(profile: UserProfile) {
