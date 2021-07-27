@@ -16,7 +16,7 @@ export class ContributionService {
       let currentUser = await this.auth.currentUser;
       uid = currentUser?.uid;
     }
-    let contrib: UserContribution = <UserContribution>await (await this.db.collection("contribution").doc(uid).get().toPromise()).data();
+    let contrib: UserContribution = <UserContribution>await (await this.db.collection("contributions").doc(uid).get().toPromise()).data();
     return contrib;
   }
 
@@ -42,6 +42,9 @@ export class ContributionService {
       created: Date.now(),
     };
     if (!skip) {
+      if (!contrib.achievements) {
+        contrib.achievements = [];
+      }
       contrib.achievements?.push(achievement);
     }
     await this.db.collection("contributions").doc(uid).update(contrib);

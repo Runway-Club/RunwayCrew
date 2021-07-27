@@ -77,17 +77,51 @@
     </nb-card-body>
     <nb-card-body>
         <p>Chọn thành tựu</p>
-        <nb-select [(ngModel)]="selectedProvidingAchievement">
+        <nb-select [(ngModel)]="selectedProvidingAchievement" fullWidth>
             <nb-option *ngFor="let achievement of achievements" [value]="achievement">
                 {{achievement.id}}: {{achievement.name}}
             </nb-option>
         </nb-select>
         <p>Cấp cho</p>
-        <nb-select>
-            <nb-option></nb-option>
+        <nb-select [(ngModel)]="selectedProvidedUser" fullWidth>
+            <nb-option *ngFor="let profile of profiles" [value]="profile">
+                {{profile.uid}}: {{profile.email}}
+            </nb-option>
         </nb-select>
+        <p>Lưu thành tựu vào hồ sơ thành viên</p>
+        <nb-toggle [(checked)]="!skipAchievement"></nb-toggle>
     </nb-card-body>
-    <nb-card-footer>
-        <button nbButton status='primary' style="float: right;">Cấp thành tựu</button>
-    </nb-card-footer>
+    <nb-card-body *ngIf="selectedProvidingAchievement && selectedProvidedUser">
+        <nb-card>
+            <nb-card-header>
+                {{selectedProvidedUser.name}} -> {{selectedProvidingAchievement.name}}
+            </nb-card-header>
+            <nb-card-body>
+                <h2 style="font-size:1rem;">Thành tựu</h2>
+                <img [src]='selectedProvidingAchievement.image' style="width: 30px;">
+                <p>Thành tựu: {{selectedProvidingAchievement.name}}</p>
+                <p>Kinh nghiệm tích luỹ: {{selectedProvidingAchievement.exp}}</p>
+                <p>Avgas: {{selectedProvidingAchievement.credit}}</p>
+                <p>Kỹ năng tích luỹ</p>
+                <nb-list style="width:100%">
+                    <nb-list-item *ngFor="let skill of selectedProvidingAchievement.skills">
+                        <img [src]='getSkillById(skill.skillId)?.image' style="width:28px;">
+                        <p>{{getSkillById(skill.skillId)?.name}}</p>
+                        <div style="flex:1 auto;"></div>
+                        <p>EXP: {{skill.exp}}</p>
+                    </nb-list-item>
+                </nb-list>
+                <h2 style="font-size:1rem;">Được nhận bởi</h2>
+                <img [src]='selectedProvidedUser.photoUrl' style="width:30px;">
+                <p style="font-weight:bold">
+                    {{selectedProvidedUser.name}}</p>
+            </nb-card-body>
+            <nb-card-footer>
+                <button nbButton status='primary' style="float: right;" (click)="provideAchievement()">Cấp thành
+                    tựu</button>
+            </nb-card-footer>
+        </nb-card>
+
+    </nb-card-body>
+
 </nb-card>

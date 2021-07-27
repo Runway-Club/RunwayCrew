@@ -32,6 +32,14 @@ export class AchievementComponent implements OnInit {
       this.skills.length = 0;
       this.skills.push(...skills)
     });
+    this.profileService.getAll().subscribe((profiles) => {
+      this.profiles.length = 0;
+      this.profiles.push(...profiles);
+    });
+    this.achievementService.getAll().subscribe((achievements) => {
+      this.achievements.length = 0;
+      this.achievements.push(...achievements);
+    })
   }
 
   public page = 0;
@@ -41,6 +49,8 @@ export class AchievementComponent implements OnInit {
   public skills: Skill[] = [];
   public selectedProvidingAchievement?: Achievement;
   public profiles: UserProfile[] = [];
+  public selectedProvidedUser?: UserProfile;
+  public skipAchievement: boolean = false;
 
   public addEmptyAchievement() {
     this.achievements.push({
@@ -80,6 +90,25 @@ export class AchievementComponent implements OnInit {
       skillId: "",
       exp: 0
     });
+  }
+
+  public getSkillById(id: string): Skill | undefined {
+    return this.skills.find((s) => s.id == id);
+  }
+
+  public async provideAchievement() {
+    if (!this.selectedProvidedUser || !this.selectedProvidingAchievement) {
+      return;
+    }
+    try {
+      await this.contributionService.provide(this.selectedProvidingAchievement, this.selectedProvidedUser?.uid, this.skipAchievement)
+      this.selectedProvidedUser = undefined;
+      this.selectedProvidingAchievement = undefined;
+      this.skipAchievement = false;
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
 
 }
