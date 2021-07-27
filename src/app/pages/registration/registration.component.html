@@ -4,7 +4,7 @@
       <h2 style="text-align: center;">Đăng ký thành viên</h2>
       <nb-form-field>
         <label>Email*</label>
-        <input type='email' nbInput fullWidth [formControl]="emailControl">
+        <input type='email' nbInput fullWidth [formControl]="emailControl" [(ngModel)]="this.defaultEmail">
       </nb-form-field>
       <nb-form-field>
         <label>Họ tên*</label>

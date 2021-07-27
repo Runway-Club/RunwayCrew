@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
+<<<<<<< HEAD
 import { ProfileService } from './services/profile.service';
+=======
+import { ContributionService } from './services/contribution.service';
+import { ProfileService } from './services/profile.service';
+import { RoleService } from './services/role.service';
+import { UtilsService } from './services/utils.service';
+>>>>>>> 8bd1dc490d922f63b65be244d637bfa191099276
 import { FileUploadComponent } from './shared/file-upload/file-upload.component';
 
 @Component({

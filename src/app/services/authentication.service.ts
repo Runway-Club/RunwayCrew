@@ -5,11 +5,12 @@ import * as firebase from 'firebase';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  public user!: firebase.default.User;
+  public user?: firebase.default.User;
   constructor(private auth: AngularFireAuth) {
     this.auth.authState.subscribe((user) => {
       if (this.user == null && user != null) {
         this.user = user;
+        localStorage.setItem('userId', user.uid);
       } else if (this.user != null) {
         console.log(`Hello + ${this.user.displayName}`);
       }
@@ -20,6 +21,8 @@ export class AuthenticationService {
     return await this.auth.signInWithPopup(provider);
   }
   public async signOut() {
-    return await this.auth.signOut();
+    return await this.auth.signOut().then(() => {
+      localStorage.removeItem('userId');
+    });
   }
 }
