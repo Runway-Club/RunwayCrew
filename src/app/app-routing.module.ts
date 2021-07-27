@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'atc/skills', canActivate: [AtcGuard], loadChildren: () => import('./pages/atc/skills/skills.module').then(m => m.SkillsModule) },
   { path: 'atc/achievements', canActivate: [AtcGuard], loadChildren: () => import('./pages/atc/achievement/achievement.module').then(m => m.AchievementModule) },
   { path: 'atc/members', canActivate: [AtcGuard], loadChildren: () => import('./pages/atc/members/members.module').then(m => m.MembersModule) },
-  { path: '**', redirectTo: 'profile' }
+  { path: 'community', loadChildren: () => import('./pages/community/community.module').then(m => m.CommunityModule) },
+  { path: '**', redirectTo: 'community' }
 ];
 
 @NgModule({
