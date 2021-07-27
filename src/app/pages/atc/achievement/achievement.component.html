@@ -89,7 +89,7 @@
             </nb-option>
         </nb-select>
         <p>Lưu thành tựu vào hồ sơ thành viên</p>
-        <nb-toggle [(checked)]="!skipAchievement"></nb-toggle>
+        <nb-toggle [(ngModel)]="!skipAchievement"></nb-toggle>
     </nb-card-body>
     <nb-card-body *ngIf="selectedProvidingAchievement && selectedProvidedUser">
         <nb-card>
