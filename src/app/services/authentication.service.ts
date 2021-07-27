@@ -19,4 +19,7 @@ export class AuthenticationService {
     let provider = new firebase.default.auth.GoogleAuthProvider();
     return await this.auth.signInWithPopup(provider);
   }
+  public async signOut() {
+    return await this.auth.signOut();
+  }
 }

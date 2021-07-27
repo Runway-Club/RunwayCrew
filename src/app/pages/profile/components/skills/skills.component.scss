@@ -1,0 +1,8 @@
+nb-card {
+  width: fit-content;
+}
+@media only screen and (max-width: 400px) {
+  nb-card {
+    display: none;
+  }
+}

@@ -1,4 +1,47 @@
 .grid {
   display: grid;
-  grid-template-columns: minmax(70px, 15%) 1fr;
+  grid-template-columns: minmax(70px, 15%) 1fr minmax(70px, 15%);
 }
+.contentName {
+  padding: 0;
+  margin: 0;
+  font-size: 1.2vw;
+}
+.exp {
+  padding: 0;
+  margin: 0;
+  font-size: 1vw;
+}
+@media only screen and (max-width: 1000px) {
+  .contentName {
+    padding: 0;
+    margin: 0;
+    font-size: 2.4vw !important;
+  }
+  .exp {
+    padding: 0;
+    margin: 0;
+    font-size: 1.8vw !important;
+  }
+  .level {
+    display: none !important;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(70px, 15%) 1fr !important;
+  }
+}
+@media only screen and (max-width: 800px) {
+  nb-card {
+    display: block;
+    width: fit-content;
+  }
+  .grid {
+    // width: 100px;
+    grid-template-columns: min-content !important;
+  }
+  .content {
+    display: none;
+  }
+}
+
