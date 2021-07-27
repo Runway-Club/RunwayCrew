@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
+.card {
+  display: grid;
+  grid-template-columns: 32% 70%;
+}
+.left-box {
+  padding: 10px;
+}
+.right-box * {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.right-box > h4 {
+  margin-top: 5%;
+}
