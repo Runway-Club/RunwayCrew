@@ -1,51 +1,43 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { Achievement } from 'src/models/achievement.model';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AchievementService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private utils: UtilsService) { }
 
   public async get(id: string): Promise<Achievement> {
-    return <Achievement>(await this.db.collection("achievements").doc(id).get().toPromise()).data();
+    return this.utils.get("achievements", id);
   }
 
-  public async getAll(): Promise<Achievement[]> {
-    return <Achievement[]>(await this.db.collection("achievements").get().toPromise()).docs.map((d) => d.data());
+  public getAll(): Observable<Achievement[]> {
+    return this.utils.getAll<Achievement>("achievements");
   }
 
   public async create(achievement: Achievement) {
-    let admin = await this.auth.currentUser;
-    if (!admin) {
-      throw "Unauthenticated"
-    }
-    achievement.metadata = {
-      actor: admin.email ?? "",
-      created: Date.now(),
-      updated: Date.now()
-    };
-    await this.db.collection("achievements").doc(achievement.id).set(achievement);
+    await this.utils.create("achievements", achievement);
   }
 
   public async update(achievement: Achievement) {
-    let admin = await this.auth.currentUser;
-    if (!admin) {
-      throw "Unauthenticated"
-    }
-    await this.db.collection("achievements").doc(achievement.id).update({
-      ...achievement,
-      metadata: {
-        actor: admin.email ?? "",
-        updated: Date.now()
-      }
-    });
+    await this.utils.update("achievements", achievement);
   }
 
   public async delete(achievementId: string) {
-    await this.db.collection("achievements").doc(achievementId).delete();
+    await this.utils.delete("achievements", achievementId);
   }
+
+  public async getPaginate(after: number, size: number) {
+    return await this.db.collection("achievements").ref
+      .orderBy("metadata.created", "desc")
+      .startAfter(after)
+      .limit(size)
+      .get();
+  }
+
 }

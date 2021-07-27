@@ -1,1 +1,58 @@
-<p>skills works!</p>
+<h1>Quản lý các Kỹ năng</h1>
+<nb-card status='primary'>
+    <nb-card-header>
+        Các kỹ năng trong hệ thống
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item *ngFor="let skill of skills; let i = index" style="width: 100%;">
+                <nb-accordion style="width: 100%;">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header *ngIf="skill.name==''">
+                            <i>Kỹ năng chưa được đặt tên</i>
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-header *ngIf="skill.name!=''">{{skill.name}}</nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <img [src]='skill.image' style="width:100px;" />
+                            <br>
+                            <button nbButton (click)="uploadImage(i)">Thêm ảnh</button>
+                            <p>Id:</p>
+                            <input nbInput [(ngModel)]='skill.id' fullWidth>
+                            <p>Tên</p>
+                            <input nbInput [(ngModel)]='skill.name' fullWidth>
+                            <p>Mô tả</p>
+                            <input nbInput [(ngModel)]='skill.description' fullWidth>
+                            <p>Các cấp độ</p>
+                            <nb-list>
+                                <nb-list-item *ngFor="let level of skill.levels; let j = index;">
+                                    <b>Level: {{j+1}}</b>
+                                    <input nbInput type="number" [(ngModel)]='skill.levels[j]'>
+                                    <button nbButton ghost status='danger' (click)="skill.levels.splice(j,1)">
+                                        <nb-icon icon='trash-2-outline'></nb-icon>
+                                    </button>
+                                </nb-list-item>
+                                <nb-list-item>
+                                    <button nbButton (click)="skill.levels.push(0)">Thêm level</button>
+                                </nb-list-item>
+                            </nb-list>
+                            <p>Tạo ngày: {{skill.metadata?.created}}</p>
+                            <p>Cập nhật ngày: {{skill.metadata?.updated}}</p>
+                            <p>Tác giả: {{skill.metadata?.actor}}</p>
+                        </nb-accordion-item-body>
+                        <nb-accordion-item-body>
+                            <button nbButton style="float:left;" status='danger'
+                                (click)="deleteSkill(skill.id)">Xoá</button>
+                            <button nbButton style="float: right;" (click)="saveSkill(i)" status='primary'>Lưu</button>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+                </nb-accordion>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+    <nb-card-footer>
+        <button nbButton (click)="addEmptySkill()">
+            <nb-icon icon='plus-outline'></nb-icon>
+            Thêm vai trò
+        </button>
+    </nb-card-footer>
+</nb-card>

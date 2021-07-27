@@ -7,8 +7,9 @@ export interface AchievedSkill {
 
 export interface Achievement {
   id: string,
-  name: string,
-  title: string,
+  name: string
+  description: string,
+  image: string,
   exp: number,
   skills: AchievedSkill[],
   credit: number,

@@ -41,12 +41,14 @@ export class AppComponent {
           link: 'atc/skills'
         },
         {
-          title: 'Quản lý Achievement',
+          title: 'Quản lý các Thành tựu',
           icon: 'award-outline',
+          link: 'atc/achievements'
         },
         {
           title: 'Xử lý phản hồi',
           icon: 'message-circle-outline',
+          link: 'atc/feedbacks'
         },
       ],
     },
