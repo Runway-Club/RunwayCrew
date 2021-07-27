@@ -19,7 +19,6 @@ export class SkillsComponent implements OnInit {
     this.skills = await (
       await this.contribute.get('y7iqLV4bkZQ1yp8ptDn8ko8slej1')
     ).skills;
-    console.log(this.skills);
     this.loadDone = true;
   }
 }

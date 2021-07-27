@@ -1,7 +1,7 @@
 <nb-card *ngIf="this.loadDone">
     <nb-card-body class="grid">
         <div class="image" style="width: 50px; padding-top: 5px;">
-            <img width="50px" src="https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png">
+            <img width="50px" [src]="this.skillDetail.image">
         </div>
         <div class="content">
             <p class="contentName">
