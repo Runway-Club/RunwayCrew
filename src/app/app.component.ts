@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
+import { ProfileService } from './services/profile.service';
 import { FileUploadComponent } from './shared/file-upload/file-upload.component';
 
 @Component({
@@ -10,6 +12,38 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
 })
 export class AppComponent {
   title = 'RunwayCrew';
+
+  atcMenu = {
+    title: 'ATC Zone',
+    icon: 'flash-outline',
+    children: [
+      {
+        title: 'Quản lý Crew Member',
+        icon: 'people-outline',
+        link: 'atc/members'
+      },
+      {
+        title: "Quản lý các Vai trò",
+        icon: 'briefcase-outline',
+        link: 'atc/roles'
+      },
+      {
+        title: 'Quản lý các Kỹ năng',
+        icon: 'activity-outline',
+        link: 'atc/skills'
+      },
+      {
+        title: 'Quản lý các Thành tựu',
+        icon: 'award-outline',
+        link: 'atc/achievements'
+      },
+      {
+        title: 'Xử lý phản hồi',
+        icon: 'message-circle-outline',
+        link: 'atc/feedbacks'
+      },
+    ],
+  };
 
   menuItems: NbMenuItem[] = [
     {
@@ -22,45 +56,20 @@ export class AppComponent {
       icon: 'globe-outline',
       link: 'members',
     },
-    {
-      title: 'ATC Zone',
-      icon: 'flash-outline',
-      children: [
-        {
-          title: 'Quản lý Crew Member',
-          icon: 'people-outline',
-          link: 'atc/members'
-        },
-        {
-          title: "Quản lý các Vai trò",
-          icon: 'briefcase-outline',
-          link: 'atc/roles'
-        },
-        {
-          title: 'Quản lý các Kỹ năng',
-          icon: 'activity-outline',
-          link: 'atc/skills'
-        },
-        {
-          title: 'Quản lý các Thành tựu',
-          icon: 'award-outline',
-          link: 'atc/achievements'
-        },
-        {
-          title: 'Xử lý phản hồi',
-          icon: 'message-circle-outline',
-          link: 'atc/feedbacks'
-        },
-      ],
-    },
   ];
   constructor(
     private dialog: NbDialogService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private profileService: ProfileService
   ) {
     setTimeout(() => {
       console.log(this.auth.user);
     }, 2000);
+    this.profileService.isATC().then((isAtc) => {
+      if (isAtc) {
+        this.menuItems.push(this.atcMenu);
+      }
+    })
   }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {

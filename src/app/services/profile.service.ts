@@ -100,19 +100,27 @@ export class ProfileService {
   }
 
   public async isATC(): Promise<boolean> {
-
-    if (!this.currentUser) {
-      return false;
-    }
-    return (await this.db.collection("atc").doc(this.currentUser.uid).get().toPromise()).exists
+    return new Promise((resolve) => {
+      this.auth.authState.subscribe(async (state) => {
+        if (state) {
+          this.currentUser = state;
+          let atc = (await this.db.collection("atc").doc(this.currentUser.uid).get().toPromise()).exists;
+          resolve(atc);
+        }
+      });
+    })
   }
 
   public async isRegistrated(): Promise<boolean> {
-
-    if (!this.currentUser) {
-      throw "Unauthenticated"
-    }
-    return (await this.db.collection("profiles").doc(this.currentUser.uid).get().toPromise()).exists
+    return new Promise((resolve) => {
+      this.auth.authState.subscribe(async (state) => {
+        if (state) {
+          this.currentUser = state;
+          let registrated = await (await (this.db.collection("profiles").doc(this.currentUser.uid).get().toPromise())).exists;
+          resolve(registrated);
+        }
+      });
+    })
   }
 
   public async addToATC(profile: UserProfile) {
