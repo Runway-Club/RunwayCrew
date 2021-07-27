@@ -63,7 +63,7 @@ export class RegistrationComponent implements OnInit {
   ];
 
   roles = [
-    {
+    { 
       name: 'Runway ATC',
       description: 'Điều hành và kiểm soát sự hoạt động',
       image: '',

@@ -18,7 +18,9 @@ export class SkillsComponent implements OnInit {
     }, 100);
   }
   public async get() {
-    this.skills = await (await this.contribute.get()).skills;
+    this.skills = await (
+      await this.contribute.get('y7iqLV4bkZQ1yp8ptDn8ko8slej1')
+    ).skills;
     this.loadDone = true;
   }
 }
