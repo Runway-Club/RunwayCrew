@@ -14,6 +14,7 @@ import {
   NbListModule,
   NbProgressBarModule,
   NbSelectModule,
+  NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +24,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { RolesComponent } from './components/roles/roles.component';
 
 @NgModule({
-  declarations: [ProfileComponent, SkillsComponent, DetailSkillComponent, HeaderComponent, RolesComponent],
+  declarations: [
+    ProfileComponent,
+    SkillsComponent,
+    DetailSkillComponent,
+    HeaderComponent,
+    RolesComponent,
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -36,6 +43,7 @@ import { RolesComponent } from './components/roles/roles.component';
     NbSelectModule,
     NbCheckboxModule,
     NbListModule,
+    NbTooltipModule,
     NbLayoutModule,
     NbProgressBarModule,
     NbUserModule,

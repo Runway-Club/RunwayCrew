@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card *ngIf="this.loadDone">
   <nb-card-header>Skills</nb-card-header>
   <nb-card-body>
     <div class="list-skill" *ngFor="let skill of skills">
