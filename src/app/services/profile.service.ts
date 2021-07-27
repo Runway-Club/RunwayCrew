@@ -73,6 +73,7 @@ export class ProfileService {
     await this.db.collection("profiles").doc(profile.uid).update({
       ...profile,
       profileMetadata: {
+        ...profile.profileMetadata,
         updated: Date.now()
       }
     });
@@ -91,7 +92,7 @@ export class ProfileService {
     return this.utils.getAll<UserProfile>("profiles");
   }
 
-  public async isATC(): Promise<Boolean> {
+  public async isATC(): Promise<boolean> {
     let currentUser = await this.auth.currentUser;
     if (!currentUser) {
       return false;
@@ -99,7 +100,7 @@ export class ProfileService {
     return (await this.db.collection("atc").doc(currentUser.uid).get().toPromise()).exists
   }
 
-  public async isRegistrated(): Promise<Boolean> {
+  public async isRegistrated(): Promise<boolean> {
     let currentUser = await this.auth.currentUser;
     if (!currentUser) {
       throw "Unauthenticated"
