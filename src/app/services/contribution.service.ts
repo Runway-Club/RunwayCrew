@@ -9,11 +9,19 @@ import { UserContribution } from 'src/models/user-profile.model';
 })
 export class ContributionService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
+  private currentUser?: firebase.default.User;
+
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
+    this.auth.authState.subscribe((state) => {
+      if (state != null) {
+        this.currentUser = state;
+      }
+    });
+  }
 
   public async get(uid?: string): Promise<UserContribution> {
     if (!uid) {
-      let currentUser = await this.auth.currentUser;
+      let currentUser = this.currentUser;
       uid = currentUser?.uid;
     }
     let contrib: UserContribution = <UserContribution>await (await this.db.collection("contributions").doc(uid).get().toPromise()).data();
@@ -21,7 +29,7 @@ export class ContributionService {
   }
 
   public async provide(achievement: Achievement, uid: string, skip?: boolean) {
-    let admin = await this.auth.currentUser;
+    let admin = this.currentUser;
     if (!admin) {
       throw "Unauthenticated"
     }

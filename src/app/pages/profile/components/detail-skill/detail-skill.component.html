@@ -1,20 +1,20 @@
-<nb-card>
+<nb-card *ngIf="this.loadDone">
     <nb-card-body class="grid">
         <div class="image" style="width: 50px; padding-top: 5px;">
-            <img width="50px" src="https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png">
+            <img width="50px" [src]="this.skillDetail.image">
         </div>
         <div class="content">
             <p class="contentName">
-                <strong>{{this.item.name}}</strong>
+                <strong>{{this.skillDetail.name}}</strong>
             </p>
             <p></p>
             <p class="exp">EXP: {{this.item.exp}}</p>
-            <nb-progress-bar [value]="this.skillCalculate(this.item.exp)" [status]="checkStatus()" size="tiny">
+            <nb-progress-bar [value]="this.progressBar" [status]="this.status" size="tiny">
             </nb-progress-bar>
 
         </div>
         <div class="level" style="text-align: center;padding: 30px 0; font-size: larger;"><strong>Lv
-                {{this.item.level}}</strong>
+                {{this.level}}</strong>
         </div>
     </nb-card-body>
 </nb-card>

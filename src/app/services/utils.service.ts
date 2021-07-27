@@ -9,7 +9,15 @@ import { map } from 'rxjs/operators';
 })
 export class UtilsService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
+  private currentUser?: firebase.default.User;
+
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
+    this.auth.authState.subscribe((state) => {
+      if (state != null) {
+        this.currentUser = state;
+      }
+    });
+  }
 
   public getAll<T>(collectionName: string): Observable<T[]> {
     return this.db.collection(collectionName).get()
@@ -21,7 +29,7 @@ export class UtilsService {
   }
 
   public async create(collectionName: string, data: any) {
-    let user = await this.auth.currentUser;
+    let user = this.currentUser;
     if (!user) {
       throw "Unauthenticated";
     }
@@ -34,7 +42,7 @@ export class UtilsService {
     await this.db.collection(collectionName).doc(data.id).set(data);
   }
   public async update(collectionName: string, data: any) {
-    let user = await this.auth.currentUser;
+    let user = this.currentUser;
     if (!user) {
       throw "Unauthenticated";
     }
