@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { RegistrationProfile, UserContribution, UserProfile } from 'src/models/user-profile.model';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private utils: UtilsService) { }
 
   public async create(registration: RegistrationProfile) {
     let currentUser = await this.auth.currentUser;
@@ -74,6 +76,10 @@ export class ProfileService {
     }
     let profile = await this.db.collection("profiles").doc(currentUser.uid).get().toPromise();
     return <UserProfile>profile.data();
+  }
+
+  public getAll(): Observable<UserProfile[]> {
+    return this.utils.getAll<UserProfile>("profiles");
   }
 
   public async isATC(): Promise<Boolean> {

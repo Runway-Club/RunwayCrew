@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
-    grid-template-rows: 0.25fr 0.5fr 1fr 2fr;
+    grid-template-rows: 0.5fr 0.5fr 1fr 2fr;
     gap: 2px 2px;
     grid-auto-flow: row;
     grid-template-areas:
@@ -15,7 +15,7 @@
   
   .Left { grid-area: Left; }
   
-  .Right { grid-area: Right; background-color: deepskyblue; }
+  .Right { grid-area: Right; }
   
   .Header { grid-area: Header; background-color: white; border-radius: 10px 10px 0px 0px; }
   
