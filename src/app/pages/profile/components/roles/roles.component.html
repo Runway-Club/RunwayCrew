@@ -2,7 +2,8 @@
     <nb-card-header>Roles</nb-card-header>
     <nb-card-body class="list-role">
         <div class="role" *ngFor="let role of roles">
-            <img [src]='role.img'>
+            <img [nbTooltip]='role.name' [src]=' role.img'>
+
         </div>
     </nb-card-body>
 </nb-card>

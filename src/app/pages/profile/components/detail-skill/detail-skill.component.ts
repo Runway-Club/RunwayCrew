@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Skill } from 'src/app/models/skill.model';
+import { ContributionService } from 'src/app/services/contribution.service';
+import { SkillService } from 'src/app/services/skill.service';
+import { AchievedSkill } from 'src/models/achievement.model';
+import { Skill } from 'src/models/skill.model';
 
 @Component({
   selector: 'app-detail-skill',
@@ -7,22 +10,60 @@ import { Skill } from 'src/app/models/skill.model';
   styleUrls: ['./detail-skill.component.scss'],
 })
 export class DetailSkillComponent implements OnInit {
-  @Input() item!: Skill;
-  constructor() {}
-  ngOnInit(): void {}
-  public skillCalculate(exp: any) {
-    return (exp / 2000) * 100;
+  @Input() item!: AchievedSkill;
+  public skillDetail!: Skill;
+  public loadDone = false;
+  public level: any = 0;
+  public progressBar: any;
+  public status!: string;
+  constructor(public skill: SkillService) {}
+  ngOnInit(): void {
+    this.getSkillDetail();
   }
-  public checkStatus(): string {
-    let temp = this.item.exp;
-    if (temp >= 1500) {
-      return 'success';
-    } else if (temp < 1500 && temp >= 1000) {
-      return 'primary';
-    } else if (temp < 1000 && temp >= 500) {
-      return 'warning';
+  public async getSkillDetail() {
+    this.skillDetail = await this.skill.get(this.item.skillId);
+    this.getLevel();
+    this.progressCal();
+    this.loadDone = true;
+  }
+  public getLevel() {
+    for (let i = 0; i < this.skillDetail.levels.length; i++) {
+      if (this.item.exp > this.skillDetail.levels[i]) {
+        if (this.level != this.skillDetail.levels.length) {
+          this.level = i + 1;
+        }
+      }
+    }
+  }
+  public progressCal() {
+    if (this.item.exp == this.skillDetail.levels[this.level]) {
+      if (this.level != this.skillDetail.levels.length - 1) {
+        this.item.exp = 0;
+        this.level++;
+        this.progressBar = 0;
+      } else {
+        this.progressBar = 100;
+        this.level = 'Max';
+      }
     } else {
-      return 'danger';
+      this.progressBar = parseInt(
+        (
+          ((this.item.exp - this.skillDetail.levels[this.level - 1]) /
+            (this.skillDetail.levels[this.level] -
+              this.skillDetail.levels[this.level - 1])) *
+          100
+        ).toString()
+      );
+    }
+
+    if (this.progressBar <= 40) {
+      this.status = 'info';
+    }
+    if (this.progressBar > 40) {
+      this.status = 'primary';
+    }
+    if (this.progressBar > 80) {
+      this.status = 'success';
     }
   }
 }

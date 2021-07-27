@@ -14,6 +14,7 @@ import {
   NbListModule,
   NbProgressBarModule,
   NbSelectModule,
+  NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +26,15 @@ import { RolesComponent } from './components/roles/roles.component';
 import { ContributionComponent } from './components/contribution/contribution.component';
 
 @NgModule({
-  declarations: [ProfileComponent, SkillsComponent, DetailSkillComponent, HeaderComponent, BodyComponent, RolesComponent, ContributionComponent],
+  declarations: [
+    ProfileComponent,
+    SkillsComponent,
+    DetailSkillComponent,
+    HeaderComponent,
+    BodyComponent,
+    RolesComponent,
+    ContributionComponent,
+  ],
   imports: [
     CommonModule,
     ProfileRoutingModule,
@@ -38,9 +47,10 @@ import { ContributionComponent } from './components/contribution/contribution.co
     NbSelectModule,
     NbCheckboxModule,
     NbListModule,
+    NbTooltipModule,
     NbLayoutModule,
     NbProgressBarModule,
     NbUserModule,
   ],
 })
-export class ProfileModule { }
+export class ProfileModule {}
