@@ -1,0 +1,22 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 0.7fr 0.3fr;
+    gap: 5px 2px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Header Header Header"
+      "Left Left Right"
+      "Left Left Right"
+      "Contribution Contribution Contribution";
+  }
+  
+  .Contribution { grid-area: Contribution; }
+  
+  .Left { grid-area: Left;}
+  
+  .Right { grid-area: Right;}
+  
+  .Header { grid-area: Header; background-color:white; border-radius: 10px 10px 0px 0px; position: relative; }
+  
+  

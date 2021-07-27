@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'atc/roles', loadChildren: () => import('./pages/atc/role/role.module').then(m => m.RoleModule) },
   { path: 'atc/skills', loadChildren: () => import('./pages/atc/skills/skills.module').then(m => m.SkillsModule) },
   { path: 'atc/achievements', loadChildren: () => import('./pages/atc/achievement/achievement.module').then(m => m.AchievementModule) },
+  { path: 'atc/members', loadChildren: () => import('./pages/atc/members/members.module').then(m => m.MembersModule) },
   { path: '**', redirectTo: 'profile' }
 ];
 

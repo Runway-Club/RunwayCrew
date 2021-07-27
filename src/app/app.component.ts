@@ -29,6 +29,7 @@ export class AppComponent {
         {
           title: 'Quản lý Crew Member',
           icon: 'people-outline',
+          link: 'atc/members'
         },
         {
           title: "Quản lý các Vai trò",

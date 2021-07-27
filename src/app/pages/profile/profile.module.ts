@@ -21,7 +21,9 @@ import { FormsModule } from '@angular/forms';
 import { SkillsComponent } from './components/skills/skills.component';
 import { DetailSkillComponent } from './components/detail-skill/detail-skill.component';
 import { HeaderComponent } from './components/header/header.component';
+import { BodyComponent } from './components/body/body.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { ContributionComponent } from './components/contribution/contribution.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { RolesComponent } from './components/roles/roles.component';
     SkillsComponent,
     DetailSkillComponent,
     HeaderComponent,
+    BodyComponent,
     RolesComponent,
+    ContributionComponent,
   ],
   imports: [
     CommonModule,

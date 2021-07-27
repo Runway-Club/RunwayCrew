@@ -69,6 +69,15 @@ export class ProfileService {
     await this.db.collection("profiles").doc(currentUser.uid).update(updated);
   }
 
+  public async updateProfile(profile: UserProfile) {
+    await this.db.collection("profiles").doc(profile.uid).update({
+      ...profile,
+      profileMetadata: {
+        updated: Date.now()
+      }
+    });
+  }
+
   public async get(): Promise<UserProfile> {
     let currentUser = await this.auth.currentUser;
     if (!currentUser) {
