@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile.service';
-import { UserProfile } from 'src/models/user-profile.model';
+import { RegistrationProfile, UserProfile } from 'src/models/user-profile.model';
 
 @Component({
   selector: 'app-body',
@@ -8,8 +9,11 @@ import { UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./body.component.scss']
 })
 export class BodyComponent implements OnInit {
-  selectedGender = '';
-  isUpdate: boolean = false;
+  isUpdate: boolean = true;
+  updateBtn: string = 'Update';
+  userProfile?: RegistrationProfile;
+
+
   roles = [
     {
       name: 'Runway ATC',
@@ -33,23 +37,40 @@ export class BodyComponent implements OnInit {
     }
   ]
 
-  userProfile: UserProfile[] = [];
+
+  // selectedGender: string = '';
   constructor(
     private profileService: ProfileService
   ) { }
 
   async ngOnInit() {
-    this.userProfile.push(await this.profileService.get());
-    console.log(this.userProfile);
+    setTimeout(async () => {
+      await this.getProfile();
+    }, 500);
   }
 
   async getProfile() {
-
+    this.userProfile = await this.profileService.get();
+    console.log(this.userProfile);
 
   }
 
-  onUpdate() {
-    this.isUpdate = true;
-    console.log(this.isUpdate)
+  async onUpdate() {
+    if (this.userProfile === undefined) {
+      return;
+    } else {
+      if (this.updateBtn == "Confirm") {
+        await this.profileService.update(this.userProfile)
+        this.isUpdate = !this.isUpdate;
+        this.updateBtn = 'Update'
+        console.log("Hi");
+      }
+
+    }
+
+  }
+  onEdit() {
+    this.isUpdate = false;
+    this.updateBtn = "Confirm"
   }
 }

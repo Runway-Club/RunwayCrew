@@ -11,9 +11,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     public authSv: AuthenticationService,
     public auth: AngularFireAuth
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.auth.currentUser);
+    // console.log(this.auth.currentUser);
   }
 }
