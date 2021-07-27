@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from 'src/app/services/profile.service';
+import { RoleService } from 'src/app/services/role.service';
+import { Role } from 'src/models/role.model';
+import { UserProfile } from 'src/models/user-profile.model';
 
 @Component({
   selector: 'app-roles',
@@ -6,25 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
-  public roles = [
-    { name: 'Runway ATC', img: '../../../assets/images/roles/ATC.png' },
-    {
-      name: 'Runway Threshold',
-      img: '../../../assets/images/roles/Threshold.png',
-    },
-    {
-      name: 'Runway Lightning',
-      img: '../../../assets/images/roles/Lightning.png',
-    },
-    { name: 'Runway SWAT', img: '../../../assets/images/roles/SWAT.png' },
-    { name: 'Runway Corium', img: '../../../assets/images/roles/Corium.png' },
-    { name: 'Runway Dev', img: '../../../assets/images/roles/Dev.png' },
-    {
-      name: 'Runway Discovery',
-      img: '../../../assets/images/roles/Discovery.png',
-    },
-  ];
-  constructor() {}
+  public roles!: Role[];
+  public loadDone = false;
+  constructor(private profileSv: ProfileService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(async () => {
+      await this.getRoles();
+    }, 100);
+  }
+  public async getRoles() {
+    this.roles = await (await this.profileSv.get()).roles;
+    console.log(this.roles);
+    this.loadDone = true;
+  }
 }

@@ -13,12 +13,12 @@ export class SkillsComponent implements OnInit {
   constructor(public contribute: ContributionService) {}
 
   ngOnInit(): void {
-    this.get();
+    setTimeout(async () => {
+      await this.get();
+    }, 100);
   }
   public async get() {
-    this.skills = await (
-      await this.contribute.get('y7iqLV4bkZQ1yp8ptDn8ko8slej1')
-    ).skills;
+    this.skills = await (await this.contribute.get()).skills;
     this.loadDone = true;
   }
 }
