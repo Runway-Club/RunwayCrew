@@ -4,14 +4,10 @@
     display: flex; 
     flex-direction: row; 
     justify-content: space-between;
+    padding: 15px
 }
 .header-right{
     display: flex; 
     flex-direction: column; 
     justify-content: center;
-}
-
-nb-user{
-    user-giant-name-text-font-size: 1.3rem;
-    user-giant-title-text-font-size: 1.3rem
 }
