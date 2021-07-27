@@ -67,3 +67,30 @@
         </nb-card>
     </nb-card-body>
 </nb-card>
+
+<nb-card status='primary'>
+    <nb-card-header>Thêm thành viên vào ATC Zone</nb-card-header>
+    <nb-card-body>
+        <nb-select [(ngModel)]="selectedProfileForATCZone" fullWidth>
+            <nb-option *ngFor="let profile of profiles" [value]='profile'>
+                {{profile.uid}}: {{profile.name}}
+            </nb-option>
+        </nb-select>
+    </nb-card-body>
+    <nb-card-footer *ngIf="selectedProfileForATCZone">
+        <button nbButton status='primary' (click)="addToATC()">Thêm</button>
+    </nb-card-footer>
+</nb-card>
+
+<nb-card status='primary'>
+    <nb-card-header>Xoá thành viên ATC Zone</nb-card-header>
+    <nb-card-body>
+        <nb-list style="width:100%">
+            <nb-list-item *ngFor="let profile of atcMembers">
+                <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'></nb-user>
+                <div style="flex:1 auto;"></div>
+                <button (click)="removeFromATC(profile.uid)" nbButton status='danger'>Trục xuất</button>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>

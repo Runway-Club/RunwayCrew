@@ -107,4 +107,16 @@ export class ProfileService {
     return (await this.db.collection("profiles").doc(currentUser.uid).get().toPromise()).exists
   }
 
+  public async addToATC(profile: UserProfile) {
+    await this.db.collection("atc").doc(profile.uid).set(profile);
+  }
+
+  public async removeFromATC(id: string) {
+    await this.db.collection("atc").doc(id).delete();
+  }
+
+  public getATCMembers(): Observable<UserProfile[]> {
+    return this.utils.getAll("atc");
+  }
+
 }

@@ -15,10 +15,12 @@ export class MembersComponent implements OnInit {
 
   public profiles: UserProfile[] = [];
   public roles: Role[] = [];
+  public atcMembers: UserProfile[] = [];
   public selectedRole?: Role;
   public selectedProfile?: UserProfile;
   public selectedRoleForReclaim?: Role;
   public selectedProfileForReclaim?: UserProfile;
+  public selectedProfileForATCZone?: UserProfile;
 
   ngOnInit(): void {
     this.profileService.getAll().subscribe((profiles) => {
@@ -29,9 +31,16 @@ export class MembersComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
+    this.profileService.getATCMembers().subscribe((profiles) => {
+      this.atcMembers.length = 0;
+      this.atcMembers.push(...profiles);
+    });
   }
 
   public getRoleString(profile: UserProfile) {
+    if (!profile.roles) {
+      return "No role";
+    }
     let r = profile.roles.length == 0 ? "No role" : '';
     for (let role of profile.roles) {
       r += role.name + ', ';
@@ -79,6 +88,19 @@ export class MembersComponent implements OnInit {
     catch (err) {
       console.log(err);
     }
+  }
+
+  public async addToATC() {
+    if (!this.selectedProfileForATCZone) {
+      return;
+    }
+    await this.profileService.addToATC(this.selectedProfileForATCZone);
+    window.location.reload();
+  }
+
+  public async removeFromATC(id: string) {
+    await this.profileService.removeFromATC(id);
+    window.location.reload();
   }
 
 }
