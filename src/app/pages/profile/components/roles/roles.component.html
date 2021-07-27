@@ -1,6 +1,7 @@
 <nb-card>
-    <nb-card-body class="list-role" *ngFor="let role of roles">
-        <div>
+    <nb-card-header>Roles</nb-card-header>
+    <nb-card-body class="list-role">
+        <div class="role" *ngFor="let role of roles">
             <img [src]='role.img'>
         </div>
     </nb-card-body>
