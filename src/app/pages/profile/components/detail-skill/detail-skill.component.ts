@@ -34,11 +34,9 @@ export class DetailSkillComponent implements OnInit {
         }
       }
     }
-    console.log(this.level);
   }
   public progressCal() {
     if (this.item.exp == this.skillDetail.levels[this.level]) {
-      console.log(this.item.exp, this.skillDetail.levels[this.level]);
       if (this.level != this.skillDetail.levels.length - 1) {
         this.item.exp = 0;
         this.level++;
@@ -67,12 +65,5 @@ export class DetailSkillComponent implements OnInit {
     if (this.progressBar > 80) {
       this.status = 'success';
     }
-    console.log(
-      this.item.exp +
-        ' ' +
-        this.skillDetail.levels[this.level] +
-        ' ' +
-        this.progressBar
-    );
   }
 }
