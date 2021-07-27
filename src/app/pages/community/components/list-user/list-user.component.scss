@@ -6,6 +6,8 @@
 .card {
   display: grid;
   grid-template-columns: 32% 70%;
+  margin-bottom: 0;
+  border-radius: 10px;
 }
 .left-box {
   padding: 10px;
@@ -14,6 +16,15 @@
   margin-top: 1%;
   margin-bottom: 1%;
 }
+.right-box {
+  width: 97%;
+}
 .right-box > h4 {
+  margin-left: 4%;
+  margin-right: 0;
   margin-top: 5%;
+}
+.right-box > p {
+  margin-left: 4%;
+  margin-right: 0;
 }

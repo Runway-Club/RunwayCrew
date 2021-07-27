@@ -2,17 +2,17 @@
     <div class="container">
         <nb-card class="card" *ngFor="let user of listUser">
             <div class="left-box">
-                <img style="border-radius: 100%; display: block;
-                margin-left: auto;
-                margin-right: auto" [src]="user.photoUrl">
-                <p style="text-align:center">LV: 3</p>
+                <img style="border-radius: 100%; display: block;margin-top: auto;margin-left: auto; margin-right: auto"
+                    [src]="user.photoUrl">
+                <p style="text-align:center"><strong>LV: 3</strong></p>
             </div>
             <div class="right-box">
                 <h4>{{user.name}}</h4>
+                <h4 *ngIf="!user.name">Chưa có tên</h4>
                 <p>{{user.email}}</p>
                 <div class="list-role">
                     <nb-tag-list>
-                        <nb-tag *ngFor="let tree of user.roles" [text]="tree.name"></nb-tag>
+                        <nb-tag *ngFor="let role of user.roles" [text]="role.name"></nb-tag>
                     </nb-tag-list>
                 </div>
             </div>
