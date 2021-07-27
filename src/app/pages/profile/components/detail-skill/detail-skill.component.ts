@@ -18,7 +18,9 @@ export class DetailSkillComponent implements OnInit {
   public status!: string;
   constructor(public skill: SkillService) {}
   ngOnInit(): void {
-    this.getSkillDetail();
+    setTimeout(async () => {
+      await this.getSkillDetail();
+    }, 100);
   }
   public async getSkillDetail() {
     this.skillDetail = await this.skill.get(this.item.skillId);

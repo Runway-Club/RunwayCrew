@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
+import { ContributionService } from './services/contribution.service';
+import { ProfileService } from './services/profile.service';
+import { RoleService } from './services/role.service';
+import { UtilsService } from './services/utils.service';
 import { FileUploadComponent } from './shared/file-upload/file-upload.component';
 
 @Component({
@@ -29,38 +34,41 @@ export class AppComponent {
         {
           title: 'Quản lý Crew Member',
           icon: 'people-outline',
-          link: 'atc/members'
+          link: 'atc/members',
         },
         {
-          title: "Quản lý các Vai trò",
+          title: 'Quản lý các Vai trò',
           icon: 'briefcase-outline',
-          link: 'atc/roles'
+          link: 'atc/roles',
         },
         {
           title: 'Quản lý các Kỹ năng',
           icon: 'activity-outline',
-          link: 'atc/skills'
+          link: 'atc/skills',
         },
         {
           title: 'Quản lý các Thành tựu',
           icon: 'award-outline',
-          link: 'atc/achievements'
+          link: 'atc/achievements',
         },
         {
           title: 'Xử lý phản hồi',
           icon: 'message-circle-outline',
-          link: 'atc/feedbacks'
+          link: 'atc/feedbacks',
         },
       ],
     },
   ];
   constructor(
     private dialog: NbDialogService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private profileSv: ProfileService,
+    private util: UtilsService,
+    private roles: RoleService,
+    private contribute: ContributionService,
+    private achivement: AchievementService
   ) {
-    setTimeout(() => {
-      console.log(this.auth.user);
-    }, 2000);
+    console.log(localStorage.getItem('userId'));
   }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {
