@@ -9,6 +9,7 @@ import {
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
+  NbTagModule,
 } from '@nebular/theme';
 
 @NgModule({
@@ -20,6 +21,7 @@ import {
     NbCardModule,
     NbInputModule,
     NbIconModule,
+    NbTagModule,
     CommunityRoutingModule,
   ],
 })

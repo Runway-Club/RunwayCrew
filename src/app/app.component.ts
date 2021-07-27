@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ProfileService } from './services/profile.service';
@@ -20,27 +20,27 @@ export class AppComponent {
       {
         title: 'Quản lý Crew Member',
         icon: 'people-outline',
-        link: 'atc/members'
+        link: 'atc/members',
       },
       {
-        title: "Quản lý các Vai trò",
+        title: 'Quản lý các Vai trò',
         icon: 'briefcase-outline',
-        link: 'atc/roles'
+        link: 'atc/roles',
       },
       {
         title: 'Quản lý các Kỹ năng',
         icon: 'activity-outline',
-        link: 'atc/skills'
+        link: 'atc/skills',
       },
       {
         title: 'Quản lý các Thành tựu',
         icon: 'award-outline',
-        link: 'atc/achievements'
+        link: 'atc/achievements',
       },
       {
         title: 'Xử lý phản hồi',
         icon: 'message-circle-outline',
-        link: 'atc/feedbacks'
+        link: 'atc/feedbacks',
       },
     ],
   };
@@ -60,7 +60,8 @@ export class AppComponent {
   constructor(
     private dialog: NbDialogService,
     private auth: AuthenticationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private menuService: NbMenuService
   ) {
     setTimeout(() => {
       console.log(this.auth.user);
@@ -69,7 +70,7 @@ export class AppComponent {
       if (isAtc) {
         this.menuItems.push(this.atcMenu);
       }
-    })
+    });
   }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {
