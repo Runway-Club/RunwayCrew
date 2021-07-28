@@ -21,4 +21,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRouter.queryParams.subscribe((queries) => this.uid = queries['id']);
   }
+  isMobile() {
+    if (window.innerWidth <= 600) {
+      console.log(true);
+      return true;
+    }
+    return false;
+  }
 }

@@ -7,11 +7,15 @@
     </div>
     <div class="body">
         <div class="Left">
-            <app-roles [uid]='uid'></app-roles>
-            <app-body [uid]='uid'></app-body>
+            <div style="margin-bottom:10px" *ngIf="isMobile()">
+                <app-skills></app-skills>
+            </div>
+            <app-roles></app-roles>
+            <app-body></app-body>
+
         </div>
-        <div class="Right">
-            <app-skills [uid]='uid'></app-skills>
+        <div class="Right" *ngIf="!isMobile()">
+            <app-skills></app-skills>
         </div>
     </div>
     <div class="Contribution" [class.mat-elevation-z8]="true">
