@@ -11,26 +11,11 @@ import { UserProfile } from 'src/models/user-profile.model';
 })
 export class ListUserComponent implements OnInit {
   @Input() listUser!: UserProfile[];
-  public commonSkill!: number[];
+  @Input() commonSkill!: number[];
   public loadDone = false;
   constructor(private skillSv: SkillService) {}
 
   ngOnInit(): void {
-    setTimeout(async () => {
-      this.commonSkill = await this.getCommonSkill();
-      console.log(this.commonSkill);
-      this.loadDone = true;
-    }, 500);
-  }
-
-  // public async getAllUser() {
-  //   await this.profileSv.getAll().subscribe(async (user) => {
-  //     this.listUser = user;
-  //     console.log(this.listUser);
-  //   });
-  // }
-  public async getCommonSkill() {
-    let result = await this.skillSv.get('common');
-    return result.levels;
+    this.loadDone = true;
   }
 }

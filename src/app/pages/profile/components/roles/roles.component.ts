@@ -10,21 +10,9 @@ import { UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
-  public roles!: Role[];
-  public loadDone = false;
-  constructor(private profileSv: ProfileService) { }
-
+  @Input() roles!: Role[];
+  constructor(private profileSv: ProfileService) {}
   @Input()
-  uid = "";
-
-  ngOnInit(): void {
-    setTimeout(async () => {
-      await this.getRoles();
-    }, 100);
-  }
-  public async getRoles() {
-    this.roles = await (await this.profileSv.get(this.uid == "" ? undefined : this.uid)).roles;
-    console.log(this.roles);
-    this.loadDone = true;
-  }
+  uid = '';
+  ngOnInit(): void {}
 }

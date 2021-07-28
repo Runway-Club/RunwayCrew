@@ -2,17 +2,17 @@
     *ngIf="loadDone">
     <div class="box">
         <div class="left-box">
-            <img style="border-radius: 100%; display: block;" [src]="usr?.photoUrl">
+            <img style="border-radius: 100%; display: block;" [src]="user.photoUrl">
         </div>
         <div class="center-box">
             <div class="name">
-                <h4>{{usr?.name}}</h4>
-                <h4 *ngIf="!usr?.name">Chưa có tên</h4>
+                <h4>{{user?.name}}</h4>
+                <h4 *ngIf="!user?.name">Chưa có tên</h4>
                 <!-- <div>{{usr?.email}}</div> -->
                 <div><strong>Level: </strong> {{level}}</div>
-                <div>{{usr?.email}}</div>
-                <div><strong>EXP:</strong> {{contributionInfo?.exp}}</div>
-                <div><strong>Avgas: </strong>{{contributionInfo?.credit}} </div>
+                <div>{{user?.email}}</div>
+                <div><strong>EXP:</strong> {{contribute?.exp}}</div>
+                <div><strong>Avgas: </strong>{{contribute?.credit}} </div>
             </div>
 
         </div>
