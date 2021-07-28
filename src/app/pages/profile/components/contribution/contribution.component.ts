@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ContributionService } from 'src/app/services/contribution.service';
+import { UserContribution } from 'src/models/user-profile.model';
 
 @Component({
   selector: 'app-contribution',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContributionComponent implements OnInit {
 
-  constructor() { }
+  contributionInfo: UserContribution | undefined;
+  constructor(
+    private contributionService: ContributionService
+  ) { }
 
   ngOnInit(): void {
+    setTimeout(async () => {
+      await this.getContributions();
+    }, 500)
   }
 
+
+  async getContributions() {
+    this.contributionInfo = await this.contributionService.get();
+  }
 }

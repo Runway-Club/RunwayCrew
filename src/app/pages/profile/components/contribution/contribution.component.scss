@@ -1,0 +1,20 @@
+.body{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 7fr)); 
+    grid-gap: 20px 30px;
+  }
+  .card-row {
+    display: flex;
+    flex-direction: row;
+    // max-height: 80rem;
+    // max-width: 30rem;
+    margin: 0 -0.5rem;
+    // grid-template-columns: repeat(auto-fit, minmax(300px, 10fr));
+  }
+  
+  .card-col {
+    flex: 1 0 calc(50% - 1rem);
+    flex-direction: column;
+    margin: 0 0.5rem;
+  }
