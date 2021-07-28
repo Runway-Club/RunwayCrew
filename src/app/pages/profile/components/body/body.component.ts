@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -13,6 +13,9 @@ export class BodyComponent implements OnInit {
   isUpdate: boolean = true;
   updateBtn: string = 'Update';
   userProfile?: RegistrationProfile;
+
+  @Input()
+  uid = "";
 
 
   roles = [
@@ -52,7 +55,7 @@ export class BodyComponent implements OnInit {
   }
 
   async getProfile() {
-    this.userProfile = await this.profileService.get();
+    this.userProfile = await this.profileService.get(this.uid == "" ? undefined : this.uid);
 
   }
 

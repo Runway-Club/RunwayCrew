@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ContributionService } from 'src/app/services/contribution.service';
 import { UserContribution } from 'src/models/user-profile.model';
 
@@ -9,6 +9,9 @@ import { UserContribution } from 'src/models/user-profile.model';
 })
 export class ContributionComponent implements OnInit {
 
+  @Input()
+  uid = "";
+
   contributionInfo: UserContribution | undefined;
   constructor(
     private contributionService: ContributionService
@@ -16,13 +19,13 @@ export class ContributionComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(async () => {
-      await this.getContributions();
+      await this.getContributions(this.uid == "" ? undefined : this.uid);
     }, 500)
   }
 
 
-  async getContributions() {
-    this.contributionInfo = await this.contributionService.get();
+  async getContributions(uid?: string) {
+    this.contributionInfo = await this.contributionService.get(uid);
   }
   public convertDate(timestamp?: number) {
     var d = new Date(timestamp ?? 0);
