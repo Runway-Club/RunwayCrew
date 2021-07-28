@@ -1,4 +1,4 @@
-<div class="header-container">
+<!-- <div class="header-container">
     <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}} title="EXP: {{exp}}" color='white'>
     </nb-user>
     <div class="header-right">
@@ -7,4 +7,19 @@
                 style="font-size: 2rem; color: tomato;">{{rank}}</span> </span>
     </div>
 
-</div>
+</div> -->
+
+<nb-card size="tiny">
+    <nb-card-body>
+        <nb-layout-column class="header-container">
+            <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}} title="EXP: {{exp}}" color='white'>
+            </nb-user>
+            <div class="header-right">
+                <span style="font-size: 1.2rem;">Avgas: {{avgas}}</span>
+                <span style="font-size: 1.2rem; margin-top: 5px;">Rank: <span
+                        style="font-size: 2rem; color: tomato;">{{rank}}</span> </span>
+            </div>
+        </nb-layout-column>
+
+    </nb-card-body>
+</nb-card>

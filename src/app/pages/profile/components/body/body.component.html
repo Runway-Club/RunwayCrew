@@ -1,72 +1,66 @@
 <nb-card size="large" *ngIf="userProfile !=undefined">
+  <nb-card-header>
+    <h5>Information</h5>
+  </nb-card-header>
   <nb-card-body>
 
-    <div>
-      <h5>Information</h5>
+    <form class="form-registration" (ngSubmit)="onUpdate()">
 
-      <form class="form-registration" (ngSubmit)="onUpdate()">
-        <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
-          <div>
-            <nb-form-field>
-              <label>Email*</label>
-              <input type="email" nbInput disabled placeholder="{{userProfile?.email}}">
-            </nb-form-field>
-            <nb-form-field>
-              <label>Họ tên*</label>
-              <input type='text' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.name"
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field>
-              <label>Giới tính</label>
-              <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate">
-                <nb-option value="Male">Nam</nb-option>
-                <nb-option value="Female">Nữ</nb-option>
-                <nb-option value="Not share">Không chia sẻ</nb-option>
-              </nb-select>
-            </nb-form-field>
-            <nb-form-field>
-              <label>Ngày sinh*</label>
-              <input type='date' nbInput [disabled]="isUpdate" [(ngModel)]='userProfile!.dob'
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field style="margin: 0 auto">
-              <input nbInput type="button" status='primary' value="Edit" (click)="onEdit()"
-                [disabled]="updateBtn=='Update'?false:true">
-            </nb-form-field>
-          </div>
-          <div>
-            <nb-form-field>
-              <label>Số điện thoại*</label>
-              <input type="tel" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.phoneNumber"
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field>
-              <label>Địa chỉ nhận quà</label>
-              <input type="text" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.address"
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field>
-              <label>Facebook</label>
-              <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.facebook"
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field>
-              <label>Linkedin</label>
-              <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.linkIn"
-                [ngModelOptions]="{standalone: true}">
-            </nb-form-field>
-            <nb-form-field style="margin: 0 auto">
-              <input nbInput type="submit" status='primary' value="Confirm" (click)="onUpdate()"
-                [disabled]="updateBtn=='Update'?true:false"
-                [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#4FD132':'#fff'}">
-            </nb-form-field>
-          </div>
-
-        </div>
+      <nb-form-field>
+        <label>Email*</label>
+        <input type="email" nbInput disabled placeholder="{{userProfile?.email}}" fullWidth>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Họ tên*</label>
+        <input type='text' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.name" fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field>
+        <label>Giới tính</label>
+        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth>
+          <nb-option value="Male">Nam</nb-option>
+          <nb-option value="Female">Nữ</nb-option>
+          <nb-option value="Not share">Không chia sẻ</nb-option>
+        </nb-select>
+      </nb-form-field>
+      <nb-form-field>
+        <label>Ngày sinh*</label>
+        <input type='date' nbInput [disabled]="isUpdate" [(ngModel)]='userProfile!.dob' fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field>
+        <label>Số điện thoại*</label>
+        <input type="tel" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.phoneNumber" fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field>
+        <label>Địa chỉ nhận quà</label>
+        <input type="text" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.address" fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field>
+        <label>Facebook</label>
+        <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.facebook" fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field>
+        <label>Linkedin</label>
+        <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.linkIn" fullWidth
+          [ngModelOptions]="{standalone: true}">
+      </nb-form-field>
+      <nb-form-field style="margin: 0 auto">
+        <input nbInput type="button" status='primary' value="Edit" (click)="onEdit()" fullWidth
+          [disabled]="updateBtn=='Update'?false:true">
+      </nb-form-field>
+      <nb-form-field style="margin: 0 auto">
+        <input nbInput type="submit" status='primary' value="Confirm" (click)="onUpdate()" fullWidth
+          [disabled]="updateBtn=='Update'?true:false"
+          [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#4FD132':'#fff'}">
+      </nb-form-field>
 
 
-      </form>
-    </div>
+
+    </form>
   </nb-card-body>
 </nb-card>
 
