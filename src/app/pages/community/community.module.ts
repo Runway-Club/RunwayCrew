@@ -5,6 +5,7 @@ import { CommunityRoutingModule } from './community-routing.module';
 import { CommunityComponent } from './community.component';
 import { ListUserComponent } from './components/list-user/list-user.component';
 import {
+  NbButtonModule,
   NbCardModule,
   NbFormFieldModule,
   NbIconModule,
@@ -20,6 +21,8 @@ import {
     NbFormFieldModule,
     NbCardModule,
     NbInputModule,
+    NbIconModule,
+    NbButtonModule,
     NbIconModule,
     NbTagModule,
     CommunityRoutingModule,
