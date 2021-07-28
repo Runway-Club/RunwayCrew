@@ -47,6 +47,7 @@ export class ProfileService {
       uid: this.currentUser.uid,
       email: this.currentUser.email ?? "",
       credit: 0,
+      exp: 0,
       skills: []
     }
     // Create data
@@ -133,6 +134,21 @@ export class ProfileService {
 
   public getATCMembers(): Observable<UserProfile[]> {
     return this.utils.getAll("atc");
+  }
+
+  public async getPaginate(page: number, size: number): Promise<UserProfile[]> {
+    return (await this.db.collection("profiles").ref
+      .startAfter(page * size)
+      .limit(size)
+      .orderBy("metadataProfile.created")
+      .get()).docs.map((d) => <UserProfile>d.data())
+  }
+
+  public async getNumOfProfile() {
+    return new Promise<number>(async (resolve) => {
+      let snapshot = await this.db.collection("profiles").snapshotChanges().toPromise();
+      resolve(snapshot.length);
+    });
   }
 
 }
