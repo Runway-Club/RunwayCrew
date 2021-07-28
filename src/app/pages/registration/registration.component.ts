@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { RoleService } from 'src/app/services/role.service';
+import { Role } from 'src/models/role.model';
 import { RegistrationProfile } from 'src/models/user-profile.model';
 
 @Component({
@@ -32,6 +34,8 @@ export class RegistrationComponent implements OnInit {
   facebookControl!: FormControl;
   linkInControl!: FormControl;
 
+  roles: any[] = [];
+
   registration: RegistrationProfile = {
     email: '',
     name: '',
@@ -48,7 +52,8 @@ export class RegistrationComponent implements OnInit {
     private profileService: ProfileService,
     private toast: NbToastrService,
     private router: Router,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private roleService: RoleService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state) {
@@ -56,40 +61,16 @@ export class RegistrationComponent implements OnInit {
         console.log(this.defaultEmail);
       }
     })
-
+    this.roleService.getAll().subscribe((roles) => {
+      this.roles.length = 0;
+      this.roles.push(...roles.map((r) => { return { ...r, selected: false } }));
+    })
   }
 
   rules = [
     '1. Ưu tiên hàng đầu của việc tham gia Runway Club là học hỏi thêm nhiều kiến thức, kỹ năng và tạo thêm nhiều mối quan hệ xã hội.',
     '2. Runway Club hoạt động phi lợi nhuận, được bảo trợ bởi Công ty TNHH Dịch Vụ Đào tạo và Giải pháp ITSS (aka. ITSS). Vì thế, các hoạt động của mỗi thành viên là tình nguyện và vì cộng đồng. Đôi khi, các thành viên sẽ có trợ cấp cho công việc của mình, tuy nhiên nó hoàn toàn phụ thuộc vào những gì bạn đã làm được.',
     '3. Các thành viên tham gia Runway Club không cần đóng bất kỳ khoản tiền nào.',
-  ];
-
-  roles = [
-    {
-      name: 'Runway ATC',
-      description: 'Điều hành và kiểm soát sự hoạt động',
-      image: '',
-      selected: false,
-    },
-    {
-      name: 'Runway Developers',
-      description: 'Tham gia các dự án Open Source của dự án',
-      image: '',
-      selected: false,
-    },
-    {
-      name: 'Runway Lightning',
-      description: '',
-      image: '',
-      selected: false,
-    },
-    {
-      name: 'Runway Threshold',
-      description: '',
-      image: '',
-      selected: false,
-    },
   ];
 
   async ngOnInit() {
