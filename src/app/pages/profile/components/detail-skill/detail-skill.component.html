@@ -1,20 +1,29 @@
-<nb-card *ngIf="this.loadDone">
-    <nb-card-body class="grid">
-        <div class="image" style="width: 50px; padding-top: 5px;">
-            <img width="50px" [src]="this.skillDetail.image">
-        </div>
-        <div class="content">
-            <p class="contentName">
+<nb-card *ngIf="this.loadDone" size="tiny">
+    <nb-card-body style="display: flex; flex-direction: column;">
+        <!-- <div class="image" style="width: 50px; padding-top: 5px;"> -->
+        <img width="50px" height="50px" [src]="this.skillDetail.image"
+            style="align-self: center; align-items: center; justify-items: center;">
+        <div style="display: flex; flex-direction: row;">
+
+            <!-- </div> -->
+            <span style="margin-left: 1px;">
                 <strong>{{this.skillDetail.name}}</strong>
-            </p>
-            <p></p>
-            <p class="exp">EXP: {{this.item.exp}}</p>
-            <nb-progress-bar [value]="this.progressBar" [status]="this.status" size="tiny">
-            </nb-progress-bar>
+            </span>
+        </div>
+
+        <div>
+
+            <div style="display: flex; flex-direction: column;">
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                    <strong class="exp">Lv&nbsp;{{this.level}}</strong>
+                    <p>EXP: {{this.item.exp}}</p>
+                </div>
+
+                <nb-progress-bar [value]="this.progressBar" [status]="this.status" size="tiny">
+                </nb-progress-bar>
+            </div>
 
         </div>
-        <div class="level" style="text-align: center;padding: 30px 0; font-size: larger;"><strong>Lv
-                {{this.level}}</strong>
-        </div>
     </nb-card-body>
+
 </nb-card>
