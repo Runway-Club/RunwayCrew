@@ -16,10 +16,11 @@ export class LevelComponent implements OnInit {
   public progressBar: number = 0;
   public level: any = 0;
   public status: string = 'primary';
+  public remainingExp = 0;
   constructor(
     private contrib: ContributionService,
     private skillSv: SkillService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -27,6 +28,7 @@ export class LevelComponent implements OnInit {
       console.log(this.skill);
       this.checkLv();
       this.progressCalc();
+      this.getRemainingExp();
       this.loadDone = true;
     }, 100);
   }
@@ -62,9 +64,9 @@ export class LevelComponent implements OnInit {
         this.progressBar =
           Math.abs(
             (this.skill.exp - this.skillCommon[this.level - 1]) /
-              Math.abs(
-                this.skillCommon[this.level] - this.skillCommon[this.level - 1]
-              )
+            Math.abs(
+              this.skillCommon[this.level] - this.skillCommon[this.level - 1]
+            )
           ) * 100;
       }
     }
@@ -80,5 +82,14 @@ export class LevelComponent implements OnInit {
     console.log(
       this.progressBar + ' status: ' + this.status + ' level: ' + this.level
     );
+  }
+
+  public getRemainingExp() {
+    if (this.skillCommon.length < this.level) {
+      this.remainingExp = this.skill.exp;
+    }
+    else {
+      this.remainingExp = this.skillCommon[this.level] - this.skill.exp;
+    }
   }
 }
