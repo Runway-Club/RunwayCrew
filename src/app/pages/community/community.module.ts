@@ -16,6 +16,7 @@ import {
   NbTooltipModule,
 } from '@nebular/theme';
 import { LevelComponent } from './components/level/level.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CommunityComponent, ListUserComponent, LevelComponent],
@@ -33,6 +34,7 @@ import { LevelComponent } from './components/level/level.component';
     NbTagModule,
     NbIconModule,
     CommunityRoutingModule,
+    FormsModule
   ],
 })
-export class CommunityModule {}
+export class CommunityModule { }

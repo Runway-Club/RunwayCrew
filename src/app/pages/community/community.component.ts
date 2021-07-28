@@ -9,7 +9,7 @@ import { UserProfile } from 'src/models/user-profile.model';
 })
 export class CommunityComponent implements OnInit {
   public data!: UserProfile[];
-  constructor(private profileSv: ProfileService) {}
+  constructor(private profileSv: ProfileService) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
