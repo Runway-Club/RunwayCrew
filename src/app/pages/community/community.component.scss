@@ -1,5 +1,5 @@
 .container {
-  background-color: white;
+  background-color: none;
 }
 .title {
   padding: 10px;
@@ -10,7 +10,25 @@
   height: 100vh;
 }
 .footer{
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));  
+  // display: grid;
+  // grid-gap: 1rem;
+  // grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));  
+  // border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.paginate {
+  flex-direction: row;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+  background: #fff;
+  padding: 10px;
+}
+.paginate > * {
+  margin: 5px;
 }
