@@ -5,46 +5,45 @@
 .contentName {
   padding: 0;
   margin: 0;
-  font-size: 1.2vw;
+  // font-size: 1.2vw;
 }
 .exp {
   padding: 0;
   margin: 0;
-  font-size: 1vw;
+  // font-size: 1vw;
 }
 nb-progress-bar{
   height: 10px;
 }
-@media only screen and (max-width: 1300px) {
-  .contentName {
-    padding: 0;
-    margin: 0;
-    font-size: 1.6vw !important;
-  }
-  .exp {
-    padding: 0;
-    margin: 0;
-    font-size: 1.2vw !important;
-  }
-  .level {
-    display: none !important;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: minmax(70px, 15%) 1fr !important;
-  }
-}
-@media only screen and (max-width: 800px) {
-  nb-card {
-    display: block;
-    width: fit-content;
-  }
-  .grid {
-    // width: 100px;
-    grid-template-columns: min-content !important;
-  }
-  .content {
-    display: none;
-  }
-}
-
+// @media only screen and (max-width: 1300px) {
+//   .contentName {
+//     padding: 0;
+//     margin: 0;
+//     font-size: 1.6vw !important;
+//   }
+//   .exp {
+//     padding: 0;
+//     margin: 0;
+//     font-size: 1.2vw !important;
+//   }
+//   .level {
+//     display: none !important;
+//   }
+//   .grid {
+//     display: grid;
+//     grid-template-columns: minmax(70px, 15%) 1fr !important;
+//   }
+// }
+// @media only screen and (max-width: 800px) {
+//   nb-card {
+//     display: block;
+//     width: fit-content;
+//   }
+//   .grid {
+//     // width: 100px;
+//     grid-template-columns: min-content !important;
+//   }
+//   .content {
+//     display: none;
+//   }
+// }
