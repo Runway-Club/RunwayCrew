@@ -1,10 +1,12 @@
-<nb-card *ngIf="this.loadDone" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);margin-bottom: 10px;border-radius: 15px;">
+<nb-card *ngIf="this.loadDone"
+    style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);margin-bottom: 10px;border-radius: 15px;">
     <nb-card-header>
         <h5>Roles</h5>
     </nb-card-header>
     <nb-card-body class="list-role">
         <div class="role" *ngFor="let role of roles">
-            <img [nbTooltip]='role.name' [src]=' role.image'>
+            <img [nbTooltip]='role.description' [src]=' role.image'>
+            <p><strong>{{role.name}}</strong></p>
         </div>
     </nb-card-body>
 </nb-card>
