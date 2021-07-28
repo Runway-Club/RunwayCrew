@@ -7,7 +7,7 @@
 .body {
   display: grid;
   gap: 10px 10px;
-  grid-template-columns: auto 0.4fr;
+  grid-template-columns: auto 0.3fr;
 }
 @media only screen and (max-width: 600px) {
   .body {
