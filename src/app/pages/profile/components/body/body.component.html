@@ -4,11 +4,15 @@
     <div style="flex: 1 auto;"></div>
     <div style="float: right;">
 
-      <input *ngIf="isUpdate" nbInput type="button" status='primary' value="Edit" (click)="onEdit()" shape='semi-round'
-        size="small" [disabled]="updateBtn=='Update'?false:true">
+
+      <button *ngIf="isUpdate" nbButton type="button" status='primary' value="Edit" (click)="onEdit()"
+        shape='semi-round' size="small" [disabled]="updateBtn=='Update'?false:true">
+        <nb-icon icon="edit-outline"> </nb-icon>
+      </button>
 
 
-      <input *ngIf="!isUpdate" nbInput type="submit" status='primary' value="Confirm" (click)="onUpdate()" size="small"
+
+      <input *ngIf="!isUpdate" nbInput type="submit" status='success' value="Confirm" (click)="onUpdate()" size="small"
         style="margin-left: 5px;" shape='semi-round'
         [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#04AA6D':'#fff'}">
 
@@ -24,12 +28,12 @@
       </nb-form-field>
       <nb-form-field>
         <label>Họ tên</label>
-        <input type='text' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.name" fullWidth
+        <input type='text' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.name" fullWidth style="color: #000;"
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Giới tính</label>
-        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth>
+        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth [ngStyle]="{color: '#000'}">
           <nb-option value="Male">Nam</nb-option>
           <nb-option value="Female">Nữ</nb-option>
           <nb-option value="Not share">Không chia sẻ</nb-option>
@@ -37,27 +41,27 @@
       </nb-form-field>
       <nb-form-field>
         <label>Ngày sinh</label>
-        <input type='date' nbInput [disabled]="isUpdate" [(ngModel)]='userProfile!.dob' fullWidth
+        <input type='date' nbInput [disabled]="isUpdate" [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;"
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Số điện thoại</label>
         <input type="tel" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.phoneNumber" fullWidth
-          [ngModelOptions]="{standalone: true}">
+          style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Địa chỉ nhận quà</label>
         <input type="text" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.address" fullWidth
-          [ngModelOptions]="{standalone: true}">
+          style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Facebook</label>
         <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.facebook" fullWidth
-          [ngModelOptions]="{standalone: true}">
+          style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Linkedin</label>
-        <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.linkIn" fullWidth
+        <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.linkIn" fullWidth style="color: #000;"
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
 
