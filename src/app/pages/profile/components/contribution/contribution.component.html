@@ -15,6 +15,10 @@
         </nb-layout-column>
         <nb-layout-column>
             <!-- <h6>Achievements</h6> -->
+            <div *ngIf="contributionInfo?.achievements?.length == 0">
+                <span>Bạn chưa có đóng góp nào</span>
+            </div>
+
             <div class="body" *ngIf="contributionInfo?.achievements!=undefined">
                 <div class="card-row" *ngFor="let contrib of contributionInfo?.achievements">
                     <div class="card-col">

@@ -8,18 +8,20 @@
             <div class="name">
                 <h4>{{usr?.name}}</h4>
                 <h4 *ngIf="!usr?.name">Chưa có tên</h4>
-                <div><strong>Email:</strong> {{usr?.email}}</div>
+                <!-- <div>{{usr?.email}}</div> -->
+                <div><strong>Level: </strong> {{level}}</div>
                 <div><strong>EXP:</strong> {{contributionInfo?.exp}}</div>
+                <div><strong>Avgas: </strong>{{contributionInfo?.credit}} </div>
             </div>
 
         </div>
-        <div></div>
+        <!-- <div></div>
         <div class="right-box">
             <div class="name">
-                <h4>Level: {{contributionInfo?.exp}}</h4>
-                <h5>AVGAS:{{contributionInfo?.credit}} </h5>
+
+                <h5>AVGAS:</h5>
             </div>
 
-        </div>
+        </div> -->
     </div>
 </nb-card>
