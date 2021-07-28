@@ -3,7 +3,7 @@
         <app-header style="position: absolute; top: 20%; width: 100%;"></app-header>
     </div> -->
     <div class="Header">
-        <app-header></app-header>
+        <app-header [uid]='uid'></app-header>
     </div>
     <div class="body">
         <div class="Left">
@@ -19,6 +19,6 @@
         </div>
     </div>
     <div class="Contribution" [class.mat-elevation-z8]="true">
-        <app-contribution></app-contribution>
+        <app-contribution [uid]='uid'></app-contribution>
     </div>
 </div>
