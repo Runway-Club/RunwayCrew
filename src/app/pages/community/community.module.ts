@@ -12,6 +12,8 @@ import {
   NbInputModule,
   NbProgressBarModule,
   NbTagModule,
+  NbTooltipComponent,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { LevelComponent } from './components/level/level.component';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +29,7 @@ import { FormsModule } from '@angular/forms';
     NbIconModule,
     NbButtonModule,
     NbIconModule,
+    NbTooltipModule,
     NbProgressBarModule,
     NbTagModule,
     NbIconModule,

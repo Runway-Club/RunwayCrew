@@ -1,3 +1,10 @@
 <div class="container" *ngIf="loadDone">
-    <p style="margin:0">EXP: {{this.skill.exp}}</p>
+    <p style="text-align:center; font-size: larger;"><strong>Level: {{level}}</strong></p>
+    <div>
+        <p style="margin:0">EXP: {{this.skill.exp}}</p>
+        <nb-progress-bar style="width:95%" [value]="this.progressBar" [status]="this.status" size="tiny">
+        </nb-progress-bar>
+    </div>
+
+
 </div>

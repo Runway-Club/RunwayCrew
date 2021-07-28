@@ -14,6 +14,29 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
 export class AppComponent implements AfterViewInit {
   title = 'RunwayCrew';
 
+  public menus = [
+    {
+      type: 'menu',
+      icon: 'account_circle',
+      name: 'Your profile',
+      link: 'profile'
+    },
+    {
+      type: 'menu',
+      icon: 'public',
+      name: 'Our community',
+      link: 'community'
+    },
+    {
+      icon: 'admin_panel_settings',
+      type: 'parent',
+      name: 'ATC Zone',
+      link: 'atc'
+    },
+  ]
+
+  showSidemenu = false;
+
   atcMenu = {
     title: 'ATC Zone',
     icon: 'flash-outline',
