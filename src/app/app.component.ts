@@ -18,69 +18,21 @@ export class AppComponent implements AfterViewInit {
     {
       type: 'menu',
       icon: 'account_circle',
-      name: 'Your profile',
+      name: 'Profile',
       link: 'profile'
     },
     {
       type: 'menu',
       icon: 'public',
-      name: 'Our community',
+      name: 'Community',
       link: 'community'
     },
-    {
-      icon: 'admin_panel_settings',
-      type: 'parent',
-      name: 'ATC Zone',
-      link: 'atc'
-    },
+
   ]
 
   showSidemenu = false;
+  selectedMenu = 0;
 
-  atcMenu = {
-    title: 'ATC Zone',
-    icon: 'flash-outline',
-    children: [
-      {
-        title: 'Quản lý Crew Member',
-        icon: 'people-outline',
-        link: 'atc/members',
-      },
-      {
-        title: 'Quản lý các Vai trò',
-        icon: 'briefcase-outline',
-        link: 'atc/roles',
-      },
-      {
-        title: 'Quản lý các Kỹ năng',
-        icon: 'activity-outline',
-        link: 'atc/skills',
-      },
-      {
-        title: 'Quản lý các Thành tựu',
-        icon: 'award-outline',
-        link: 'atc/achievements',
-      },
-      {
-        title: 'Xử lý phản hồi',
-        icon: 'message-circle-outline',
-        link: 'atc/feedbacks',
-      },
-    ],
-  };
-
-  menuItems: NbMenuItem[] = [
-    {
-      title: 'Profile của bạn',
-      icon: 'file-text-outline',
-      link: 'profile',
-    },
-    {
-      title: 'Cộng đồng',
-      icon: 'globe-outline',
-      link: 'members',
-    },
-  ];
   constructor(
     private dialog: NbDialogService,
     private auth: AuthenticationService,
@@ -95,7 +47,12 @@ export class AppComponent implements AfterViewInit {
     }, 500);
     this.profileService.isATC().then((isAtc) => {
       if (isAtc) {
-        this.menuItems.push(this.atcMenu);
+        this.menus.push({
+          icon: 'admin_panel_settings',
+          type: 'parent',
+          name: 'ATC Zone',
+          link: 'atc'
+        });
       }
     });
   }
@@ -122,7 +79,7 @@ export class AppComponent implements AfterViewInit {
   toggleSidebar() {
     this.sidebarService.toggle(false, 'mainSidebar');
   }
-  async onLogout() {
+  async logout() {
     await this.auth.signOut();
     this.userInfo = null;
     this.router.navigate(['home']);
