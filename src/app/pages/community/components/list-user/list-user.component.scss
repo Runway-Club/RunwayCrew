@@ -3,15 +3,22 @@
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 }
+.list-role {
+  // display: grid;
+  // grid-gap: 1rem;
+  // grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  width: 95%;
+}
 .card {
   display: grid;
   grid-template-columns: 32% 70%;
   margin-bottom: 0;
   border-radius: 10px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
 }
 .left-box {
   padding: 10px;
+  padding-top: 20px;
 }
 .right-box * {
   margin-top: 1%;
@@ -19,6 +26,8 @@
 }
 .right-box {
   width: 97%;
+  display: flex;
+  flex-direction: column;
 }
 .right-box > h4 {
   margin-left: 4%;
@@ -28,4 +37,8 @@
 .right-box > p {
   margin-left: 4%;
   margin-right: 0;
+}
+.level {
+  width: 95%;
+  align-self: flex-end;
 }

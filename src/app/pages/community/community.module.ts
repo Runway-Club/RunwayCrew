@@ -10,11 +10,13 @@ import {
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
+  NbProgressBarModule,
   NbTagModule,
 } from '@nebular/theme';
+import { LevelComponent } from './components/level/level.component';
 
 @NgModule({
-  declarations: [CommunityComponent, ListUserComponent],
+  declarations: [CommunityComponent, ListUserComponent, LevelComponent],
   imports: [
     CommonModule,
     NbCardModule,
@@ -24,9 +26,10 @@ import {
     NbIconModule,
     NbButtonModule,
     NbIconModule,
+    NbProgressBarModule,
     NbTagModule,
     NbIconModule,
     CommunityRoutingModule,
   ],
 })
-export class CommunityModule { }
+export class CommunityModule {}
