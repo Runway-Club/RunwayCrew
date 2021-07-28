@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbSidebarModule, NbMenuModule, NbSidebarService, NbMenuService, NbIconModule, NbDialogModule, NbGlobalPhysicalPosition, NbToastrModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbSidebarModule, NbMenuModule, NbSidebarService, NbMenuService, NbIconModule, NbDialogModule, NbGlobalPhysicalPosition, NbToastrModule, NbUserModule, NbPopoverModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from '@angular/fire';
@@ -32,7 +32,9 @@ import { environment } from '../environments/environment';
     NbIconModule,
     NbDialogModule.forRoot(),
     SharedModule,
-    NbToastrModule.forRoot({ hasIcon: true, preventDuplicates: true, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 5000 })
+    NbToastrModule.forRoot({ hasIcon: true, preventDuplicates: true, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 5000 }),
+    NbUserModule,
+    NbPopoverModule
   ],
   providers: [NbSidebarService, NbMenuService],
   bootstrap: [AppComponent]

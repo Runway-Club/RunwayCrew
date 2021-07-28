@@ -53,7 +53,6 @@ export class BodyComponent implements OnInit {
 
   async getProfile() {
     this.userProfile = await this.profileService.get();
-    console.log(this.userProfile);
 
   }
 
@@ -66,7 +65,6 @@ export class BodyComponent implements OnInit {
         this.toast.success(`Profile ${this.userProfile.email} đã cập nhật`, "Cập nhật hồ sơ")
         this.isUpdate = true;
         this.updateBtn = 'Update'
-        console.log("Hi");
       }
 
     }

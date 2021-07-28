@@ -54,6 +54,7 @@ export class ContributionService {
         contrib.achievements = [];
       }
       contrib.achievements?.push(achievement);
+      contrib.exp += achievement.exp;
     }
     await this.db.collection("contributions").doc(uid).update(contrib);
     await this.db.collection("profiles").doc(uid).update({ profileMetadata: { updated: Date.now() } });

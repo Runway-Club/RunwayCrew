@@ -24,14 +24,10 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.authState.subscribe((user) => {
-      this.usr = user;
-    });
     setTimeout(async () => {
       await this.getContributions();
+      this.usr = await this.authService.user;
     }, 500)
-    // this.usr = this.authService.user;
-    // console.log(this.usr)
 
   }
 
