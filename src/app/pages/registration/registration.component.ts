@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { RoleService } from 'src/app/services/role.service';
 import { RegistrationProfile } from 'src/models/user-profile.model';
 
 @Component({
@@ -48,7 +49,8 @@ export class RegistrationComponent implements OnInit {
     private profileService: ProfileService,
     private toast: NbToastrService,
     private router: Router,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private roleService: RoleService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state) {
