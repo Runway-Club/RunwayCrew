@@ -1,10 +1,10 @@
 .list-role > div > img {
-  width: 5vw;
+  width: 100px;
 }
 .role {
   width: fit-content;
 }
 .list-role {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 6vw);
+  grid-template-columns: repeat(auto-fit, 100px);
 }
