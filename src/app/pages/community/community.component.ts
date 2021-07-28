@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommunityComponent implements OnInit {
 
+  searchKey: string = "";
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+  onEnter() {
+    console.log(this.searchKey);
+  }
 }
