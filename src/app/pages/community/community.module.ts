@@ -25,7 +25,8 @@ import {
     NbButtonModule,
     NbIconModule,
     NbTagModule,
+    NbIconModule,
     CommunityRoutingModule,
   ],
 })
-export class CommunityModule {}
+export class CommunityModule { }
