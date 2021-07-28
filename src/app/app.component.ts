@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { NbDialogService, NbMenuItem, NbSidebarService } from '@nebular/theme';
+import { NbDialogService, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ProfileService } from './services/profile.service';
@@ -20,27 +20,27 @@ export class AppComponent implements AfterViewInit {
       {
         title: 'Quản lý Crew Member',
         icon: 'people-outline',
-        link: 'atc/members'
+        link: 'atc/members',
       },
       {
-        title: "Quản lý các Vai trò",
+        title: 'Quản lý các Vai trò',
         icon: 'briefcase-outline',
-        link: 'atc/roles'
+        link: 'atc/roles',
       },
       {
         title: 'Quản lý các Kỹ năng',
         icon: 'activity-outline',
-        link: 'atc/skills'
+        link: 'atc/skills',
       },
       {
         title: 'Quản lý các Thành tựu',
         icon: 'award-outline',
-        link: 'atc/achievements'
+        link: 'atc/achievements',
       },
       {
         title: 'Xử lý phản hồi',
         icon: 'message-circle-outline',
-        link: 'atc/feedbacks'
+        link: 'atc/feedbacks',
       },
     ],
   };
@@ -61,7 +61,8 @@ export class AppComponent implements AfterViewInit {
     private dialog: NbDialogService,
     private auth: AuthenticationService,
     private profileService: ProfileService,
-    private sidebarService: NbSidebarService
+    private sidebarService: NbSidebarService,
+    private menuService: NbMenuService
   ) {
     setTimeout(() => {
 
@@ -70,11 +71,10 @@ export class AppComponent implements AfterViewInit {
       if (isAtc) {
         this.menuItems.push(this.atcMenu);
       }
-    })
-
+    });
   }
   ngAfterViewInit(): void {
-    this.sidebarService.collapse('mainSidebar');
+    throw new Error('Method not implemented.');
   }
   async signInWithGG() {
     await this.auth.signInWithGoogle().then((data) => {

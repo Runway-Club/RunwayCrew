@@ -14,6 +14,7 @@ import {
   NbListModule,
   NbProgressBarModule,
   NbSelectModule,
+  NbSidebarModule,
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -51,6 +52,7 @@ import { ContributionComponent } from './components/contribution/contribution.co
     NbLayoutModule,
     NbProgressBarModule,
     NbUserModule,
+    NbSidebarModule
   ],
 })
-export class ProfileModule {}
+export class ProfileModule { }
