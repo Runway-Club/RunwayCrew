@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { NbToastrService } from '@nebular/theme';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RegistrationProfile, UserProfile } from 'src/models/user-profile.model';
 
@@ -40,7 +41,8 @@ export class BodyComponent implements OnInit {
 
   // selectedGender: string = '';
   constructor(
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private toast: NbToastrService
   ) { }
 
   async ngOnInit() {
@@ -61,7 +63,8 @@ export class BodyComponent implements OnInit {
     } else {
       if (this.updateBtn == "Confirm") {
         await this.profileService.update(this.userProfile)
-        this.isUpdate = !this.isUpdate;
+        this.toast.success(`Profile ${this.userProfile.email} đã cập nhật`, "Cập nhật hồ sơ")
+        this.isUpdate = true;
         this.updateBtn = 'Update'
         console.log("Hi");
       }
