@@ -24,4 +24,9 @@ export class ContributionComponent implements OnInit {
   async getContributions() {
     this.contributionInfo = await this.contributionService.get();
   }
+  public convertDate(timestamp?: number) {
+    var d = new Date(timestamp ?? 0);
+
+    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+  }
 }
