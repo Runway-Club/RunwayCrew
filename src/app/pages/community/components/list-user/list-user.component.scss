@@ -38,11 +38,15 @@
   margin-right: 0;
   margin-top: 5%;
 }
-.right-box > p {
+.right-box > div {
   margin-left: 4%;
   margin-right: 0;
+  text-overflow: ellipsis;
 }
 .level {
   width: 95%;
   align-self: flex-end;
+}
+.name {
+  align-self: start;
 }
