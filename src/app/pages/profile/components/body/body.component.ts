@@ -63,7 +63,7 @@ export class BodyComponent implements OnInit {
       if (this.updateBtn == "Confirm") {
         await this.profileService.update(this.userProfile)
         this.toast.success(`Profile ${this.userProfile.email} đã cập nhật`, "Cập nhật hồ sơ")
-        this.isUpdate = true;
+        this.isUpdate = !this.isUpdate;
         this.updateBtn = 'Update'
       }
 
