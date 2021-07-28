@@ -9,9 +9,19 @@
 
 </div> -->
 
-<nb-card size="tiny">
+<nb-card size="tiny" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);">
     <nb-card-body>
-        <nb-layout-column class="header-container">
+        <nb-layout-column *ngIf="contributionInfo==undefined && usr == null">
+
+            <div class="wave-spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </nb-layout-column>
+        <nb-layout-column *ngIf="contributionInfo!=undefined" class="header-container">
             <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}}
                 title="EXP: {{contributionInfo?.exp}}" color='white'>
             </nb-user>

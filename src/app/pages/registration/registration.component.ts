@@ -129,7 +129,7 @@ export class RegistrationComponent implements OnInit {
 
   async onRegistration() {
     if (this.emailControl.invalid || this.nameControl.invalid || this.dobControl.invalid || this.phoneNumberControl.invalid || this.selectedRolesControl.invalid) {
-      this.toast.danger("Please re-check required fields in your form", "Submit Rejected");
+      this.toast.danger("Hãy kiểm tra thông tin lại một lần nữa nhé", "Đăng ký thất bại");
       return;
     }
     try {

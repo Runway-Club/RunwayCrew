@@ -1,10 +1,20 @@
-<nb-card size="large">
+<nb-card size="large" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);">
     <nb-card-header>
         <h5>Contributions</h5>
     </nb-card-header>
     <nb-card-body>
+        <nb-layout-column *ngIf="contributionInfo==undefined">
+
+            <div class="wave-spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </nb-layout-column>
         <nb-layout-column>
-            <h6>Achievements</h6>
+            <!-- <h6>Achievements</h6> -->
             <div class="body" *ngIf="contributionInfo?.achievements!=undefined">
                 <div class="card-row" *ngFor="let contrib of contributionInfo?.achievements">
                     <div class="card-col">
