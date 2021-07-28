@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1.5fr 0.5fr;
     grid-template-rows: 0.1fr 0.2fr 1fr 0.7fr;
-    gap: 0px 1.875rem;
+    gap: 0px 1rem;
     grid-auto-flow: row;
     grid-template-areas:
       "Header Header Header"

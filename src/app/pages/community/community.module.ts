@@ -12,6 +12,8 @@ import {
   NbInputModule,
   NbProgressBarModule,
   NbTagModule,
+  NbTooltipComponent,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { LevelComponent } from './components/level/level.component';
 
@@ -26,6 +28,7 @@ import { LevelComponent } from './components/level/level.component';
     NbIconModule,
     NbButtonModule,
     NbIconModule,
+    NbTooltipModule,
     NbProgressBarModule,
     NbTagModule,
     NbIconModule,

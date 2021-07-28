@@ -1,24 +1,24 @@
 <div style="width:96%;margin: 0%;">
     <div class="container" *ngIf="loadDone">
         <nb-card class="card" *ngFor="let user of listUser">
-            <div class="left-box">
-                <img style="border-radius: 100%; display: block;margin-top: auto;margin-left: auto; margin-right: auto"
-                    [src]="user.photoUrl">
-                <p style="text-align:center"><strong>Level: 3</strong></p>
-            </div>
-            <div class="right-box">
-                <h4>{{user.name}}</h4>
-                <h4 *ngIf="!user.name">Chưa có tên</h4>
-                <p>{{user.email}}</p>
-                <div class="list-role" >
-                    <img width="50px" *ngFor="let role of user.roles" [src]="role.image">
+            <div class="box">
+                <div class="left-box">
+                    <img style="border-radius: 100%; display: block;margin-top: 2%;margin-left: auto; margin-right: auto"
+                        [src]="user.photoUrl">
                 </div>
-                <div class="level">
-                    <app-level [skillCommon]="commonSkill" [uid]="user.uid"></app-level>
-                    <nb-progress-bar style="width:95%" [value]="40" size="tiny"></nb-progress-bar>
-                </div>
+                <div class="right-box">
+                    <div class="name">
+                        <h4>{{user.name}}</h4>
+                        <h4 *ngIf="!user.name">Chưa có tên</h4>
+                        <div><strong>Email:</strong> {{user.email}}</div>
+                    </div>
 
+                    <div class="list-role">
+                        <img width="50px" *ngFor="let role of user.roles" [nbTooltip]="role.name" [src]="role.image">
+                    </div>
+                </div>
             </div>
+            <app-level [skillCommon]="commonSkill" [uid]="user.uid"></app-level>
         </nb-card>
     </div>
 </div>
