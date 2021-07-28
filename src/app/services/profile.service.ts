@@ -47,6 +47,7 @@ export class ProfileService {
       uid: this.currentUser.uid,
       email: this.currentUser.email ?? "",
       credit: 0,
+      exp: 0,
       skills: []
     }
     // Create data
