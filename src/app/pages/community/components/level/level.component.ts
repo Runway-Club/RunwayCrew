@@ -68,7 +68,6 @@ export class LevelComponent implements OnInit {
           ) * 100;
       }
     }
-
     if (this.progressBar <= 40) {
       this.status = 'info';
     }

@@ -1,4 +1,6 @@
 .container {
+  display: flex;
+  flex-direction: column;
   background-color: none;
 }
 .title {
@@ -9,23 +11,24 @@
   width: 97%;
   height: 100vh;
 }
-.footer{
+.footer {
   // display: grid;
   // grid-gap: 1rem;
-  // grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));  
+  // grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   // border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .paginate {
+  width: 100%;
   flex-direction: row;
   display: flex;
-  justify-content: flex-end;
+  align-self: flex-end;
 }
 
 .card {
   border-radius: 10px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
   background: #fff;
   padding: 10px;
 }
