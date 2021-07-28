@@ -1,7 +1,7 @@
 .body{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 7fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 7fr)); 
     grid-gap: 20px 30px;
   }
   .card-row {
@@ -10,7 +10,6 @@
     // max-height: 80rem;
     // max-width: 30rem;
     margin: 0 -0.5rem;
-    // grid-template-columns: repeat(auto-fit, minmax(300px, 10fr));
   }
   
   .card-col {

@@ -2,10 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px 10px;
-  // grid-template-columns: 1fr 1.5fr 0.5fr;
-  // grid-template-rows: 0.1fr 0.2fr 1fr 0.7fr;
-  // gap: 10px 10px;
-  // grid-auto-flow: row;
 }
 
 .body {
@@ -18,8 +14,4 @@
     gap: 10px 0px;
     grid-template-columns: auto;
   }
-  .Right {
-    width: 0;
-  }
 }
-// .Header { grid-area: Header; background-color:white; border-radius: 10px 10px 0px 0px; position: relative;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
