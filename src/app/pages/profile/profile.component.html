@@ -7,10 +7,14 @@
     </div>
     <div class="body">
         <div class="Left">
+            <div style="margin-bottom:10px" *ngIf="isMobile()">
+                <app-skills></app-skills>
+            </div>
             <app-roles></app-roles>
             <app-body></app-body>
+
         </div>
-        <div class="Right">
+        <div class="Right" *ngIf="!isMobile()">
             <app-skills></app-skills>
         </div>
     </div>

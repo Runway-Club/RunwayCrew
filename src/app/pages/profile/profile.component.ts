@@ -11,9 +11,16 @@ export class ProfileComponent implements OnInit {
   constructor(
     public authSv: AuthenticationService,
     public auth: AngularFireAuth
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // console.log(this.auth.currentUser);
+  }
+  isMobile() {
+    if (window.innerWidth <= 600) {
+      console.log(true);
+      return true;
+    }
+    return false;
   }
 }
