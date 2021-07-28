@@ -27,6 +27,7 @@ export interface UserContribution {
   uid: string,
   email: string,
   credit: number,
+  exp: number,
   skills: AchievedSkill[],
   achievements?: Achievement[],
 }
