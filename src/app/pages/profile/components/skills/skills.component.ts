@@ -8,23 +8,13 @@ import { AchievedSkill } from 'src/models/achievement.model';
   styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent implements OnInit {
-  public skills!: AchievedSkill[];
-  public loadDone = false;
-
-  @Input()
-  uid = '';
-
-  constructor(public contribute: ContributionService) {}
-
-  ngOnInit(): void {
-    setTimeout(async () => {
-      await this.get();
-    }, 100);
-  }
+  @Input() skills!: AchievedSkill[];
+  @Input() uid = '';
+  public loadDone = false;  
+  constructor(public contributeSv: ContributionService) {}
+  ngOnInit(): void {}
   public async get() {
-    this.skills = await (
-      await this.contribute.get('y7iqLV4bkZQ1yp8ptDn8ko8slej1')
-    ).skills;
+    this.skills = await (await this.contributeSv.get()).skills;
     this.loadDone = true;
   }
 }

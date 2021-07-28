@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { SkillService } from 'src/app/services/skill.service';
 import { UserProfile } from 'src/models/user-profile.model';
 
 @Component({
@@ -9,17 +10,25 @@ import { UserProfile } from 'src/models/user-profile.model';
 })
 export class CommunityComponent implements OnInit {
   public data!: UserProfile[];
-  constructor(private profileSv: ProfileService) { }
+  public commonSkill!: number[];
+  constructor(
+    private profileSv: ProfileService,
+    private skillSv: SkillService
+  ) {}
 
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getAllUser();
-    }, 500);
+      await this.getCommonSkill();
+    }, 0);
   }
   public async getAllUser() {
     await this.profileSv.getAll().subscribe(async (user) => {
       this.data = user;
       console.log(this.data);
     });
+  }
+  public async getCommonSkill() {
+    this.commonSkill = await (await this.skillSv.get('common')).levels;
   }
 }

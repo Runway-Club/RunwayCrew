@@ -1,24 +1,26 @@
-<div class="container">
+<div class="container" *ngIf="this.loadDone">
     <!-- <div class="Header">
         <app-header style="position: absolute; top: 20%; width: 100%;"></app-header>
     </div> -->
     <div class="Header">
-        <app-header [uid]='uid'></app-header>
+        <app-header *ngIf="this.loadDone" [user]="this.userProfile" [contribute]="this.contribute" [uid]='uid'
+            [commonSkill]="this.commonSkill">
+        </app-header>
     </div>
     <div class="body">
         <div class="Left">
             <div style="margin-bottom:10px" *ngIf="isMobile()">
-                <app-skills></app-skills>
+                <app-skills [skills]="this.contribute.skills"></app-skills>
             </div>
-            <app-roles></app-roles>
-            <app-body></app-body>
+            <app-roles [roles]="this.userProfile.roles" *ngIf="this.loadDone" [uid]='uid'></app-roles>
+            <app-body [userProfile]="this.userProfile" [uid]='uid'></app-body>
 
         </div>
         <div class="Right" *ngIf="!isMobile()">
-            <app-skills></app-skills>
+            <app-skills [skills]="this.contribute.skills" [uid]='uid'></app-skills>
         </div>
     </div>
     <div class="Contribution" [class.mat-elevation-z8]="true">
-        <app-contribution [uid]='uid'></app-contribution>
+        <app-contribution [contributionInfo]="this.contribute" [uid]='uid'></app-contribution>
     </div>
 </div>

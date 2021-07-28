@@ -16,14 +16,14 @@ export class DetailSkillComponent implements OnInit {
   public level: any = 0;
   public progressBar: any;
   public status!: string;
-  constructor(public skill: SkillService) {}
+  constructor(public skillSv: SkillService) {}
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getSkillDetail();
-    }, 100);
+    }, 0);
   }
   public async getSkillDetail() {
-    this.skillDetail = await this.skill.get(this.item.skillId);
+    this.skillDetail = await this.skillSv.get(this.item.skillId);
     this.getLevel();
     this.progressCal();
     this.loadDone = true;
