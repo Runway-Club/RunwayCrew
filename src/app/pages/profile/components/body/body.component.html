@@ -1,6 +1,18 @@
 <nb-card size="large" *ngIf="userProfile !=undefined" style="margin-bottom: 0;border-radius: 15px;">
-  <nb-card-header>
+  <nb-card-header style="display: flex; flex-direction: row;">
     <h5>Information</h5>
+    <div style="flex: 1 auto;"></div>
+    <div style="float: right;">
+
+      <input nbInput type="button" status='primary' value="Edit" (click)="onEdit()" shape='semi-round'
+        [disabled]="updateBtn=='Update'?false:true">
+
+
+      <input nbInput type="submit" status='primary' value="Confirm" (click)="onUpdate()" style="margin-left: 5px;"
+        shape='semi-round' [disabled]="updateBtn=='Update'?true:false"
+        [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#04AA6D':'#fff'}">
+
+    </div>
   </nb-card-header>
   <nb-card-body>
 
@@ -48,15 +60,7 @@
         <input type='url' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.linkIn" fullWidth
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
-      <nb-form-field style="margin: 0 auto">
-        <input nbInput type="button" status='primary' value="Edit" (click)="onEdit()" fullWidth
-          [disabled]="updateBtn=='Update'?false:true">
-      </nb-form-field>
-      <nb-form-field style="margin: 0 auto">
-        <input nbInput type="submit" status='primary' value="Confirm" (click)="onUpdate()" fullWidth
-          [disabled]="updateBtn=='Update'?true:false"
-          [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#04AA6D':'#fff'}">
-      </nb-form-field>
+
 
 
 

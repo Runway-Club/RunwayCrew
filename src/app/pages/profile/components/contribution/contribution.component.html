@@ -23,16 +23,20 @@
                                 style="display:grid;align-self: center; align-items: center; justify-items: center;">
                                 <img [src]="this.contrib.image" alt="img" style="width: 50px; border-radius: 50%;" />
                                 <div style="text-align: center;">
-                                    <span
-                                        style="font-size: x-large; font-weight: 100; color: #5f6368; line-height: 1.5;">
+                                    <span style="font-size: 1.3rem; font-weight: 100; color: #5f6368; line-height: 1;">
                                         {{this.contrib.name}}
                                     </span>
 
                                 </div>
                             </nb-card-body>
-                            <nb-card-footer style="align-self: center;">
-                                <button nbButton outline status="primary"><strong>EXP&nbsp;
+                            <nb-card-footer style="align-self: center; text-align: center;">
+                                <button nbButton outline status="info" shape="semi-round"><strong>EXP&nbsp;
                                     </strong> {{this.contrib.exp}}</button>
+                                <button nbButton nbButton outline status="info" shape="semi-round"
+                                    style="margin-left: 5px;"><strong>Credit&nbsp;
+                                    </strong>{{this.contrib.credit}}</button>
+                                <br>
+                                <span><i>Cập nhật lúc&nbsp;</i>{{convertDate(this.contrib.metadata?.updated)}}</span>
                             </nb-card-footer>
                         </nb-card>
                     </div>

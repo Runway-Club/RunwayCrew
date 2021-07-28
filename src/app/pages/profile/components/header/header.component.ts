@@ -10,9 +10,6 @@ import { UserContribution } from 'src/models/user-profile.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  exp: number = 0;
-  avgas: number = 1028;
-  rank: string = 'S';
   usr: any = null;
   contributionInfo: UserContribution | undefined;
   loadDone = false;
@@ -20,7 +17,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthenticationService,
     private auth: AngularFireAuth,
     private contributionService: ContributionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     setTimeout(async () => {

@@ -9,15 +9,15 @@
                 <h4>{{usr.displayName}}</h4>
                 <h4 *ngIf="!usr.displayName">Chưa có tên</h4>
                 <div><strong>Email:</strong> {{usr.email}}</div>
-                <div><strong>EXP:</strong> {{exp}}</div>
+                <div><strong>EXP:</strong> {{contributionInfo?.exp}}</div>
             </div>
 
         </div>
         <div></div>
         <div class="right-box">
             <div class="name">
-                <h4>Rank: {{rank}}</h4>
-                <h5>AVGAS:{{avgas}} </h5>
+                <h4>Level: {{contributionInfo?.exp}}</h4>
+                <h5>AVGAS:{{contributionInfo?.credit}} </h5>
             </div>
 
         </div>
