@@ -77,7 +77,7 @@ export class AppComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
   userInfo: any;
   async signInWithGG() {
