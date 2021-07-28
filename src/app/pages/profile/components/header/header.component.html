@@ -1,36 +1,25 @@
-<!-- <div class="header-container">
-    <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}} title="EXP: {{exp}}" color='white'>
-    </nb-user>
-    <div class="header-right">
-        <span style="font-size: 1.2rem;">Avgas: {{avgas}}</span>
-        <span style="font-size: 1.2rem; margin-top: 5px;">Rank: <span
-                style="font-size: 2rem; color: tomato;">{{rank}}</span> </span>
+<nb-card class="card" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);margin-bottom: 0px;border-radius: 15px;"
+    *ngIf="loadDone">
+    <div class="box">
+        <div class="left-box">
+            <img style="border-radius: 100%; display: block;" [src]="usr.photoURL">
+        </div>
+        <div class="center-box">
+            <div class="name">
+                <h4>{{usr.displayName}}</h4>
+                <h4 *ngIf="!usr.displayName">Chưa có tên</h4>
+                <div><strong>Email:</strong> {{usr.email}}</div>
+                <div><strong>EXP:</strong> {{exp}}</div>
+            </div>
+
+        </div>
+        <div></div>
+        <div class="right-box">
+            <div class="name">
+                <h4>Rank: {{rank}}</h4>
+                <h5>AVGAS:{{avgas}} </h5>
+            </div>
+
+        </div>
     </div>
-
-</div> -->
-
-<nb-card size="tiny" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);">
-    <nb-card-body>
-        <nb-layout-column *ngIf="contributionInfo==undefined && usr == null">
-
-            <div class="wave-spinner">
-                <div class="rect1"></div>
-                <div class="rect2"></div>
-                <div class="rect3"></div>
-                <div class="rect4"></div>
-                <div class="rect5"></div>
-            </div>
-        </nb-layout-column>
-        <nb-layout-column *ngIf="contributionInfo!=undefined" class="header-container">
-            <nb-user size="giant" picture={{usr.photoURL}} name={{usr.displayName}}
-                title="EXP: {{contributionInfo?.exp}}" color='white'>
-            </nb-user>
-            <div class="header-right">
-                <span style="font-size: 1.2rem;">Avgas: {{contributionInfo?.credit}}</span>
-                <span style="font-size: 1.2rem; margin-top: 5px;">Rank: <span
-                        style="font-size: 2rem; color: tomato;">{{contributionInfo?.exp}}</span> </span>
-            </div>
-        </nb-layout-column>
-
-    </nb-card-body>
 </nb-card>
