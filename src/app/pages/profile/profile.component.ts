@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -8,12 +9,23 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+
+  public uid = "";
+
   constructor(
     public authSv: AuthenticationService,
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    public activatedRouter: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.auth.currentUser);
+    this.activatedRouter.queryParams.subscribe((queries) => this.uid = queries['id']);
+  }
+  isMobile() {
+    if (window.innerWidth <= 600) {
+      console.log(true);
+      return true;
+    }
+    return false;
   }
 }

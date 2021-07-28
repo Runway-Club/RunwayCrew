@@ -10,7 +10,11 @@ import { AchievedSkill } from 'src/models/achievement.model';
 export class SkillsComponent implements OnInit {
   public skills!: AchievedSkill[];
   public loadDone = false;
-  constructor(public contribute: ContributionService) {}
+
+  @Input()
+  uid = "";
+
+  constructor(public contribute: ContributionService) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -19,7 +23,7 @@ export class SkillsComponent implements OnInit {
   }
   public async get() {
     this.skills = await (
-      await this.contribute.get('y7iqLV4bkZQ1yp8ptDn8ko8slej1')
+      await this.contribute.get(this.uid == "" ? undefined : this.uid)
     ).skills;
     this.loadDone = true;
   }
