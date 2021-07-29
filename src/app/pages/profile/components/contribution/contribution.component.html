@@ -1,4 +1,4 @@
-<nb-card size="large" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);border-radius: 15px;">
+<nb-card size="large" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);border-radius: 15px; ">
     <nb-card-header>
         <h5>Contributions</h5>
     </nb-card-header>
@@ -15,8 +15,8 @@
         </nb-layout-column>
         <nb-layout-column>
             <!-- <h6>Achievements</h6> -->
-            <div *ngIf="contributionInfo?.achievements?.length == 0">
-                <span>Bạn chưa có đóng góp nào</span>
+            <div *ngIf="contributionInfo?.achievements == undefined" style="font-size: 1rem; width: 100%;">
+                <span><i>Hãy đóng góp tích cực cho cộng đồng nhé!</i></span>
             </div>
 
             <div class="body" *ngIf="contributionInfo?.achievements!=undefined">
@@ -32,16 +32,20 @@
                                     </span>
 
                                 </div>
+                                <div>
+                                    <button nbButton outline status="info" shape="semi-round"
+                                        size="tiny"><strong>EXP&nbsp;
+                                        </strong> {{this.contrib.exp}}</button>
+                                    <button nbButton nbButton outline status="info" shape="semi-round" size="tiny"
+                                        style="margin-left: 5px;"><strong>Avgas&nbsp;
+                                        </strong>{{this.contrib.credit}}</button>
+                                </div>
+                                <div style="text-align: center; width: 100%;">
+                                    <span><i>Đạt được
+                                            ngày&nbsp;</i>{{convertDate(this.contrib.metadata?.updated)}}</span>
+                                </div>
+
                             </nb-card-body>
-                            <nb-card-footer style="align-self: center; text-align: center;">
-                                <button nbButton outline status="info" shape="semi-round"><strong>EXP&nbsp;
-                                    </strong> {{this.contrib.exp}}</button>
-                                <button nbButton nbButton outline status="info" shape="semi-round"
-                                    style="margin-left: 5px;"><strong>Credit&nbsp;
-                                    </strong>{{this.contrib.credit}}</button>
-                                <br>
-                                <span><i>Đạt được ngày&nbsp;</i>{{convertDate(this.contrib.metadata?.updated)}}</span>
-                            </nb-card-footer>
                         </nb-card>
                     </div>
                 </div>
