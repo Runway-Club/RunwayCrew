@@ -90,4 +90,12 @@ export class AppComponent implements AfterViewInit {
     this.userInfo = null;
     this.router.navigate(['home']);
   }
+
+  isMobile() {
+    if (window.innerWidth <= 600) {
+      console.log(true);
+      return true;
+    }
+    return false;
+  }
 }

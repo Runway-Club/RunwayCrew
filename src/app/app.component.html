@@ -21,24 +21,14 @@
         </button>
         <h1 class='heading1'>Runway Crew</h1>
         <div style="flex:1 auto;"></div>
-        <button nbButton ghost routerLink='./profile' (click)="selectedMenu = 0"
-          [status]='selectedMenu==0?"primary":"basic"' size='tiny'>
-          <span class="material-icons-outlined">
-            account_circle
-          </span>
-        </button>
-        <button nbButton ghost routerLink='./community' (click)="selectedMenu = 1"
-          [status]='selectedMenu==1?"primary":"basic"' size='tiny'>
-          <span class="material-icons-outlined">
-            public
-          </span>
-        </button>
-        <button nbButton ghost routerLink='./store' (click)="selectedMenu = 2"
-          [status]='selectedMenu==2?"primary":"basic"' size='tiny'>
-          <span class="material-icons-outlined">
-            store
-          </span>
-        </button>
+        <div *ngIf="!isMobile()">
+          <button *ngFor="let menu of menus; let i = index;" nbButton ghost [routerLink]='menu.link'
+            (click)="selectedMenu = i" [status]='selectedMenu==i?"primary":"basic"' size='tiny'>
+            <span class="material-icons-outlined">
+              {{menu.icon}}
+            </span>
+          </button>
+        </div>
         <button nbButton ghost (click)="logout()" size='tiny'>
           <span class="material-icons-outlined">
             logout

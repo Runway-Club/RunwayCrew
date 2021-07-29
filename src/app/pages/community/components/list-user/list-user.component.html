@@ -7,11 +7,11 @@
                         [src]="user.photoUrl">
                 </div>
                 <div class="right-box">
-                    <div class="name">
+                    <div class="name" style="padding-top:10px;">
                         <a href="./profile?id={{user.uid}}"
-                            style="margin-top:10px;font-size: 1.7rem; font-weight: bold; text-decoration: none; color:#000">{{user.name}}</a>
+                            style="font-size: 1.7rem; font-weight: bold; text-decoration: none; color:#000">{{user.name}}</a>
                         <h4 *ngIf="!user.name">Chưa có tên</h4>
-                        <div>{{user.email}}</div>
+
                     </div>
 
                     <div class="list-role">
