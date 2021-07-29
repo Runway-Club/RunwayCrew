@@ -6,16 +6,17 @@
     <div style="float: right;">
 
 
-      <button *ngIf="isUpdate" nbButton type="button" status='primary' value="Edit" (click)="onEdit()"
+      <button *ngIf="isUpdate" nbButton type="button" status='primary' value="Edit" (click)="onEdit()" outline
         shape='semi-round' size="small" [disabled]="updateBtn=='Update'?false:true">
         <nb-icon icon="edit-outline"> </nb-icon>
       </button>
 
 
 
-      <input *ngIf="!isUpdate" nbInput type="submit" status='success' value="Confirm" (click)="onUpdate()" size="small"
-        style="margin-left: 5px;" shape='semi-round'
-        [ngStyle]="{backgroundColor:updateBtn=='Confirm'?'#04AA6D':'#fff'}">
+      <button *ngIf="!isUpdate" nbButton type="submit" status='success' value="Confirm" (click)="onUpdate()" outline
+        shape='semi-round' size="small" style="margin-left: 5px;" shape='semi-round'>Update</button>
+      <button *ngIf="!isUpdate" nbButton type="button" status='danger' value="Confirm" (click)="onCancel()" size="small"
+        outline shape='semi-round' style="margin-left: 5px;" shape='semi-round'>Cancel</button>
 
     </div>
   </nb-card-header>
@@ -25,7 +26,8 @@
 
       <nb-form-field>
         <label>Email</label>
-        <input type="email" nbInput disabled placeholder="{{userProfile?.email}}" fullWidth>
+        <input type="email" nbInput disabled [(ngModel)]="userProfile!.email" fullWidth
+          [ngModelOptions]="{standalone: true}" style="color: #000;">
       </nb-form-field>
       <nb-form-field>
         <label>Họ tên</label>
@@ -34,7 +36,7 @@
       </nb-form-field>
       <nb-form-field>
         <label>Giới tính</label>
-        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth [ngStyle]="{color: '#000'}">
+        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth>
           <nb-option value="Male">Nam</nb-option>
           <nb-option value="Female">Nữ</nb-option>
           <nb-option value="Not share">Không chia sẻ</nb-option>
