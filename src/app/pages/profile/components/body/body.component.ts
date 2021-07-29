@@ -14,9 +14,10 @@ import {
   styleUrls: ['./body.component.scss'],
 })
 export class BodyComponent {
-  isUpdate: boolean = true;
+  isUpdate: boolean = false;
   updateBtn: string = 'Update';
   currentUser: any;
+  isPermit: boolean = false;
   @Input() userProfile?: UserProfile;
 
   @Input()
@@ -52,7 +53,7 @@ export class BodyComponent {
     }
   }
   onEdit() {
-    if (this.currentUser != this.uid) {
+    if (!this.checkEditPermission()) {
       this.toast.danger(`Bạn không có quyền chỉnh sửa hồ sơ của ${this.userProfile?.email}`, "Cập nhật hồ sơ")
       return;
     }
@@ -62,5 +63,12 @@ export class BodyComponent {
   onCancel() {
     this.isUpdate = !this.isUpdate;
     this.updateBtn = 'Update';
+  }
+  checkEditPermission() {
+    if (this.currentUser == this.uid) {
+      this.isPermit = !this.isPermit;
+      return true;
+    }
+    return false;
   }
 }

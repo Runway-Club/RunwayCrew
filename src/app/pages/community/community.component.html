@@ -1,9 +1,15 @@
 <div style="display: flex; flex-direction: row; justify-content: center;">
     <div class="parent">
         <div class="title card">
-            <span>
-                Filter by roles
-            </span>
+            <h2 style="font-size: 1rem; margin: 0;width: 150px;">
+                Filter by role
+            </h2>
+            <div style="width:100%;overflow-x: auto;">
+                <button nbButton ghost size='small' *ngFor="let role of roles">
+                    <img [src]='role.image' style="width: 28px;">
+                    {{role.name}}
+                </button>
+            </div>
 
         </div>
         <div class="list-container">
