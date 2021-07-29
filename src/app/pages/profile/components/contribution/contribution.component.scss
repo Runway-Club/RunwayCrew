@@ -1,8 +1,12 @@
 .body{
-    width: 100%;
+    // width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 7fr)); 
+    // min-width: 360px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 7fr)); 
     grid-gap: 20px 30px;
+    // grid-template-columns: minmax(120px, 15%);
+    justify-content: center;
+    justify-items: center;
   }
   .card-row {
     display: flex;
