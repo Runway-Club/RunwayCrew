@@ -35,9 +35,9 @@ export class ProfileComponent implements OnInit {
       await this.getCommonSkill();
       this.loadDone = true;
     }, 0);
-    this.activatedRouter.queryParams.subscribe(
-      (queries) => (this.uid = queries['id'])
-    );
+    // this.activatedRouter.queryParams.subscribe(
+    //   (queries) => (this.uid = queries['id'])
+    // );
   }
   isMobile() {
     if (window.innerWidth <= 600) {

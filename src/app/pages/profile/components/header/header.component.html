@@ -10,19 +10,22 @@
                 <h4 *ngIf="!user?.name">Chưa có tên</h4>
                 <!-- <div>{{usr?.email}}</div> -->
                 <div><strong>Level: </strong> {{level}}</div>
-                <div>{{user?.email}}</div>
                 <div><strong>EXP:</strong> {{contribute?.exp}}</div>
-                <div><strong>Avgas: </strong>{{contribute?.credit}} </div>
+                <!-- <div><strong>Avgas: </strong>{{contribute?.credit}} </div> -->
             </div>
 
         </div>
-        <!-- <div></div>
+        <div></div>
         <div class="right-box">
-            <div class="name">
-
-                <h5>AVGAS:</h5>
+            <div class="sale">
+                <p><strong>AVGAS:</strong> {{contribute?.credit}}</p>
+                <button nbButton ghost>
+                    <span class="material-icons-outlined">
+                        shopping_cart
+                    </span>
+                </button>
             </div>
 
-        </div> -->
+        </div>
     </div>
 </nb-card>
