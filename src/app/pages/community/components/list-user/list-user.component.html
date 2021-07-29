@@ -14,8 +14,9 @@
 
                     </div>
 
-                    <div class="list-role">
-                        <img width="50px" *ngFor="let role of user.roles" [nbTooltip]="role.name" [src]="role.image">
+                    <div class="list-role" *ngIf="loaded|async">
+                        <img width="50px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
+                            [src]="getRoleById(role)?.image">
                     </div>
                 </div>
             </div>

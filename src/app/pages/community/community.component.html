@@ -8,32 +8,30 @@
                     Filter by role
                 </h2>
                 <div style="width:100%;overflow-x: auto;">
-                    <button nbButton ghost size='small' *ngFor="let role of roles" (click)="selectedRoleId=role.id"
+                    <button nbButton ghost size='small' *ngFor="let role of roles" (click)="getUserByRole(role.id)"
                         [style]="{color:selectedRoleId==role.id?'#426EF0':'#000'}">
                         <img [src]='role.image' style="width: 28px;">
                         {{role.name}}
                     </button>
-                    <button nbButton ghost size='small' (click)="selectedRoleId=undefined">
+                    <button nbButton ghost size='small' (click)="getUserByRole(undefined)">
                         <span class="material-icons-outlined">
                             clear
                         </span>
                     </button>
                 </div>
             </div>
-
-
         </div>
         <div class="list-container">
             <app-list-user [commonSkill]="this.commonSkill" [listUser]="data"></app-list-user>
         </div>
-        <div class="card paginate">
-            <button nbButton ghost style="margin-right:10px;">
+        <!-- <div class="card paginate">
+            <button nbButton (click)="goPrevious()" ghost style="margin-right:10px;">
                 <nb-icon icon="arrow-left-outline"></nb-icon>
             </button>
             <p style="font-size: 1rem;">1</p>
-            <button nbButton ghost style="margin-left:10px;">
+            <button nbButton (click)="goNext()" ghost style="margin-left:10px;">
                 <nb-icon icon="arrow-right-outline"></nb-icon>
             </button>
-        </div>
+        </div> -->
     </div>
 </div>

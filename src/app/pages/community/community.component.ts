@@ -33,7 +33,7 @@ export class CommunityComponent implements OnInit {
     });
   }
   public async getUsers() {
-    let users = await this.profileSv.getPaginate(50, this.selectedRoleId, this.data[this.data.length - 1]);
+    let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
     if (users.length == 0) {
       return false;
     }
@@ -46,11 +46,17 @@ export class CommunityComponent implements OnInit {
   }
   public async goNext() {
     this.lasts.push(this.data[this.data.length - 1]);
-
+    await this.getUsers();
   }
   public async goPrevious() {
     this.lasts.pop();
     this.data.push(this.lasts[this.lasts.length - 1]);
     await this.getUsers();
   }
+
+  public async getUserByRole(roleId?: string) {
+    this.selectedRoleId = roleId;
+    await this.getUsers();
+  }
+
 }

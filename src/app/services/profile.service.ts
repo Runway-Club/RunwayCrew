@@ -169,13 +169,13 @@ export class ProfileService {
     return this.utils.getAll('atc');
   }
 
-  public async getPaginate(size: number, roleId?: string, last?: UserProfile,): Promise<UserProfile[]> {
+  public async getPaginate(size: number, roleId?: string, last?: UserProfile): Promise<UserProfile[]> {
     let query: Query<any> = this.db.collection("profiles").ref;
     if (roleId) {
-      query = query.where("roles.id", 'array-contains', roleId);
+      query = query.where("roles", 'array-contains', roleId);
     }
     if (last) {
-      query = query.startAfter(last?.uid);
+      // query = query.startAfter(last?.uid);
     }
     return (await query
       .limit(size)

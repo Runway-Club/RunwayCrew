@@ -67,13 +67,13 @@
         </nb-select>
         <p>bị thu hồi vai trò</p>
         <nb-select *ngIf="selectedProfileForReclaim" [(ngModel)]="selectedRoleForReclaim" fullWidth>
-            <nb-option *ngFor="let role of selectedProfileForReclaim?.roles" [value]='role'>{{role.name}}</nb-option>
+            <nb-option *ngFor="let role of selectedProfileForReclaim?.roles" [value]='role'>{{role}}</nb-option>
         </nb-select>
         <p></p>
         <nb-card *ngIf="selectedRoleForReclaim && selectedProfileForReclaim">
             <nb-card-body>
                 <p>Thành viên <b>{{selectedProfileForReclaim?.name}}</b> bị thu hồi vai trò
-                    <b>{{selectedRoleForReclaim?.name}}</b>
+                    <b>{{selectedRoleForReclaim}}</b>
                 </p>
 
                 <button style="float:right;" nbButton status='primary' (click)="reclaimRole()">Duyệt</button>
