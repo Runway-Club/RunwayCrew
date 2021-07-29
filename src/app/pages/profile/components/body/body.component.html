@@ -31,15 +31,15 @@
       </nb-form-field>
       <nb-form-field>
         <label>Name</label>
-        <input type='text' nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.name" fullWidth style="color: #000;"
+        <input type='text' nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.name" fullWidth style="color: #000;"
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Gender</label>
-        <input *ngIf="isUpdate" type='text' nbInput [disabled]="true" [value]="userProfile!.gender" style="color:#000;"
+        <input *ngIf="!isUpdate" type='text' nbInput [disabled]="true" [value]="userProfile!.gender" style="color:#000;"
           fullWidth>
-        <nb-select *ngIf="!isUpdate" style="color:#000 !important;" [(selected)]="userProfile!.gender"
-          [disabled]="isUpdate" fullWidth>
+        <nb-select *ngIf="isUpdate" style="color:#000 !important;" [(selected)]="userProfile!.gender"
+          [disabled]="!isUpdate" fullWidth>
           <nb-option value="Male">Male</nb-option>
           <nb-option value="Female">Female</nb-option>
           <nb-option value="Not share">Không chia sẻ</nb-option>
@@ -47,17 +47,17 @@
       </nb-form-field>
       <nb-form-field>
         <label>Day of birth</label>
-        <input type='date' nbInput [disabled]="isUpdate" [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;"
+        <input type='date' nbInput [disabled]="!isUpdate" [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;"
           [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Phone number</label>
-        <input type="tel" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.phoneNumber" fullWidth
+        <input type="tel" nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.phoneNumber" fullWidth
           style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Address</label>
-        <input type="text" nbInput [disabled]="isUpdate" [(ngModel)]="userProfile!.address" fullWidth
+        <input type="text" nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.address" fullWidth
           style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>

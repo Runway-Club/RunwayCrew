@@ -5,7 +5,7 @@
                 [commonSkill]="this.commonSkill">
             </app-header>
         </div>
-        <div class="body">
+        <div [ngClass]="{'body':!isMobile()}">
             <div class="Left">
                 <div style="margin-bottom:10px" *ngIf="isMobile()">
                     <app-skills [skills]="this.contribute.skills"></app-skills>

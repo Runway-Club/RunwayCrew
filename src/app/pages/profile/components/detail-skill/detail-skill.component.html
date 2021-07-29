@@ -12,11 +12,18 @@
 
 
                 </div>
-                <div class="level" style="text-align: center;padding: 30px 0 0 0; font-size: larger;"><strong>Lv
+                <div *ngIf="!isMax()" class="level" style="text-align: center;padding: 30px 0 0 0; font-size: larger;">
+                    <strong>Lv
                         {{this.level}}</strong>
                 </div>
+                <div *ngIf="isMax()" class="level" style="text-align: center;padding: 30px 0 0 0; font-size: larger;">
+                    <strong>Lv MAX</strong>
+                </div>
             </div>
-            <nb-progress-bar style="width:100%;padding:0 10px 10px 0" [value]="this.progressBar" [status]="this.status"
+            <nb-progress-bar *ngIf="!isMax()" style="width:100%;padding:0 10px 10px 0" [value]="this.progressBar"
+                [status]="this.status" size="tiny">
+            </nb-progress-bar>
+            <nb-progress-bar *ngIf="isMax()" style="width:100%;padding:0 10px 10px 0" [value]="100" status='success'
                 size="tiny">
             </nb-progress-bar>
         </div>
