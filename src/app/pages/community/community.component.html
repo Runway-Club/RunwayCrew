@@ -1,20 +1,22 @@
-<div class="container">
-    <div class="title card">
-        <nb-form-field>
-            <nb-icon nbPrefix icon="at-outline" pack="eva"></nb-icon>
-            <input #searchInput type="text" nbInput shape="semi-round" placeholder="Search">
-        </nb-form-field>
-    </div>
-    <div class="list-container">
-        <app-list-user [commonSkill]="this.commonSkill" [listUser]="data"></app-list-user>
-    </div>
-    <div class="card paginate">
-        <button nbButton ghost style="margin-right:10px;">
-            <nb-icon icon="arrow-left-outline"></nb-icon>
-        </button>
-        <p style="font-size: 1rem;">1</p>
-        <button nbButton ghost style="margin-left:10px;">
-            <nb-icon icon="arrow-right-outline"></nb-icon>
-        </button>
+<div style="display: flex; flex-direction: row; justify-content: center;">
+    <div class="parent">
+        <div class="title card">
+            <span>
+                Filter by roles
+            </span>
+
+        </div>
+        <div class="list-container">
+            <app-list-user [commonSkill]="this.commonSkill" [listUser]="data"></app-list-user>
+        </div>
+        <div class="card paginate">
+            <button nbButton ghost style="margin-right:10px;">
+                <nb-icon icon="arrow-left-outline"></nb-icon>
+            </button>
+            <p style="font-size: 1rem;">1</p>
+            <button nbButton ghost style="margin-left:10px;">
+                <nb-icon icon="arrow-right-outline"></nb-icon>
+            </button>
+        </div>
     </div>
 </div>

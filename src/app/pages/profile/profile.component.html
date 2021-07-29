@@ -11,7 +11,7 @@
                     <app-skills [skills]="this.contribute.skills"></app-skills>
                 </div>
                 <app-roles [roles]="this.userProfile.roles" *ngIf="this.loadDone" [uid]='uid'></app-roles>
-                <app-body [userProfile]="this.userProfile" [uid]='uid'></app-body>
+                <app-body [userProfile]="this.userProfile" [uid]='uid' style="height: 100%;"></app-body>
 
             </div>
             <div class="Right" *ngIf="!isMobile()">
