@@ -34,7 +34,10 @@
       </nb-form-field>
       <nb-form-field>
         <label>Giới tính</label>
-        <nb-select [(selected)]="userProfile!.gender" [disabled]="isUpdate" fullWidth [ngStyle]="{color: '#000'}">
+        <input *ngIf="isUpdate" type='text' nbInput [disabled]="true" [value]="userProfile!.gender" style="color:#000;"
+          fullWidth>
+        <nb-select *ngIf="!isUpdate" style="color:#000 !important;" [(selected)]="userProfile!.gender"
+          [disabled]="isUpdate" fullWidth>
           <nb-option value="Male">Nam</nb-option>
           <nb-option value="Female">Nữ</nb-option>
           <nb-option value="Not share">Không chia sẻ</nb-option>

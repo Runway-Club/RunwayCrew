@@ -2,14 +2,17 @@
   display: flex;
   flex-direction: column;
   gap: 10px 10px;
+  width: 80vw;
+  max-width: 1500px;
 }
 
 .body {
   display: grid;
   gap: 10px 10px;
   grid-template-columns: auto 0.3fr;
+  width: 100%;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
   .body {
     gap: 10px 0px;
     grid-template-columns: auto;
