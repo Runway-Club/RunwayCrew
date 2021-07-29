@@ -12,7 +12,8 @@
   grid-template-columns: auto 0.3fr;
   width: 100%;
 }
-@media only screen and (max-width: 60%) {
+
+@media only screen and (max-width: 700px) {
   .body {
     gap: 10px 0px;
     grid-template-columns: auto;

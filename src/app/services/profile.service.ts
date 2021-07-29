@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, Query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {
   RegistrationProfile,
@@ -106,12 +106,9 @@ export class ProfileService {
   }
 
   public async get(uid?: string): Promise<UserProfile> {
-    if (!this.currentUser) {
-      throw 'Unauthenticated';
-    }
     let profile = await this.db
       .collection('profiles')
-      .doc(uid ?? this.currentUser.uid)
+      .doc(uid ?? this.currentUser?.uid)
       .get()
       .toPromise();
     return <UserProfile>profile.data();
@@ -169,19 +166,25 @@ export class ProfileService {
     return this.utils.getAll('atc');
   }
 
-  public async getPaginate(page: number, size: number): Promise<UserProfile[]> {
-    return (await this.db.collection("profiles").ref
-      .startAfter(page * size)
+  public async getPaginate(size: number, roleId?: string, last?: UserProfile): Promise<UserProfile[]> {
+    let query: Query<any> = this.db.collection("profiles").ref;
+    if (roleId) {
+      query = query.where("roles", 'array-contains', roleId);
+    }
+    if (last) {
+      // query = query.startAfter(last?.uid);
+    }
+    return (await query
       .limit(size)
-      .orderBy("metadataProfile.created")
+      .orderBy("profileMetadata.updated")
       .get()).docs.map((d) => <UserProfile>d.data())
   }
 
-  public async getNumOfProfile() {
-    return new Promise<number>(async (resolve) => {
-      let snapshot = await this.db.collection("profiles").snapshotChanges().toPromise();
-      resolve(snapshot.length);
-    });
-  }
+  // public async getNumOfProfile(roleId?:string) {
+  //   return new Promise<number>(async (resolve) => {
+  //     let snapshot = await (await this.db.collection("profiles").ref.where("roles.id",'array-contains',roleId).get())..snapshotChanges().toPromise();
+  //     resolve(snapshot.length);
+  //   });
+  // }
 
 }

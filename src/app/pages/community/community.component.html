@@ -1,28 +1,37 @@
 <div style="display: flex; flex-direction: row; justify-content: center;">
-    <div class="parent">
-        <div class="title card">
-            <h2 style="font-size: 1rem; margin: 0;width: 150px;">
-                Filter by role
-            </h2>
-            <div style="width:100%;overflow-x: auto;">
-                <button nbButton ghost size='small' *ngFor="let role of roles">
-                    <img [src]='role.image' style="width: 28px;">
-                    {{role.name}}
-                </button>
-            </div>
 
+    <div class="parent">
+        <div>
+            <h2 style="color:#426EF0; text-align: center;">Runway Club's members</h2>
+            <div class="title card">
+                <h2 style="font-size: 1rem; margin: 0;width: 150px;">
+                    Filter by role
+                </h2>
+                <div style="width:100%;overflow-x: auto;">
+                    <button nbButton ghost size='small' *ngFor="let role of roles" (click)="getUserByRole(role.id)"
+                        [style]="{color:selectedRoleId==role.id?'#426EF0':'#000'}">
+                        <img [src]='role.image' style="width: 28px;">
+                        {{role.name}}
+                    </button>
+                    <button nbButton ghost size='small' (click)="getUserByRole(undefined)">
+                        <span class="material-icons-outlined">
+                            clear
+                        </span>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="list-container">
             <app-list-user [commonSkill]="this.commonSkill" [listUser]="data"></app-list-user>
         </div>
-        <div class="card paginate">
-            <button nbButton ghost style="margin-right:10px;">
+        <!-- <div class="card paginate">
+            <button nbButton (click)="goPrevious()" ghost style="margin-right:10px;">
                 <nb-icon icon="arrow-left-outline"></nb-icon>
             </button>
             <p style="font-size: 1rem;">1</p>
-            <button nbButton ghost style="margin-left:10px;">
+            <button nbButton (click)="goNext()" ghost style="margin-left:10px;">
                 <nb-icon icon="arrow-right-outline"></nb-icon>
             </button>
-        </div>
+        </div> -->
     </div>
 </div>

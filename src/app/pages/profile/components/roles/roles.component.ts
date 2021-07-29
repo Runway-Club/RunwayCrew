@@ -10,9 +10,20 @@ import { UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./roles.component.scss'],
 })
 export class RolesComponent implements OnInit {
-  @Input() roles!: Role[];
-  constructor(private profileSv: ProfileService) {}
+
+  @Input()
+  public set roleIds(roles: string[]) {
+    roles.map(async (r) => {
+      this.roles.push(await this.roleService.get(r));
+    })
+  }
+
+  public roles: Role[] = [];
+
+  constructor(private profileSv: ProfileService, private roleService: RoleService) { }
+
   @Input()
   uid = '';
-  ngOnInit(): void {}
+
+  ngOnInit(): void { }
 }

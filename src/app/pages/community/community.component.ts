@@ -11,10 +11,11 @@ import { UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./community.component.scss'],
 })
 export class CommunityComponent implements OnInit {
-  public data!: UserProfile[];
+  public data: UserProfile[] = [];
   public commonSkill!: number[];
   public roles: Role[] = [];
-
+  public selectedRoleId?: string = undefined;
+  public lasts: UserProfile[] = [];
   constructor(
     private profileSv: ProfileService,
     private skillSv: SkillService,
@@ -23,7 +24,7 @@ export class CommunityComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(async () => {
-      await this.getAllUser();
+      await this.getUsers();
       await this.getCommonSkill();
     }, 0);
     this.roleService.getAll().subscribe((roles) => {
@@ -31,13 +32,31 @@ export class CommunityComponent implements OnInit {
       this.roles.push(...roles);
     });
   }
-  public async getAllUser() {
-    await this.profileSv.getAll().subscribe(async (user) => {
-      this.data = user;
-      console.log(this.data);
-    });
+  public async getUsers() {
+    let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
+    if (users.length == 0) {
+      return false;
+    }
+    this.data.length = 0;
+    this.data.push(...users);
+    return true;
   }
   public async getCommonSkill() {
     this.commonSkill = await (await this.skillSv.get('common')).levels;
   }
+  public async goNext() {
+    this.lasts.push(this.data[this.data.length - 1]);
+    await this.getUsers();
+  }
+  public async goPrevious() {
+    this.lasts.pop();
+    this.data.push(this.lasts[this.lasts.length - 1]);
+    await this.getUsers();
+  }
+
+  public async getUserByRole(roleId?: string) {
+    this.selectedRoleId = roleId;
+    await this.getUsers();
+  }
+
 }

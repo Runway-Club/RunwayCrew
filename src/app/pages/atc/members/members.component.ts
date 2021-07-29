@@ -18,7 +18,7 @@ export class MembersComponent implements OnInit {
   public atcMembers: UserProfile[] = [];
   public selectedRole?: Role;
   public selectedProfile?: UserProfile;
-  public selectedRoleForReclaim?: Role;
+  public selectedRoleForReclaim?: string;
   public selectedProfileForReclaim?: UserProfile;
   public selectedProfileForATCZone?: UserProfile;
 
@@ -43,7 +43,7 @@ export class MembersComponent implements OnInit {
     }
     let r = profile.roles.length == 0 ? "No role" : '';
     for (let role of profile.roles) {
-      r += role.name + ', ';
+      r += role + ', ';
     }
     return r;
   }
@@ -53,12 +53,14 @@ export class MembersComponent implements OnInit {
   }
 
   public async assignRole() {
-    if (this.selectedProfile?.roles.findIndex((r) => r.id == this.selectedRole?.id) == -1) {
+    if (!this.selectedProfile?.roles) {
+      this.selectedProfile!.roles = [];
+    }
+    if (this.selectedProfile?.roles?.findIndex((r) => r == this.selectedRole?.id) == -1) {
       if (!this.selectedRole) {
         return;
       }
-      this.selectedProfile.roles.push(this.selectedRole);
-
+      this.selectedProfile.roles.push(this.selectedRole.id);
     }
     if (!this.selectedProfile) {
       return;
@@ -76,7 +78,7 @@ export class MembersComponent implements OnInit {
     if (!this.selectedProfileForReclaim) {
       return;
     }
-    let roleId = this.selectedProfileForReclaim?.roles.findIndex((r) => r.id == this.selectedRoleForReclaim?.id);
+    let roleId = this.selectedProfileForReclaim?.roles.findIndex((r) => r == this.selectedRoleForReclaim);
     if (roleId != -1) {
       this.selectedProfileForReclaim?.roles.splice(roleId ?? -1, 1);
     }

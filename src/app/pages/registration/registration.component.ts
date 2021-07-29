@@ -109,7 +109,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   async onRegistration() {
-    if (this.emailControl.invalid || this.nameControl.invalid || this.dobControl.invalid || this.phoneNumberControl.invalid || this.selectedRolesControl.invalid) {
+    if (this.nameControl.invalid || this.dobControl.invalid || this.phoneNumberControl.invalid) {
       this.toast.danger("Hãy kiểm tra thông tin lại một lần nữa nhé", "Đăng ký thất bại");
       return;
     }

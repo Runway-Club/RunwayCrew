@@ -65,7 +65,7 @@ export class BodyComponent {
     this.updateBtn = 'Update';
   }
   checkEditPermission() {
-    if (this.currentUser == this.uid) {
+    if (this.currentUser == this.uid || this.currentUser == this.userProfile?.uid) {
       this.isPermit = !this.isPermit;
       return true;
     }

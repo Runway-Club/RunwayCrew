@@ -16,7 +16,7 @@ export class DetailSkillComponent implements OnInit {
   public level: any = 0;
   public progressBar: any;
   public status!: string;
-  constructor(public skillSv: SkillService) {}
+  constructor(public skillSv: SkillService) { }
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getSkillDetail();
@@ -67,5 +67,10 @@ export class DetailSkillComponent implements OnInit {
     if (this.progressBar > 80) {
       this.status = 'success';
     }
+  }
+
+  public isMax() {
+    return this.skillDetail.levels.length == 0 ||
+      this.skillDetail.levels[this.skillDetail.levels.length - 1] < this.level;
   }
 }

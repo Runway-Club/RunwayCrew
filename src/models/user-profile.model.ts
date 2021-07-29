@@ -18,7 +18,7 @@ export interface UserProfile extends RegistrationProfile {
   email: string,
   photoUrl: string,
   name: string,
-  roles: Role[],
+  roles: string[],
   profileMetadata?: Metadata,
   contribMetadata?: Metadata
 }
