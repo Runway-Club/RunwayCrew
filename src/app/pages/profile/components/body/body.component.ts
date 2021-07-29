@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import {
   RegistrationProfile,
@@ -15,42 +16,25 @@ import {
 export class BodyComponent {
   isUpdate: boolean = true;
   updateBtn: string = 'Update';
+  currentUser: any;
   @Input() userProfile?: UserProfile;
 
   @Input()
   uid = '';
 
-  roles = [
-    {
-      name: 'Runway ATC',
-      description: 'Điều hành và kiểm soát sự hoạt động',
-      image:
-        'https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png',
-    },
-    {
-      name: 'Runway Developers',
-      description: 'Tham gia các dự án Open Source của dự án',
-      image:
-        'https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png',
-    },
-    {
-      name: 'Runway Lightning',
-      description: '',
-      image:
-        'https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png',
-    },
-    {
-      name: 'Runway Threshold',
-      description: '',
-      image:
-        'https://cdn.iconscout.com/icon/free/png-512/achievement-1589036-1347675.png',
-    },
-  ];
-
   constructor(
     private profileService: ProfileService,
-    private toast: NbToastrService
-  ) {}
+    private toast: NbToastrService,
+    private authService: AuthenticationService
+  ) { }
+
+  ngOnInit(): void {
+    setTimeout(async () => {
+      this.currentUser = (await this.authService.user)?.uid;
+      console.log(this.currentUser);
+      console.log(this.uid);
+    }, 500);
+  }
 
   async onUpdate() {
     if (this.userProfile === undefined) {
@@ -68,7 +52,15 @@ export class BodyComponent {
     }
   }
   onEdit() {
-    this.isUpdate = false;
+    if (this.currentUser != this.uid) {
+      this.toast.danger(`Bạn không có quyền chỉnh sửa hồ sơ của ${this.userProfile?.email}`, "Cập nhật hồ sơ")
+      return;
+    }
+    this.isUpdate = !this.isUpdate;
     this.updateBtn = 'Confirm';
+  }
+  onCancel() {
+    this.isUpdate = !this.isUpdate;
+    this.updateBtn = 'Update';
   }
 }
