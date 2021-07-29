@@ -20,7 +20,8 @@ export class AppComponent implements AfterViewInit {
       type: 'menu',
       icon: 'account_circle',
       name: 'Profile',
-      link: './profile'
+      link: './profile',
+      query: { id: '' }
     },
     {
       type: 'menu',
@@ -64,7 +65,7 @@ export class AppComponent implements AfterViewInit {
     });
     this.authService.authState.subscribe((state) => {
       if (state) {
-        this.menus[0].link += '?id=' + state?.uid;
+        this.menus[0].query = { id: state.uid };
         console.log(this.menus[0].link);
       }
     });
@@ -109,6 +110,8 @@ export class AppComponent implements AfterViewInit {
   clickMenu(i: number) {
     console.log(this.menus[i].link);
     this.selectedMenu = i;
-    this.router.navigate([this.menus[i].link]);
+    this.router.navigate([this.menus[i].link], {
+      queryParams: this.menus[i].query
+    });
   }
 }
