@@ -1,4 +1,4 @@
-<nb-card *ngIf="this.loadDone">
+<nb-card *ngIf="this.loadDone" [nbTooltip]='this.skillDetail.description'>
     <nb-card-body class="grid">
         <img width="70px" style="margin:auto auto auto auto" [src]="this.skillDetail.image">
         <div>
