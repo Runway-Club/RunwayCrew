@@ -106,12 +106,9 @@ export class ProfileService {
   }
 
   public async get(uid?: string): Promise<UserProfile> {
-    if (!this.currentUser) {
-      throw 'Unauthenticated';
-    }
     let profile = await this.db
       .collection('profiles')
-      .doc(uid ?? this.currentUser.uid)
+      .doc(uid ?? this.currentUser?.uid)
       .get()
       .toPromise();
     return <UserProfile>profile.data();

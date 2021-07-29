@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FindValueSubscriber } from 'rxjs/internal/operators/find';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ContributionService } from 'src/app/services/contribution.service';
@@ -14,7 +14,7 @@ import { UserContribution, UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  public uid = 'sfWSG7FX8bSUMIsVqKomeynutVe2';
+  public uid = '';
   public userProfile!: UserProfile;
   public contribute!: UserContribution;
   public commonSkill!: number[];
@@ -25,8 +25,9 @@ export class ProfileComponent implements OnInit {
     public activatedRouter: ActivatedRoute,
     public contributeSv: ContributionService,
     private profileSv: ProfileService,
-    private skillService: SkillService
-  ) {}
+    private skillService: SkillService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -36,7 +37,22 @@ export class ProfileComponent implements OnInit {
       this.loadDone = true;
     }, 0);
     this.activatedRouter.queryParams.subscribe(
-      (queries) => (this.uid = queries['id'])
+      async (queries) => {
+        this.uid = queries['id'];
+        this.auth.authState.subscribe(async (state) => {
+          if (!state || state.isAnonymous) {
+            if (this.uid == undefined) {
+              this.router.navigate(['./home']);
+            }
+          }
+          else {
+            let registered = await this.profileSv.isRegistrated();
+            if (!registered) {
+              this.router.navigate(['./registration']);
+            }
+          }
+        })
+      }
     );
   }
   isMobile() {

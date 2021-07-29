@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { NbDialogService, NbMenuItem, NbMenuService, NbSidebarService, NbToastrService } from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
@@ -19,7 +20,7 @@ export class AppComponent implements AfterViewInit {
       type: 'menu',
       icon: 'account_circle',
       name: 'Profile',
-      link: 'profile'
+      link: './profile'
     },
     {
       type: 'menu',
@@ -27,17 +28,19 @@ export class AppComponent implements AfterViewInit {
       name: 'Community',
       link: 'community'
     },
-    {
-      type: 'menu',
-      icon: 'store',
-      name: 'Store',
-      link: 'store'
-    }
+    // {
+    //   type: 'menu',
+    //   icon: 'store',
+    //   name: 'Store',
+    //   link: 'store'
+    // }
 
   ]
 
   showSidemenu = false;
   selectedMenu = 0;
+
+  uid = "";
 
   constructor(
     private dialog: NbDialogService,
@@ -46,11 +49,9 @@ export class AppComponent implements AfterViewInit {
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private router: Router,
-    private toast: NbToastrService
+    private toast: NbToastrService,
+    private authService: AngularFireAuth
   ) {
-    setTimeout(() => {
-
-    }, 500);
     this.profileService.isATC().then((isAtc) => {
       if (isAtc) {
         this.menus.push({
@@ -59,6 +60,12 @@ export class AppComponent implements AfterViewInit {
           name: 'ATC Zone',
           link: 'atc'
         });
+      }
+    });
+    this.authService.authState.subscribe((state) => {
+      if (state) {
+        this.menus[0].link += '?id=' + state?.uid;
+        console.log(this.menus[0].link);
       }
     });
   }
@@ -97,5 +104,11 @@ export class AppComponent implements AfterViewInit {
       return true;
     }
     return false;
+  }
+
+  clickMenu(i: number) {
+    console.log(this.menus[i].link);
+    this.selectedMenu = i;
+    this.router.navigate([this.menus[i].link]);
   }
 }
