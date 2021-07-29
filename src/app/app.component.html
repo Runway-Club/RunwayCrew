@@ -33,6 +33,12 @@
             public
           </span>
         </button>
+        <button nbButton ghost routerLink='./store' (click)="selectedMenu = 2"
+          [status]='selectedMenu==2?"primary":"basic"' size='tiny'>
+          <span class="material-icons-outlined">
+            store
+          </span>
+        </button>
         <button nbButton ghost (click)="logout()" size='tiny'>
           <span class="material-icons-outlined">
             logout

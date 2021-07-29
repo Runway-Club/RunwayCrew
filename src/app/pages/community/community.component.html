@@ -1,15 +1,26 @@
 <div style="display: flex; flex-direction: row; justify-content: center;">
+
     <div class="parent">
-        <div class="title card">
-            <h2 style="font-size: 1rem; margin: 0;width: 150px;">
-                Filter by role
-            </h2>
-            <div style="width:100%;overflow-x: auto;">
-                <button nbButton ghost size='small' *ngFor="let role of roles">
-                    <img [src]='role.image' style="width: 28px;">
-                    {{role.name}}
-                </button>
+        <div>
+            <h2 style="color:#426EF0">Runway Club's members</h2>
+            <div class="title card">
+                <h2 style="font-size: 1rem; margin: 0;width: 150px;">
+                    Filter by role
+                </h2>
+                <div style="width:100%;overflow-x: auto;">
+                    <button nbButton ghost size='small' *ngFor="let role of roles" (click)="selectedRoleId=role.id"
+                        [style]="{color:selectedRoleId==role.id?'#426EF0':'#000'}">
+                        <img [src]='role.image' style="width: 28px;">
+                        {{role.name}}
+                    </button>
+                    <button nbButton ghost size='small' (click)="selectedRoleId=undefined">
+                        <span class="material-icons-outlined">
+                            clear
+                        </span>
+                    </button>
+                </div>
             </div>
+
 
         </div>
         <div class="list-container">

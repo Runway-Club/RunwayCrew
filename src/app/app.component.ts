@@ -27,6 +27,12 @@ export class AppComponent implements AfterViewInit {
       name: 'Community',
       link: 'community'
     },
+    {
+      type: 'menu',
+      icon: 'store',
+      name: 'Store',
+      link: 'store'
+    }
 
   ]
 
