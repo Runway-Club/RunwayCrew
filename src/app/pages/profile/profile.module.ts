@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
@@ -28,6 +28,7 @@ import { ContributionComponent } from './components/contribution/contribution.co
 import { SpinnerComponent } from 'src/app/shared/spinner/spinner.component';
 import { AppModule } from 'src/app/app.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbProgressBarModule,
     NbUserModule,
     NbSidebarModule,
-    SharedModule
+    SharedModule,
+    RoundProgressModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ProfileModule { }
+export class ProfileModule {}

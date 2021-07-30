@@ -71,7 +71,6 @@ export class AppComponent implements AfterViewInit {
     this.authService.authState.subscribe((state) => {
       if (state) {
         this.menus[0].query = { id: state.uid };
-        console.log(this.menus[0].link);
       }
     });
   }

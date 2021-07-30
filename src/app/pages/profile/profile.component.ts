@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   public contribute!: UserContribution;
   public commonSkill!: number[];
   public loadDone = false;
+  public progressBar: number = 0;
   constructor(
     public authSv: AuthenticationService,
     public auth: AngularFireAuth,
@@ -28,12 +29,12 @@ export class ProfileComponent implements OnInit {
     private skillService: SkillService,
     private router: Router
   ) {}
-
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getProfile();
       await this.getContribute();
       await this.getCommonSkill();
+      this.getProgressbar();
       this.loadDone = true;
     }, 0);
     this.activatedRouter.queryParams.subscribe(async (queries) => {
@@ -68,5 +69,18 @@ export class ProfileComponent implements OnInit {
   }
   public async getCommonSkill() {
     this.commonSkill = (await this.skillService.get('common')).levels;
+  }
+  public getProgressbar() {
+    let max = 0;
+    for (let i = 0; i < this.commonSkill.length; i++) {
+      if (this.contribute.exp < this.commonSkill[i]) {
+        max = i;
+        break;
+      }
+    }
+    this.progressBar =
+      ((this.contribute.exp - this.commonSkill[max - 1]) /
+        (this.commonSkill[max] - this.commonSkill[max - 1])) *
+      100;
   }
 }

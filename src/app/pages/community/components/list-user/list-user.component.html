@@ -1,10 +1,14 @@
 <div style="width:100%;margin: 0%;">
     <div class="container" *ngIf="loadDone">
-        <nb-card class="card" *ngFor="let user of listUser">
+        <nb-card class="card" *ngFor="let user of listUser;let i=index">
             <div class="box">
                 <div class="left-box">
-                    <img style="border-radius: 100%; display: block;margin-top: 2%;margin-left: auto; margin-right: auto"
+                    <img style="border-radius: 100%; display: block;margin:7px 0 0 7px;position: absolute;"
                         [src]="user.photoUrl">
+                    <round-progress style="width:110px;height: 110px;" [current]="this.getProgress(user.uid)"
+                        [max]="100" [color]="'#426EF0'" [background]="'#eaeaea'" [radius]="125" [stroke]="10"
+                        [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'">
+                    </round-progress>
                 </div>
                 <div class="right-box">
                     <div class="name" style="padding-top:10px;">
@@ -13,14 +17,16 @@
                         <h4 *ngIf="!user.name">Chưa có tên</h4>
 
                     </div>
-
+                    <app-level (newItemEvent)="getOutput($event)" [skillCommon]="commonSkill" [skill]="skill"
+                        [uid]="user.uid"></app-level>
                     <div class="list-role" *ngIf="loaded|async">
                         <img width="30px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
                             [src]="getRoleById(role)?.image">
                     </div>
+
+
                 </div>
             </div>
-            <app-level [skillCommon]="commonSkill" [uid]="user.uid"></app-level>
         </nb-card>
     </div>
 </div>

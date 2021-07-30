@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CommunityRoutingModule } from './community-routing.module';
@@ -17,6 +17,7 @@ import {
 } from '@nebular/theme';
 import { LevelComponent } from './components/level/level.component';
 import { FormsModule } from '@angular/forms';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
   declarations: [CommunityComponent, ListUserComponent, LevelComponent],
@@ -34,7 +35,9 @@ import { FormsModule } from '@angular/forms';
     NbTagModule,
     NbIconModule,
     CommunityRoutingModule,
-    FormsModule
+    FormsModule,
+    RoundProgressModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CommunityModule { }
+export class CommunityModule {}

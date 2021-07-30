@@ -7,11 +7,13 @@ import { UserProfile } from 'src/models/user-profile.model';
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html',
-  styleUrls: ['./members.component.scss']
+  styleUrls: ['./members.component.scss'],
 })
 export class MembersComponent implements OnInit {
-
-  constructor(private profileService: ProfileService, private roleService: RoleService) { }
+  constructor(
+    private profileService: ProfileService,
+    private roleService: RoleService
+  ) {}
 
   public profiles: UserProfile[] = [];
   public roles: Role[] = [];
@@ -24,6 +26,8 @@ export class MembersComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileService.getAll().subscribe((profiles) => {
+      console.log(profiles);
+
       this.profiles.length = 0;
       this.profiles.push(...profiles);
     });
@@ -33,30 +37,44 @@ export class MembersComponent implements OnInit {
     });
     this.profileService.getATCMembers().subscribe((profiles) => {
       this.atcMembers.length = 0;
+      console.log(profiles);
       this.atcMembers.push(...profiles);
     });
   }
 
   public getRoleString(profile: UserProfile) {
     if (!profile.roles) {
-      return "No role";
+      return 'No role';
     }
-    let r = profile.roles.length == 0 ? "No role" : '';
+    let r = profile.roles.length == 0 ? 'No role' : '';
     for (let role of profile.roles) {
       r += role + ', ';
     }
     return r;
   }
-
+  public getRoleATCString(profile: any) {
+    if (!profile.roles) {
+      return 'No role';
+    }
+    let r = profile.roles.length == 0 ? 'No role' : '';
+    for (let role of profile.roles) {
+      r += role.name + ', ';
+    }
+    return r;
+  }
   public getDate(time: number) {
-    return (new Date(time)).toLocaleDateString();
+    return new Date(time).toLocaleDateString();
   }
 
   public async assignRole() {
     if (!this.selectedProfile?.roles) {
       this.selectedProfile!.roles = [];
     }
-    if (this.selectedProfile?.roles?.findIndex((r) => r == this.selectedRole?.id) == -1) {
+    if (
+      this.selectedProfile?.roles?.findIndex(
+        (r) => r == this.selectedRole?.id
+      ) == -1
+    ) {
       if (!this.selectedRole) {
         return;
       }
@@ -69,8 +87,7 @@ export class MembersComponent implements OnInit {
       await this.profileService.updateProfile(this.selectedProfile);
       this.selectedProfile = undefined;
       this.selectedRole = undefined;
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -78,7 +95,9 @@ export class MembersComponent implements OnInit {
     if (!this.selectedProfileForReclaim) {
       return;
     }
-    let roleId = this.selectedProfileForReclaim?.roles.findIndex((r) => r == this.selectedRoleForReclaim);
+    let roleId = this.selectedProfileForReclaim?.roles.findIndex(
+      (r) => r == this.selectedRoleForReclaim
+    );
     if (roleId != -1) {
       this.selectedProfileForReclaim?.roles.splice(roleId ?? -1, 1);
     }
@@ -86,8 +105,7 @@ export class MembersComponent implements OnInit {
       await this.profileService.updateProfile(this.selectedProfileForReclaim);
       this.selectedProfileForReclaim = undefined;
       this.selectedRoleForReclaim = undefined;
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -104,5 +122,4 @@ export class MembersComponent implements OnInit {
     await this.profileService.removeFromATC(id);
     window.location.reload();
   }
-
 }
