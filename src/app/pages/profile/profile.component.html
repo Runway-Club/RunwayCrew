@@ -1,8 +1,8 @@
 <div style="display: flex;flex-direction: row; align-items: center; justify-content: center;">
     <div class="container" *ngIf="this.loadDone">
         <div class="Header">
-            <app-header *ngIf="this.loadDone" [user]="this.userProfile" [contribute]="this.contribute" [uid]='uid'
-                [commonSkill]="this.commonSkill">
+            <app-header *ngIf="this.loadDone" [progress]="progressBar" [user]="this.userProfile"
+                [contribute]="this.contribute" [uid]='uid' [commonSkill]="this.commonSkill">
             </app-header>
         </div>
         <div [ngClass]="{'body':!isMobile()}">

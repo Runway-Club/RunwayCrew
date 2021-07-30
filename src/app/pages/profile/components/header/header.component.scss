@@ -17,10 +17,11 @@
 }
 .left-box {
   padding: 10px;
-  display: flex;
+  position: relative;
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  height: max-content;
 }
 
 .center-box {
