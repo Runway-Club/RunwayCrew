@@ -22,7 +22,8 @@
             <div class="body" *ngIf="contributionInfo?.achievements!=undefined">
                 <div class="card-row" *ngFor="let contrib of contributionInfo?.achievements">
                     <div class="card-col">
-                        <nb-card size="tiny" style="border-radius: 10px;">
+                        <nb-card size="tiny" style="border-radius: 10px;"
+                            [nbTooltip]="contrib.description.length == 0 ? '...':contrib.description">
                             <nb-card-body
                                 style="display:grid;align-self: center; align-items: center; justify-items: center;">
                                 <img [src]="this.contrib.image" alt="img" style="width: 50px; border-radius: 50%;" />
