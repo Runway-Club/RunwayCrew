@@ -78,6 +78,9 @@ export class ProfileComponent implements OnInit {
         break;
       }
     }
-    this.progressBar = (this.contribute.exp / this.commonSkill[max]) * 100;
+    this.progressBar =
+      ((this.contribute.exp - this.commonSkill[max - 1]) /
+        (this.commonSkill[max] - this.commonSkill[max - 1])) *
+      100;
   }
 }
