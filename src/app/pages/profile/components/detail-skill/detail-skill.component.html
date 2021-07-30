@@ -1,6 +1,18 @@
 <nb-card *ngIf="this.loadDone" [nbTooltip]='this.skillDetail.description'>
     <nb-card-body class="grid">
-        <img width="70px" style="margin:auto auto auto auto" [src]="this.skillDetail.image">
+        <div *ngIf="skillDetail == undefined">
+            <app-spinner></app-spinner>
+        </div>
+        <div style="justify-self: center;">
+            <img width="70px" style="margin:auto auto auto auto" [src]="this.skillDetail.image">
+            <div *ngIf="!isMax()" class="level" style="text-align: center; font-size: larger;">
+                <strong>Lv
+                    {{this.level}}</strong>
+            </div>
+            <div *ngIf="isMax()" class="level" style="text-align: center; font-size: larger;">
+                <strong>Lv MAX</strong>
+            </div>
+        </div>
         <div>
             <div class="text-box">
                 <div class="content">
@@ -8,16 +20,7 @@
                         <strong>{{this.skillDetail.name}}</strong>
                     </h6>
                     <p></p>
-                    <p class="exp">EXP: {{this.item.exp}}</p>
-
-
-                </div>
-                <div *ngIf="!isMax()" class="level" style="text-align: center;padding: 30px 0 0 0; font-size: larger;">
-                    <strong>Lv
-                        {{this.level}}</strong>
-                </div>
-                <div *ngIf="isMax()" class="level" style="text-align: center;padding: 30px 0 0 0; font-size: larger;">
-                    <strong>Lv MAX</strong>
+                    <span class="exp">EXP: {{this.item.exp}}</span>
                 </div>
             </div>
             <nb-progress-bar *ngIf="!isMax()" style="width:100%;padding:0 10px 10px 0" [value]="this.progressBar"
@@ -27,7 +30,5 @@
                 size="tiny">
             </nb-progress-bar>
         </div>
-
-
     </nb-card-body>
 </nb-card>

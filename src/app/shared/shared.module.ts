@@ -7,10 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { SpinnerComponent } from './spinner/spinner.component';
 @NgModule({
   declarations: [
     NavbarComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     NbListModule
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    SpinnerComponent
   ],
   providers: []
 })

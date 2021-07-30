@@ -25,6 +25,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { BodyComponent } from './components/body/body.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { ContributionComponent } from './components/contribution/contribution.component';
+import { SpinnerComponent } from 'src/app/shared/spinner/spinner.component';
+import { AppModule } from 'src/app/app.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import { ContributionComponent } from './components/contribution/contribution.co
     NbLayoutModule,
     NbProgressBarModule,
     NbUserModule,
-    NbSidebarModule
+    NbSidebarModule,
+    SharedModule
   ],
 })
 export class ProfileModule { }
