@@ -1,7 +1,13 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { NbDialogService, NbMenuItem, NbMenuService, NbSidebarService, NbToastrService } from '@nebular/theme';
+import {
+  NbDialogService,
+  NbMenuItem,
+  NbMenuService,
+  NbSidebarService,
+  NbToastrService,
+} from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ProfileService } from './services/profile.service';
@@ -21,13 +27,13 @@ export class AppComponent implements AfterViewInit {
       icon: 'account_circle',
       name: 'Profile',
       link: './profile',
-      query: { id: '' }
+      query: { id: '' },
     },
     {
       type: 'menu',
       icon: 'public',
       name: 'Community',
-      link: 'community'
+      link: 'community',
     },
     // {
     //   type: 'menu',
@@ -35,13 +41,12 @@ export class AppComponent implements AfterViewInit {
     //   name: 'Store',
     //   link: 'store'
     // }
-
-  ]
+  ];
 
   showSidemenu = false;
   selectedMenu = 0;
 
-  uid = "";
+  uid = '';
 
   constructor(
     private dialog: NbDialogService,
@@ -59,7 +64,7 @@ export class AppComponent implements AfterViewInit {
           icon: 'admin_panel_settings',
           type: 'parent',
           name: 'ATC Zone',
-          link: 'atc'
+          link: 'atc',
         });
       }
     });
@@ -77,14 +82,16 @@ export class AppComponent implements AfterViewInit {
   async signInWithGG() {
     try {
       await this.auth.signInWithGoogle().then((data) => {
-        this.userInfo = data
+        this.userInfo = data;
         console.log(this.userInfo);
       });
-      this.toast.success(`Chào mừng ${this.userInfo.email} đến với Runway Crew`, "Đăng nhập thành công")
+      this.toast.success(
+        `Chào mừng ${this.userInfo.email} đến với Runway Crew`,
+        'Đăng nhập thành công'
+      );
     } catch (e) {
-      this.toast.danger(`Thử đăng nhập lại nhé`, "Đăng nhập thất bại")
+      this.toast.danger(`Thử đăng nhập lại nhé`, 'Đăng nhập thất bại');
     }
-
   }
   openDialog() {
     this.dialog.open(FileUploadComponent);
@@ -111,7 +118,7 @@ export class AppComponent implements AfterViewInit {
     console.log(this.menus[i].link);
     this.selectedMenu = i;
     this.router.navigate([this.menus[i].link], {
-      queryParams: this.menus[i].query
+      queryParams: this.menus[i].query,
     });
   }
 }
