@@ -2,6 +2,10 @@
   <div style="max-width: 70vw;  margin:0 auto;">
     <form class="form-registration" (ngSubmit)="onRegistration()">
       <h2 style="text-align: center;">Đăng ký thành viên</h2>
+      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Nguyên tắc cộng đồng</p>
+      <p style="font-family: 'Maven Pro'" *ngFor="let rule of rules">{{rule}}</p>
+      <p style="color:red;font-family: 'Maven Pro';"><i>*Nhấn nút đăng ký tham gia đồng nghĩa với việc chấp nhận các
+          nguyên tắc trên</i></p>
       <nb-form-field>
         <label>Email*</label>
         <input type='email' nbInput fullWidth [value]="this.defaultEmail" disabled>
@@ -39,18 +43,14 @@
         <input type='url' nbInput fullWidth [formControl]="linkInControl">
       </nb-form-field>
       <hr style="border-top: 1px solid">
-      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Vai trò của bạn</p>
+      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Bạn muốn tham gia với vai trò</p>
       <p>Chọn ít nhất 1</p>
-      <button type="button" *ngFor="let role of roles" [ngStyle]="{backgroundColor:role.selected?'#426EF0':'#fff'}"
-        (click)="onRoleSelected(role)"
-        style="background: none;border: none;border-radius: 5px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 10px; margin:10px; text-align: start;">
+      <button type="button" *ngFor="let role of roles" [ngStyle]="{'background-color':role.selected?'#426EF0':'#fff'}"
+        (click)="onRoleSelected(role)" [style.color]="role.selected?'#000':'fff'"
+        style="background: none;border: none;border-radius: 10px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 10px; margin:10px; text-align: start;">
         <nb-user [name]='role.name' [title]='role.description' [picture]='role.image'></nb-user>
       </button>
       <hr style="border-top: 1px solid">
-      <p style="font-family: 'Maven Pro'; font-size: 1.2rem; font-weight: bold;">Nguyên tắc cộng đồng</p>
-      <p style="font-family: 'Maven Pro'" *ngFor="let rule of rules">{{rule}}</p>
-      <p style="color:red;font-family: 'Maven Pro';">Nhấn nút đăng ký tham gia đồng nghĩa với việc chấp nhận các
-        nguyên tắc trên</p>
       <nb-form-field>
         <input nbInput type="submit" status='primary' value='Đăng ký tham gia' fullWidth>
       </nb-form-field>

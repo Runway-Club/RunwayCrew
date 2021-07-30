@@ -21,7 +21,7 @@ import { RegistrationProfile } from 'src/models/user-profile.model';
 })
 export class RegistrationComponent implements OnInit {
   selectedGender = '';
-  selectedRoles: any = [];
+  selectedRoles: Array<string> = [];
   usr: string = "Hello World";
 
   emailControl!: FormControl;
@@ -105,7 +105,16 @@ export class RegistrationComponent implements OnInit {
 
   onRoleSelected(role: any) {
     role.selected = !role.selected;
-    this.selectedRoles.push(role['name']);
+    if (role.selected) {
+      if (this.selectedRoles.indexOf(role['name']) < 0) {
+        this.selectedRoles.push(role['name']);
+      }
+    } else {
+      let index = this.selectedRoles.findIndex(r =>
+        r === role['name']
+      );
+      this.selectedRoles.splice(index, 1);
+    }
   }
 
   async onRegistration() {
