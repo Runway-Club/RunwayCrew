@@ -9,13 +9,13 @@
                 <div class="right-box">
                     <div class="name" style="padding-top:10px;">
                         <a href="./profile?id={{user.uid}}"
-                            style="font-size: 1.7rem; font-weight: bold; text-decoration: none; color:#000">{{user.name}}</a>
+                            style="font-size:1.2rem; font-weight: bold; text-decoration: none; color:#000">{{user.name}}</a>
                         <h4 *ngIf="!user.name">Chưa có tên</h4>
 
                     </div>
 
                     <div class="list-role" *ngIf="loaded|async">
-                        <img width="50px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
+                        <img width="30px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
                             [src]="getRoleById(role)?.image">
                     </div>
                 </div>

@@ -36,12 +36,20 @@
 }
 .name > h4 {
   margin: 10px 0px 10px 0px;
+  text-overflow: ellipsis;
 }
 .name > h5 {
   margin: 10px 0px 10px 0px;
 }
+
 @media only screen and (max-width: 600px) {
   .right-box {
     display: none;
+  }
+}
+@media only screen and (max-width: 355px) {
+  .name > h4 {
+    font-size: medium;
+    margin: 10px 0px 10px 0px;
   }
 }

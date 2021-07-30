@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     private profileSv: ProfileService,
     private skillService: SkillService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -36,24 +36,22 @@ export class ProfileComponent implements OnInit {
       await this.getCommonSkill();
       this.loadDone = true;
     }, 0);
-    this.activatedRouter.queryParams.subscribe(
-      async (queries) => {
-        this.uid = queries['id'];
-        this.auth.authState.subscribe(async (state) => {
-          if (!state || state.isAnonymous) {
-            if (this.uid == undefined) {
-              this.router.navigate(['./home']);
-            }
+    this.activatedRouter.queryParams.subscribe(async (queries) => {
+      this.uid = queries['id'];
+      console.log(this.uid);
+      this.auth.authState.subscribe(async (state) => {
+        if (!state || state.isAnonymous) {
+          if (this.uid == undefined) {
+            this.router.navigate(['./home']);
           }
-          else {
-            let registered = await this.profileSv.isRegistrated();
-            if (!registered) {
-              this.router.navigate(['./registration']);
-            }
+        } else {
+          let registered = await this.profileSv.isRegistrated();
+          if (!registered) {
+            this.router.navigate(['./registration']);
           }
-        })
-      }
-    );
+        }
+      });
+    });
   }
   isMobile() {
     if (window.innerWidth <= 600) {
