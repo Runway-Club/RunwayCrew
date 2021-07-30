@@ -4,7 +4,7 @@
         <p style="margin: 0;">EXP: {{skill.exp}}</p>
     </div>
     <div>
-        <p style="margin:0">EXP: {{this.remainingExp}}</p>
+        <p style="margin:0">Need:{{this.remainingExp}} to level {{this.level+1}}</p>
         <nb-progress-bar style="width:95%" [value]="this.progressBar" [status]="this.status" size="tiny">
         </nb-progress-bar>
     </div>
