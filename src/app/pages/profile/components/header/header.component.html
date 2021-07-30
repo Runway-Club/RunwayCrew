@@ -16,8 +16,9 @@
 
         </div>
         <div></div>
-        <div class="right-box">
+        <div *ngIf="checkViewAvgas()" class="right-box" nbTooltip={{this.avgasDescription}}>
             <div class="name">
+                <!-- <span>{{this.avgasDescription}}</span> -->
                 <img src='./assets/images/Avgas.png' alt='Avgas - Runway credit unit' style="width: 40px;">
                 <h5 style="margin: 0;">Avgas: {{contribute?.credit}}</h5>
             </div>

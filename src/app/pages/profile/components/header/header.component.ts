@@ -19,10 +19,18 @@ export class HeaderComponent implements OnInit {
   uid = '';
   public level: any = 0;
   loadDone = false;
-
-  constructor() {}
+  avgasDescription = 'Avgas được dùng để trao đổi quà. Bạn có thể kiếm thêm Avgas thông qua việc đóng góp cho cộng đồng';
+  currentUser: any;
+  constructor(
+    private authService: AuthenticationService
+  ) { }
   ngOnInit() {
     this.checkLevel();
+    setTimeout(async () => {
+      this.currentUser = (await this.authService.user)?.uid;
+      console.log(this.currentUser);
+      console.log(this.uid);
+    }, 500);
   }
   public checkLevel() {
     for (let i = 0; i < this.commonSkill.length; i++) {
@@ -34,5 +42,11 @@ export class HeaderComponent implements OnInit {
       this.level = 1;
     }
     this.loadDone = true;
+  }
+  checkViewAvgas() {
+    if (this.currentUser == this.uid) {
+      return true;
+    }
+    return false;
   }
 }
