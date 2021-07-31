@@ -29,15 +29,13 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     NbInputModule,
     NbIconModule,
     NbButtonModule,
-    NbIconModule,
     NbTooltipModule,
     NbProgressBarModule,
     NbTagModule,
-    NbIconModule,
     CommunityRoutingModule,
     FormsModule,
     RoundProgressModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CommunityModule {}
+export class CommunityModule { }

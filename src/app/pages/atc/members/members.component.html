@@ -5,7 +5,33 @@
     </nb-card-header>
     <nb-card-body>
         <nb-list style="width: 100%;">
-            <nb-list-item *ngFor="let profile of profiles">
+            <nb-list-item *ngFor="let profile of profiles" style="width: 100%;">
+                <div style="width: 100%;display: flex; flex-direction: row; justify-content: space-between;">
+                    <div style="width: 30%;">
+                        <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'>
+                        </nb-user>
+
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-self: center;">
+                        <span>Ngày tham gia</span>
+                        <span>{{getDate(profile.profileMetadata?.created??0)}}</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-self: center;">
+                        <span>Đóng góp lần cuối</span>
+                        <span>{{getDate(profile.contribMetadata?.updated??0)}}</span>
+                    </div>
+                    <div>
+                        <!-- <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a> -->
+                        <a href="./profile?id={{profile.uid}}" target="_blank" nbTooltip='Xem'
+                            style="font-weight: bold; text-decoration: none;">
+                            <nb-icon icon="navigation-2-outline"></nb-icon>
+                        </a>
+                    </div>
+                </div>
+
+            </nb-list-item>
+
+            <!-- <nb-list-item *ngFor="let profile of profiles">
                 <div class="parent">
                     <div class="box">
                         <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'>
@@ -26,7 +52,7 @@
                     </div>
                 </div>
 
-            </nb-list-item>
+            </nb-list-item> -->
         </nb-list>
     </nb-card-body>
 </nb-card>

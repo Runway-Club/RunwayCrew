@@ -13,7 +13,7 @@ export class MembersComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private roleService: RoleService
-  ) {}
+  ) { }
 
   public profiles: UserProfile[] = [];
   public roles: Role[] = [];
