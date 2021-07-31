@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ContributionService } from 'src/app/services/contribution.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { UserContribution } from 'src/models/user-profile.model';
@@ -11,16 +11,14 @@ import { UserContribution } from 'src/models/user-profile.model';
 export class LevelComponent implements OnInit {
   @Input() uid!: string;
   @Input() skillCommon!: number[];
+  @Output() newItemEvent = new EventEmitter<any>();
   public skill!: UserContribution;
   public loadDone = false;
   public progressBar: number = 0;
   public level: any = 0;
   public status: string = 'primary';
   public remainingExp = 0;
-  constructor(
-    private contrib: ContributionService,
-    private skillSv: SkillService
-  ) { }
+  constructor(private contrib: ContributionService) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -29,6 +27,7 @@ export class LevelComponent implements OnInit {
       this.checkLv();
       this.progressCalc();
       this.getRemainingExp();
+      this.ouput();
       this.loadDone = true;
     }, 100);
   }
@@ -87,9 +86,11 @@ export class LevelComponent implements OnInit {
   public getRemainingExp() {
     if (this.skillCommon.length < this.level) {
       this.remainingExp = this.skill.exp;
-    }
-    else {
+    } else {
       this.remainingExp = this.skillCommon[this.level] - this.skill.exp;
     }
+  }
+  ouput() {
+    this.newItemEvent.emit({ progress: this.progressBar, uid: this.uid });
   }
 }

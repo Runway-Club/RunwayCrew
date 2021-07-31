@@ -1,12 +1,12 @@
-<div class="container" *ngIf="loadDone" style="margin-bottom:10px;">
-    <div style="display: flex; flex-direction: column; align-items: center; ">
+<div class="container" *ngIf="loadDone" style="margin-left: 12px;">
+    <div style="display: flex; flex-direction: column;">
         <p style="margin: 0;"><strong>Level: {{level}}</strong></p>
-        <p style="margin: 0;">EXP: {{skill.exp}}</p>
+        <p style="margin: 5px 0 0 0;">EXP: {{skill.exp}}/{{this.skillCommon[this.level]}}</p>
     </div>
     <div>
-        <p style="margin:0">EXP: {{this.remainingExp}}</p>
+        <!-- <p style="margin:0"><strong>{{this.remainingExp}}</strong> to level {{this.level+1}}</p>
         <nb-progress-bar style="width:95%" [value]="this.progressBar" [status]="this.status" size="tiny">
-        </nb-progress-bar>
+        </nb-progress-bar> -->
     </div>
 
 

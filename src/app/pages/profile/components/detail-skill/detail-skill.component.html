@@ -3,32 +3,38 @@
         <div *ngIf="skillDetail == undefined">
             <app-spinner></app-spinner>
         </div>
-        <div style="justify-self: center;">
-            <img width="70px" style="margin:auto auto auto auto" [src]="this.skillDetail.image">
-            <div *ngIf="!isMax()" class="level" style="text-align: center; font-size: larger;">
-                <strong>Lv
-                    {{this.level}}</strong>
-            </div>
-            <div *ngIf="isMax()" class="level" style="text-align: center; font-size: larger;">
-                <strong>Lv MAX</strong>
-            </div>
+        <div class="skill">
+            <img width="60px" style="margin:20px" [src]="this.skillDetail.image">
+            <h6 style="font-size: 1rem;margin:0 0 0 10px;align-self: center;" class="contentName">
+                <strong>{{this.skillDetail.name}}</strong>
+            </h6>
         </div>
-        <div>
-            <div class="text-box">
-                <div class="content">
-                    <h6 class="contentName">
-                        <strong>{{this.skillDetail.name}}</strong>
-                    </h6>
-                    <p></p>
-                    <span class="exp">EXP: {{this.item.exp}}</span>
+
+        <div class="skill">
+            <div style="margin-left:10px; align-self: center">
+                <div *ngIf="!isMax()" class="level" style="text-align: center; font-size: larger;">
+                    <strong>Lv
+                        {{this.level}}</strong>
+                </div>
+                <div *ngIf="isMax()" class="level" style="text-align: center; font-size: larger;">
+                    <strong>Lv MAX</strong>
                 </div>
             </div>
-            <nb-progress-bar *ngIf="!isMax()" style="width:100%;padding:0 10px 10px 0" [value]="this.progressBar"
-                [status]="this.status" size="tiny">
-            </nb-progress-bar>
-            <nb-progress-bar *ngIf="isMax()" style="width:100%;padding:0 10px 10px 0" [value]="100" status='success'
-                size="tiny">
-            </nb-progress-bar>
+            <div style="margin:0 0 0 10px;">
+                <div class="text-box">
+                    <div class="content">
+                        <p></p>
+                        <span class="exp">EXP: {{this.item.exp}}</span>
+                    </div>
+                </div>
+                <nb-progress-bar *ngIf="!isMax()" style="width:100%;padding:0 10px 10px 0;" [value]="this.progressBar"
+                    [status]="this.status" size="tiny">
+                </nb-progress-bar>
+                <nb-progress-bar *ngIf="isMax()" style="width:100%;padding:0 10px 10px 0" [value]="100" status='success'
+                    size="tiny">
+                </nb-progress-bar>
+            </div>
         </div>
+
     </nb-card-body>
 </nb-card>

@@ -2,7 +2,12 @@
     *ngIf="loadDone">
     <div class="box">
         <div class="left-box">
-            <img style="border-radius: 100%; display: block;" [src]="user.photoUrl">
+            <img style="position: absolute; margin: 7px 0 0 7px; border-radius: 100%;" [src]="user.photoUrl">
+            <round-progress style="width:110px;height: 110px;" [current]="progress" [max]="100" [color]="'#FFC107'"
+                [background]="'#eaeaea'" [radius]="125" [stroke]="10" [responsive]="false" [duration]="800"
+                [animation]="'easeInOutQuart'">
+            </round-progress>
+
         </div>
         <div class="center-box">
             <div class="name">

@@ -5,7 +5,7 @@ import { RoleService } from 'src/app/services/role.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { Role } from 'src/models/role.model';
 import { Skill } from 'src/models/skill.model';
-import { UserProfile } from 'src/models/user-profile.model';
+import { UserContribution, UserProfile } from 'src/models/user-profile.model';
 
 @Component({
   selector: 'app-list-user',
@@ -14,13 +14,22 @@ import { UserProfile } from 'src/models/user-profile.model';
 })
 export class ListUserComponent implements OnInit {
   @Input() listUser!: UserProfile[];
-  @Input() commonSkill!: number[];
+  @Input() commonSkill!: any[];
 
   skills: Skill[] = [];
   roles: Role[] = [];
-
+  public skill!: UserContribution;
+  public level: any = 0;
+  public status: string = 'primary';
+  public remainingExp = 0;
   public loadDone = false;
-  constructor(private skillSv: SkillService, private roleService: RoleService) { }
+  public progressBar: number = 0;
+  public exp: any[] = [];
+
+  constructor(
+    private skillSv: SkillService,
+    private roleService: RoleService
+  ) {}
 
   loaded!: Promise<boolean>;
 
@@ -37,10 +46,20 @@ export class ListUserComponent implements OnInit {
       this.roles.push(...roles);
       this.loaded = Promise.resolve(true);
     });
-
   }
 
   getRoleById(id: string) {
     return this.roles.find((s, i) => s.id == id);
+  }
+
+  getOutput(newItem: any) {
+    this.exp.push(newItem);
+  }
+  getProgress(uid: string) {
+    for (let i of this.exp) {
+      if (i.uid == uid) {
+        return i.progress;
+      }
+    }
   }
 }

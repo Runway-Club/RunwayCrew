@@ -15,15 +15,14 @@ export class HeaderComponent implements OnInit {
   @Input() user!: UserProfile;
   @Input() contribute!: UserContribution;
   @Input() commonSkill!: number[];
-  @Input()
-  uid = '';
+  @Input() uid = '';
+  @Input() progress!: number;
   public level: any = 0;
   loadDone = false;
-  avgasDescription = 'Avgas được dùng để trao đổi quà. Bạn có thể kiếm thêm Avgas thông qua việc đóng góp cho cộng đồng';
+  avgasDescription =
+    'Avgas được dùng để trao đổi quà. Bạn có thể kiếm thêm Avgas thông qua việc đóng góp cho cộng đồng';
   currentUser: any;
-  constructor(
-    private authService: AuthenticationService
-  ) { }
+  constructor(private authService: AuthenticationService) {}
   ngOnInit() {
     this.checkLevel();
     setTimeout(async () => {

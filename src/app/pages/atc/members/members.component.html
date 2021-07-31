@@ -101,7 +101,8 @@
     <nb-card-body>
         <nb-list style="width:100%">
             <nb-list-item *ngFor="let profile of atcMembers">
-                <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'></nb-user>
+                <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleATCString(profile)'>
+                </nb-user>
                 <div style="flex:1 auto;"></div>
                 <button (click)="removeFromATC(profile.uid)" nbButton status='danger'>Trục xuất</button>
             </nb-list-item>
