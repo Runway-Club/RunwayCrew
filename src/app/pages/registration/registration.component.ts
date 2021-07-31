@@ -58,7 +58,7 @@ export class RegistrationComponent implements OnInit {
     this.auth.authState.subscribe((state) => {
       if (state) {
         this.defaultEmail = state.email;
-        console.log(this.defaultEmail);
+        // console.log(this.defaultEmail);
       }
     })
     this.roleService.getAll().subscribe((roles) => {

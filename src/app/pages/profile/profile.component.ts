@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     private profileSv: ProfileService,
     private skillService: SkillService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
     }, 0);
     this.activatedRouter.queryParams.subscribe(async (queries) => {
       this.uid = queries['id'];
-      console.log(this.uid);
+      // console.log(this.uid);
       this.auth.authState.subscribe(async (state) => {
         if (!state || state.isAnonymous) {
           if (this.uid == undefined) {
@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
   }
   isMobile() {
     if (window.innerWidth <= 600) {
-      console.log(true);
+      // console.log(true);
       return true;
     }
     return false;

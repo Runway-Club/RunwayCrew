@@ -1,0 +1,27 @@
+<nb-card style="width:30vw;min-width:150px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);border-radius: 15px; ">
+    <nb-card-header>
+        <h5>Cài đặt</h5>
+        <div style="flex: 1 auto;"></div>
+        <div style="float: right;">
+            <button nbButton size="small" shape="semi-round" (click)="afterSettings()" status="success" outline>
+                <nb-icon icon="checkmark-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+            </button>
+
+            <button nbButton style="margin:5px;" size="small" status="danger" (click)="afterCancel()" shape="semi-round"
+                outline>
+                <nb-icon icon="close-outline" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div>
+            <span style="margin-right: 5px;">Chia sẻ với</span>
+            <nb-select multiple placeholder="Mọi người" status="basic" shape="semi-round" [compareWith]="compareById">
+                <nb-option *ngFor='let s of sharingOpts' [value]='s.value' (selectionChange)='selectedOpts(s)'>
+                    {{s.description}}</nb-option>
+            </nb-select>
+        </div>
+
+
+    </nb-card-body>
+</nb-card>

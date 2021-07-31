@@ -37,8 +37,8 @@
                                     <button nbButton outline status="info" shape="semi-round"
                                         size="tiny"><strong>EXP&nbsp;
                                         </strong> {{this.contrib.exp}}</button>
-                                    <button nbButton nbButton outline status="info" shape="semi-round" size="tiny"
-                                        style="margin-left: 5px;"><strong>Avgas&nbsp;
+                                    <button *ngIf="checkViewAvgas()" nbButton nbButton outline status="info"
+                                        shape="semi-round" size="tiny" style="margin-left: 5px;"><strong>Avgas&nbsp;
                                         </strong>{{this.contrib.credit}}</button>
                                 </div>
                                 <div style="text-align: center; width: 100%;">

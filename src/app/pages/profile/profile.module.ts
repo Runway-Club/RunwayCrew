@@ -28,6 +28,7 @@ import { ContributionComponent } from './components/contribution/contribution.co
 import { SpinnerComponent } from 'src/app/shared/spinner/spinner.component';
 import { AppModule } from 'src/app/app.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     BodyComponent,
     RolesComponent,
     ContributionComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,

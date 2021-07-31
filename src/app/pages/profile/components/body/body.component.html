@@ -11,7 +11,11 @@
         <nb-icon icon="edit-outline"> </nb-icon>
       </button>
 
-
+      <button *ngIf="checkEditPermission()" nbButton type="button" status='primary' value="Settings"
+        (click)="onSettings(userProfile)" outline shape='semi-round' size="small"
+        [disabled]="updateBtn=='Update'?false:true" style="margin-left: 5px;">
+        <nb-icon icon="settings-outline"> </nb-icon>
+      </button>
 
       <button *ngIf="isUpdate" nbButton type="submit" status='success' value="Confirm" (click)="onUpdate()" outline
         shape='semi-round' size="small" style="margin-left: 5px;" shape='semi-round'>Update</button>

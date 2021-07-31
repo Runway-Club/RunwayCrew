@@ -28,8 +28,6 @@ export class HeaderComponent implements OnInit {
     this.checkLevel();
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
-      console.log(this.currentUser);
-      console.log(this.uid);
     }, 500);
   }
   public checkLevel() {

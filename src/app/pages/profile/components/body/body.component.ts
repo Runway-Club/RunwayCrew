@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { NbToastrService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import {
   RegistrationProfile,
   UserProfile,
 } from 'src/models/user-profile.model';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-body',
@@ -26,14 +27,13 @@ export class BodyComponent {
   constructor(
     private profileService: ProfileService,
     private toast: NbToastrService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private dialog: NbDialogService,
   ) { }
 
   ngOnInit(): void {
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
-      console.log(this.currentUser);
-      console.log(this.uid);
     }, 500);
   }
 
@@ -70,5 +70,16 @@ export class BodyComponent {
       return true;
     }
     return false;
+  }
+  onSettings(userProfile: UserProfile) {
+    let dialog = this.dialog.open(SettingsComponent, {
+      context: {
+        user: { ...userProfile }
+      },
+      hasBackdrop: true,
+      backdropClass: 'blur',
+      closeOnBackdropClick: true,
+      closeOnEsc: true,
+    });
   }
 }

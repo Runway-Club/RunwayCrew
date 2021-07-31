@@ -15,7 +15,7 @@ export class SkillsComponent implements OnInit {
   ngOnInit(): void { }
   public async get() {
     this.skills = await (await this.contributeSv.get()).skills;
-    console.log(typeof (this.skills));
+    // console.log(typeof (this.skills));
     this.loadDone = true;
   }
 }

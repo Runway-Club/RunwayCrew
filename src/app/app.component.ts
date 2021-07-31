@@ -71,7 +71,6 @@ export class AppComponent implements AfterViewInit {
     this.authService.authState.subscribe((state) => {
       if (state) {
         this.menus[0].query = { id: state.uid };
-        console.log(this.menus[0].link);
       }
     });
   }
@@ -83,7 +82,6 @@ export class AppComponent implements AfterViewInit {
     try {
       await this.auth.signInWithGoogle().then((data) => {
         this.userInfo = data;
-        console.log(this.userInfo);
       });
       this.toast.success(
         `Chào mừng ${this.userInfo.email} đến với Runway Crew`,
@@ -108,14 +106,14 @@ export class AppComponent implements AfterViewInit {
 
   isMobile() {
     if (window.innerWidth <= 600) {
-      console.log(true);
+      // console.log(true);
       return true;
     }
     return false;
   }
 
   clickMenu(i: number) {
-    console.log(this.menus[i].link);
+    // console.log(this.menus[i].link);
     this.selectedMenu = i;
     this.router.navigate([this.menus[i].link], {
       queryParams: this.menus[i].query,

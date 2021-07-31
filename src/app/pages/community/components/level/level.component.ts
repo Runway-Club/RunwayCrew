@@ -25,7 +25,7 @@ export class LevelComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(async () => {
       this.skill = await this.getSkill();
-      console.log(this.skill);
+      // console.log(this.skill);
       this.checkLv();
       this.progressCalc();
       this.getRemainingExp();
@@ -79,9 +79,9 @@ export class LevelComponent implements OnInit {
     if (this.progressBar > 80) {
       this.status = 'success';
     }
-    console.log(
-      this.progressBar + ' status: ' + this.status + ' level: ' + this.level
-    );
+    // console.log(
+    //   this.progressBar + ' status: ' + this.status + ' level: ' + this.level
+    // );
   }
 
   public getRemainingExp() {
