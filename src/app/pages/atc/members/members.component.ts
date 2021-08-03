@@ -14,7 +14,8 @@ export class MembersComponent implements OnInit {
     private profileService: ProfileService,
     private roleService: RoleService
   ) { }
-
+  selectedTypeUser = '';
+  countRolesOfUser: number = 0;
   public profiles: UserProfile[] = [];
   public roles: Role[] = [];
   public atcMembers: UserProfile[] = [];
@@ -23,10 +24,10 @@ export class MembersComponent implements OnInit {
   public selectedRoleForReclaim?: string;
   public selectedProfileForReclaim?: UserProfile;
   public selectedProfileForATCZone?: UserProfile;
-
+  public selectedProfileRemoveFromATC!: UserProfile;
   ngOnInit(): void {
     this.profileService.getAll().subscribe((profiles) => {
-      console.log(profiles);
+      // console.log(profiles);
 
       this.profiles.length = 0;
       this.profiles.push(...profiles);
@@ -37,9 +38,10 @@ export class MembersComponent implements OnInit {
     });
     this.profileService.getATCMembers().subscribe((profiles) => {
       this.atcMembers.length = 0;
-      console.log(profiles);
+      // console.log(profiles);
       this.atcMembers.push(...profiles);
     });
+    console.log(this.roles);
   }
 
   public getRoleString(profile: UserProfile) {
@@ -119,7 +121,14 @@ export class MembersComponent implements OnInit {
   }
 
   public async removeFromATC(id: string) {
+    // console.log(this.selectedProfileRemoveFromATC);
+    // console.log(id);
     await this.profileService.removeFromATC(id);
     window.location.reload();
+  }
+  public changeTypeUser() {
+    this.countRolesOfUser = (this.profiles.map((profile) => {
+      return profile.roles.filter(i => i === this.selectedTypeUser).length
+    })).filter(i => i == 1).length;
   }
 }

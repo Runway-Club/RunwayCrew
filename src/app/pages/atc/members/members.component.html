@@ -1,4 +1,77 @@
 <h1>Quản lý các Thành viên</h1>
+<div style="width: 100%; display: grid; grid-gap: 1rem;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
+
+    <!-- ATC -->
+    <nb-card style="border-radius: 10px; " status="primary">
+        <nb-card-body style="display: flex; align-items: center; justify-content: center;">
+            <button nbButton size="giant" shape="round" outline>
+                <nb-icon icon="people" status="primary"></nb-icon>
+            </button>
+            <div style="margin: 3vh 2vw">
+                <h5 class="title">{{ this.atcMembers.length }}</h5>
+                <span class="title">ATC Members</span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <!-- Users -->
+    <nb-card style="border-radius: 10px; " status="info">
+        <nb-card-header>
+            <nb-select [(selected)]="selectedTypeUser" outline (selectedChange)="changeTypeUser()"
+                placeholder='Chọn vai trò'>
+                <nb-option *ngFor='let r of roles' [value]='r.id'>{{r.name}}</nb-option>
+            </nb-select>
+        </nb-card-header>
+        <nb-card-body style="display: flex; align-items: center; justify-content: center; ">
+            <button nbButton size="giant" shape="round" outline>
+                <nb-icon icon="people" status="info"></nb-icon>
+            </button>
+            <div style="margin: 3vh 2vw">
+                <h5 class="title">{{countRolesOfUser}}</h5>
+                <span class="title">Người dùng</span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <!-- Add to ATC Zone -->
+    <nb-card style="border-radius: 10px; " status="success">
+        <nb-card-header>
+            <nb-select [(selected)]="selectedProfileForATCZone" outline placeholder='Chọn thành viên'>
+                <nb-option *ngFor='let profile of profiles' [value]='profile'>{{profile.name}}</nb-option>
+            </nb-select>
+        </nb-card-header>
+        <nb-card-body style="display: flex; align-items: center; justify-content: center">
+            <button *ngIf='selectedProfileForATCZone' nbButton size="giant" shape="round" outline (click)='addToATC()'
+                nbTooltip='Thêm'>
+                <nb-icon icon="person-add-outline" status="success" [options]="{ animation: { type: 'pulse' } }">
+                </nb-icon>
+            </button>
+            <div style="margin: 3vh 2vw">
+                <span class="title">Thêm thành viên vào ATC Zone </span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+
+    <!-- Remove ATC Members -->
+    <nb-card style="border-radius: 10px; " status="danger">
+        <nb-card-header>
+            <nb-select [(selected)]="selectedProfileRemoveFromATC" outline placeholder='Chọn thành viên'>
+                <nb-option *ngFor='let profile of atcMembers' [value]='profile'>{{profile.name}}</nb-option>
+            </nb-select>
+        </nb-card-header>
+        <nb-card-body style="display: flex; align-items: center; justify-content: center">
+            <button *ngIf='selectedProfileRemoveFromATC' nbButton size="giant" shape="round" outline
+                (click)='removeFromATC(selectedProfileRemoveFromATC.uid)'>
+                <nb-icon icon="person-remove-outline" status="danger" [options]="{ animation: { type: 'shake' } }">
+                </nb-icon>
+            </button>
+            <div style="margin: 3vh 2vw">
+                <span class="title">Trục xuất</span>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>
 <nb-card status='primary' style="max-height:50vh;">
     <nb-card-header>
         Danh sách các thành viên trong hệ thống
@@ -20,6 +93,9 @@
                         <span>Đóng góp lần cuối</span>
                         <span>{{getDate(profile.contribMetadata?.updated??0)}}</span>
                     </div>
+                    <!-- <div>
+                        <button nbButton shape='semi-round' status='primary' outline size='small'>Kiểm soát</button>
+                    </div> -->
                     <div>
                         <!-- <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a> -->
                         <a href="./profile?id={{profile.uid}}" target="_blank" nbTooltip='Xem'
@@ -30,29 +106,6 @@
                 </div>
 
             </nb-list-item>
-
-            <!-- <nb-list-item *ngFor="let profile of profiles">
-                <div class="parent">
-                    <div class="box">
-                        <nb-user [picture]='profile.photoUrl' [name]='profile.name' [title]='getRoleString(profile)'>
-                        </nb-user>
-
-                    </div>
-                    <div class="box">
-                        <p>Ngày tham gia: {{getDate(profile.profileMetadata?.created??0)}}</p>
-
-                    </div>
-                    <div class="box">
-                        <p>Đóng góp lần cuối: {{getDate(profile.contribMetadata?.updated??0)}}</p>
-
-                    </div>
-                    <div class="box">
-                        <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a>
-
-                    </div>
-                </div>
-
-            </nb-list-item> -->
         </nb-list>
     </nb-card-body>
 </nb-card>
@@ -68,7 +121,11 @@
         </nb-select>
         <p>Được cấp cho</p>
         <nb-select [(ngModel)]="selectedProfile" fullWidth>
-            <nb-option *ngFor="let profile of profiles" [value]='profile'>{{profile.uid}}: {{profile.name}}</nb-option>
+            <nb-option *ngFor="let profile of profiles" [value]='profile'>
+                <!-- {{profile.uid}}: {{profile.name}} -->
+                <nb-user [picture]='profile.photoUrl' [name]='profile.name'>
+                </nb-user>
+            </nb-option>
         </nb-select>
         <p></p>
         <nb-card *ngIf="selectedRole && selectedProfile">
@@ -89,7 +146,11 @@
 
         <p>Thành viên</p>
         <nb-select [(ngModel)]="selectedProfileForReclaim" fullWidth>
-            <nb-option *ngFor="let profile of profiles" [value]='profile'>{{profile.uid}}: {{profile.name}}</nb-option>
+            <nb-option *ngFor="let profile of profiles" [value]='profile'>
+                <!-- {{profile.uid}}: {{profile.name}} -->
+                <nb-user [picture]='profile.photoUrl' [name]='profile.name'>
+                </nb-user>
+            </nb-option>
         </nb-select>
         <p>bị thu hồi vai trò</p>
         <nb-select *ngIf="selectedProfileForReclaim" [(ngModel)]="selectedRoleForReclaim" fullWidth>
@@ -108,7 +169,7 @@
     </nb-card-body>
 </nb-card>
 
-<nb-card status='primary'>
+<!-- <nb-card status='primary'>
     <nb-card-header>Thêm thành viên vào ATC Zone</nb-card-header>
     <nb-card-body>
         <nb-select [(ngModel)]="selectedProfileForATCZone" fullWidth>
@@ -122,7 +183,7 @@
     </nb-card-footer>
 </nb-card>
 
-<nb-card status='primary'>
+<nb-card status='danger'>
     <nb-card-header>Xoá thành viên ATC Zone</nb-card-header>
     <nb-card-body>
         <nb-list style="width:100%">
@@ -134,4 +195,4 @@
             </nb-list-item>
         </nb-list>
     </nb-card-body>
-</nb-card>
+</nb-card> -->
