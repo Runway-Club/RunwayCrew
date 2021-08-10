@@ -11,11 +11,7 @@
         <nb-icon icon="edit-outline"> </nb-icon>
       </button>
 
-      <button *ngIf="checkEditPermission()" nbButton type="button" status='primary' value="Settings"
-        (click)="onSettings(userProfile)" outline shape='semi-round' size="small"
-        [disabled]="updateBtn=='Update'?false:true" style="margin-left: 5px;">
-        <nb-icon icon="settings-outline"> </nb-icon>
-      </button>
+
 
       <button *ngIf="isUpdate" nbButton type="submit" status='success' value="Confirm" (click)="onUpdate()" outline
         shape='semi-round' size="small" style="margin-left: 5px;" shape='semi-round'>Update</button>
@@ -51,23 +47,23 @@
       </nb-form-field>
       <nb-form-field>
         <label>Day of birth</label>
-        <input type='date' nbInput [disabled]="!isUpdate" [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;"
-          [ngModelOptions]="{standalone: true}">
+        <input [type]="checkEditPermission()? ' date':'password'" nbInput [disabled]="!isUpdate"
+          [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Phone number</label>
-        <input type="tel" nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.phoneNumber" fullWidth
-          style="color: #000;" [ngModelOptions]="{standalone: true}">
+        <input [type]="checkEditPermission()? 'tel':'password'" nbInput [disabled]="!isUpdate"
+          [(ngModel)]="userProfile!.phoneNumber" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Address</label>
-        <input type="text" nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.address" fullWidth
-          style="color: #000;" [ngModelOptions]="{standalone: true}">
+        <input [type]="checkEditPermission()? 'text':'password'" nbInput [disabled]="!isUpdate"
+          [(ngModel)]="userProfile!.address" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Facebook</label>
-        <input type='url' nbInput [disabled]="!isUpdate" [(ngModel)]="userProfile!.facebook" fullWidth
-          style="color: #000;" [ngModelOptions]="{standalone: true}">
+        <input [type]="checkEditPermission()? ' url':'password'" nbInput [disabled]="!isUpdate"
+          [(ngModel)]="userProfile!.facebook" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Linkedin</label>

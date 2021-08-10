@@ -70,7 +70,17 @@ export class AppComponent implements AfterViewInit {
     });
     this.authService.authState.subscribe((state) => {
       if (state) {
-        this.menus[0].query = { id: state.uid };
+        if (this.menus[0].name.toLowerCase() != 'profile') {
+          this.menus.unshift({
+            type: 'menu',
+            icon: 'account_circle',
+            name: 'Profile',
+            link: './profile',
+            query: { id: state.uid },
+          });
+        }
+      } else {
+        this.menus.shift();
       }
     });
   }
@@ -102,6 +112,9 @@ export class AppComponent implements AfterViewInit {
     await this.auth.signOut();
     this.userInfo = null;
     this.router.navigate(['home']);
+    if (this.menus[2].name.toLowerCase() == 'atc zone') {
+      this.menus.pop();
+    }
   }
 
   isMobile() {
