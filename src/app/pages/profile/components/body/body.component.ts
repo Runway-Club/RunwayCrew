@@ -28,12 +28,13 @@ export class BodyComponent {
     private profileService: ProfileService,
     private toast: NbToastrService,
     private authService: AuthenticationService,
-    private dialog: NbDialogService,
-  ) { }
+    private dialog: NbDialogService
+  ) {}
 
   ngOnInit(): void {
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
+      console.log(this.userProfile);
     }, 500);
   }
 
@@ -54,7 +55,10 @@ export class BodyComponent {
   }
   onEdit() {
     if (!this.checkEditPermission()) {
-      this.toast.danger(`Bạn không có quyền chỉnh sửa hồ sơ của ${this.userProfile?.email}`, "Cập nhật hồ sơ")
+      this.toast.danger(
+        `Bạn không có quyền chỉnh sửa hồ sơ của ${this.userProfile?.email}`,
+        'Cập nhật hồ sơ'
+      );
       return;
     }
     this.isUpdate = !this.isUpdate;
@@ -65,7 +69,7 @@ export class BodyComponent {
     this.updateBtn = 'Update';
   }
   checkEditPermission() {
-    if (this.currentUser == this.uid || this.currentUser == this.userProfile?.uid) {
+    if (this.currentUser == this.userProfile?.uid) {
       this.isPermit = !this.isPermit;
       return true;
     }
@@ -74,7 +78,7 @@ export class BodyComponent {
   onSettings(userProfile: UserProfile) {
     let dialog = this.dialog.open(SettingsComponent, {
       context: {
-        user: { ...userProfile }
+        user: { ...userProfile },
       },
       hasBackdrop: true,
       backdropClass: 'blur',
