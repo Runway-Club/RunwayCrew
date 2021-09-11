@@ -24,8 +24,11 @@
     "@nebular/theme": "^8.0.0",
     "angular-svg-round-progressbar": "^7.0.0",
     "eva-icons": "^1.1.2",
+    "express": "^4.17.1",
     "firebase": "^8.8.0",
     "material-icons": "^1.0.1",
+    "mongodb": "^4.1.1",
+    "mongoose": "^6.0.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
