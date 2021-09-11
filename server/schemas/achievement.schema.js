@@ -15,5 +15,4 @@ const achievementSchema = new mongoose.Schema({
     skill:[]
 });
 
-
 module.exports = achievementSchema;
