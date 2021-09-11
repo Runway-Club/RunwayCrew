@@ -14,5 +14,7 @@ server.use("/profile", require('./router/profile.router'));
 server.use("/contri", require('./router/contribute.router'));
 server.use("/user", require('./router/user.router'));
 server.use("/api", roleRouter, achievementRouter);
+server.use("/atc", require('./router/atc.router'));
+server.use("/skill", require('./router/skill.router'));
 
 module.exports = server;
