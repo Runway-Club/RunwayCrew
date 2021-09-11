@@ -47,4 +47,35 @@ router.post('/achievement', async (req, res)=>{
     }
 })
 
+router.put('/achievement', async (req, res)=>{
+    let {_id} = req.query;
+    let {exp, description, image, name, actor, credit} = req.body;
+    try{
+        await achievement.findByIdAndUpdate(
+        _id, 
+        {
+            "id":id,
+            "credit":credit,
+            "description":description,
+            "image":image,
+            "metadata.actor":actor,
+            "metadata.updated": Date.now().toString(),
+            "name":name
+        },
+        {rawResult: true});
+        res.send(`updated ${_id}`);
+    }catch(err){
+        console.error(err);
+    }
+})
+router.delete('/achievement', async (req, res)=>{
+    let {_id} = req.query;
+    try {
+        await achievement.findByIdAndDelete(_id);
+        res.send(`deleted ${_id}`)
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 module.exports = router;
