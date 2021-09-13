@@ -8,7 +8,7 @@ const atc = mongoose.model('atc', atcSchema);
 router.get("/", async (req, res) => {
     try {
         let data;
-        if (req.query.uid!= undefined)
+        if (req.query.uid != undefined)
             data = await atc.findOne({ uid: req.query['uid'] })
         else
             data = await atc.find()
@@ -24,28 +24,28 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl,actor,} = req.body
+        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
         const fluffy = new atc({
-           address: address,
-           email: email,
-           uid:uid,
-           contribMetadata: {
-              actor: actor,
-              created: Date.now().toString(),
-              updated: Date.now().toString(),
-           },
-           dob: dob,
-           facebook: facebook,
-           gender: gender,
-           linkIn: linkIn,
-           name: name,
-           phoneNumber: phoneNumber,
-           photoUrl: photoUrl,
-           profileMetadata:{
-              updated: Date.now().toString(),
-           },
-           roles:[],
-           selectedRoles:[],
+            address: address,
+            email: email,
+            uid: uid,
+            contribMetadata: {
+                actor: actor,
+                created: Date.now().toString(),
+                updated: Date.now().toString(),
+            },
+            dob: dob,
+            facebook: facebook,
+            gender: gender,
+            linkIn: linkIn,
+            name: name,
+            phoneNumber: phoneNumber,
+            photoUrl: photoUrl,
+            profileMetadata: {
+                updated: Date.now().toString(),
+            },
+            roles: roles,
+            selectedRoles: selectedRoles,
         });
         await fluffy.save();
         res.status(200)
@@ -55,6 +55,45 @@ router.post("/", async (req, res) => {
         res.status(500)
         res.send({ mess: 'Server err' })
 
+    }
+});
+
+router.put("/", async (req, res) => {
+    try {
+        let _id = req.body._id
+        let resdb = await atc.findByIdAndUpdate(_id, {
+            address: req.body.address,
+            email: req.body.email,
+            uid: req.body.uid,
+            contribMetadata: {
+                actor: req.body.actor,
+                created: 0,
+                updated: 0,
+            },
+            dob: req.body.dob,
+            facebook: req.body.facebook,
+            gender: req.body.gender,
+            linkIn: req.body.linkIn,
+            name: req.body.name,
+            phoneNumber: req.body.phoneNumber,
+            photoUrl: req.body.photoUrl,
+            profileMetadata: {
+                updated: 0,
+            },
+            roles: req.body.roles,
+            selectedRoles: req.body.selectedRoles,
+        }, { rawResult: true });
+        
+        if(!resdb.lastErrorObject.updatedExisting){
+            res.send({ mess: `[${req.body._id}] is not found` })
+        }
+        else{
+            res.send({ mess: `[${req.body._id}] is updated` })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
     }
 });
 

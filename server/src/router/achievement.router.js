@@ -5,7 +5,7 @@ const router = app.Router();
 
 const achievement = mongoose.model('achievements', achievementSchema);
 
-router.get('/achievements', async (req, res)=>{
+router.get('/', async (req, res)=>{
     let {id} = req.query;
 
     if(!id){
@@ -15,7 +15,7 @@ router.get('/achievements', async (req, res)=>{
     }
 })
 
-router.post('/achievement', async (req, res)=>{
+router.post('/', async (req, res)=>{
     let {credit, description, exp, image, actor, name, skillId} = req.body;
     try{
         const _achievement = new achievement({
@@ -47,7 +47,7 @@ router.post('/achievement', async (req, res)=>{
     }
 })
 
-router.put('/achievement', async (req, res)=>{
+router.put('/', async (req, res)=>{
     let {_id} = req.query;
     let {exp, description, image, name, actor, credit} = req.body;
     try{
@@ -68,7 +68,7 @@ router.put('/achievement', async (req, res)=>{
         console.error(err);
     }
 })
-router.delete('/achievement', async (req, res)=>{
+router.delete('/', async (req, res)=>{
     let {_id} = req.query;
     try {
         await achievement.findByIdAndDelete(_id);

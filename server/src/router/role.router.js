@@ -5,7 +5,7 @@ const router = app.Router();
 
 const role = mongoose.model('roles', roleSchema);
 
-router.get('/roles', async (req, res)=>{
+router.get('/', async (req, res)=>{
     let {id} = req.query;
 
     if(!id){
@@ -15,7 +15,7 @@ router.get('/roles', async (req, res)=>{
     }
 })
 
-router.post('/role', async (req, res)=>{
+router.post('/', async (req, res)=>{
     let {id, description, image, actor, name} = req.body;
     try{
         const _role = new role({
@@ -38,7 +38,7 @@ router.post('/role', async (req, res)=>{
         res.send({ mess: 'Server err' })
     }
 })
-router.put('/role', async (req, res)=>{
+router.put('/', async (req, res)=>{
     let {_id} = req.query;
     let {id, description, image, name, actor} = req.body;
     try{
@@ -58,7 +58,7 @@ router.put('/role', async (req, res)=>{
         console.error(err);
     }
 })
-router.delete('/role', async (req, res)=>{
+router.delete('/', async (req, res)=>{
     let {_id} = req.query;
     try {
         await role.findByIdAndDelete(_id);

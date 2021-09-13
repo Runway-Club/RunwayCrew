@@ -12,6 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     SharedModule,
     NbToastrModule.forRoot({ hasIcon: true, preventDuplicates: true, position: NbGlobalPhysicalPosition.TOP_RIGHT, duration: 5000 }),
     NbUserModule,
-    NbPopoverModule
+    NbPopoverModule,
+    HttpClientModule,
   ],
   providers: [NbSidebarService, NbMenuService],
   bootstrap: [AppComponent]
