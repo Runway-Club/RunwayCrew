@@ -27,4 +27,5 @@ export class HomeComponent implements OnInit {
     let res = await this.http.get('http://localhost:8080/atc').toPromise();
     console.log(res);
   }
+
 }

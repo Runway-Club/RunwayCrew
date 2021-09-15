@@ -8,8 +8,8 @@ const atc = mongoose.model('atc', atcSchema);
 router.get("/", async (req, res) => {
     try {
         let data;
-        if (req.query.uid != undefined)
-            data = await atc.findOne({ uid: req.query['uid'] })
+        if (req.query.id != undefined)
+            data = await atc.findOne({ id: req.query['id'] })
         else
             data = await atc.find()
         res.status(200)
@@ -24,11 +24,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
+        let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
         const fluffy = new atc({
             address: address,
             email: email,
-            uid: uid,
+            id: id,
             contribMetadata: {
                 actor: actor,
                 created: Date.now().toString(),
@@ -92,6 +92,18 @@ router.put("/", async (req, res) => {
         }
     } catch (err) {
         console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
+router.delete('/', async (req, res)=>{
+    let _id = req.body._id
+    try {
+        await atcSchema.findByIdAndDelete(_id);
+        res.status(200)
+        res.send({mess : ` [${req.body._id}] is deleted`})
+    } catch (err) {
+        console.log(err);
         res.status(500)
         res.send({ mess: 'Server err' })
     }

@@ -47,5 +47,45 @@ router.post("/", async (req, res) => {
 
     }
 });
+router.put("/", async (req, res) => {
+    try {
+        let _id = req.body._id
+        let resdb = await skill.findByIdAndUpdate(_id, {
+            description: req.body.description,
+            image: req.body.image,
+            uid: req.body.uid,
+            levels: req.body.levels,
+            metadata: {
+                actor: req.body.actor,
+                created: 0,
+                updated: 0,
+            },
+            name: req.body.name,
+        }, { rawResult: true });
+        
+        if(!resdb.lastErrorObject.updatedExisting){
+            res.send({ mess: `[${req.body._id}] is not found` })
+        }
+        else{
+            res.send({ mess: `[${req.body._id}] is updated` })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
+router.delete('/', async (req, res)=>{
+    let _id = req.body._id
+    try {
+        await skillSchema.findByIdAndDelete(_id);
+        res.status(200)
+        res.send({mess : ` [${req.body._id}] is deleted`})
+    } catch (err) {
+        console.log(err);
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
 
 module.exports = router;
