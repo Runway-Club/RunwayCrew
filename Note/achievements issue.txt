@@ -5,7 +5,7 @@
 
  GET/achievements?id=123
  -bỏ trường id và chỉ sử dụng duy nhất _id. tìm kiếm theo _id 
- -chưa xử lí tìm kiếm thất bại(_id ko tồn tại)
+ -chưa xử lí tìm kiếm thất bại(_id ko tồn tại) 404
 
  POST/achievements
  -giá trị có thể null nhưng trường dữ liệu phải đầy đủ.

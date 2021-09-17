@@ -4,14 +4,14 @@ GET:	get tất cả
 	-req: không có
 	-res: danh sách các đối tượng và mã(status) 200(OK)
 	get theo ID
-	-req: _id (req.query.id) 
+	-req: id (req.query.id) 
 	-res: đối tượng tìm được và mã(status) 200
 		hoặc thông báo nếu không thấy "id.... not found" và mã 404
 
 POST:	create với đối tượng ứng với schema đã tạo (dữ liệu tham khảo trên firestore)
 	-req: thông tin đối tượng (req.body)
 	-res: thành công báo "id... created" và mã 201(Created)
-		hoặc báo lỗi nếu thiếu trường và trả mã 400(Bad Request)
+	        hoặc báo lỗi nếu thiếu trường và trả mã 400(Bad Request)
 
 PUT:	update đối tượng ứng với schema đã tạo
 	-req: thông tin đối tượng (req.body)
@@ -19,7 +19,7 @@ PUT:	update đối tượng ứng với schema đã tạo
 		hoặc báo lỗi nếu thiếu trường và trả mã 400(Bad Request)
 
 DELETE:	delete đối tượng ứng với schema đã tạo
-	-req: _id (req.query.id) 
+	-req: id (req.query.id)
 	-res: thành công báo "id... deleted" và mã 200(OK)
 		hoặc báo lỗi nếu không thấy "id.... not found" và mã 404(Not Found)
 		hoặc báo lỗi nếu thiếu trường và trả mã 400(Bad Request)		
