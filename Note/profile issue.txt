@@ -1,0 +1,26 @@
+**CRUD profile còn lỗi
+
+ GET/profile
+ -ok
+
+ GET/profile?id=613c4b851d509d2e1b09630a
+ -chưa có
+
+ POST/profile
+ -đặt sai đường dẫn: '/profile/profile' , dòng 20 chỉ cần "/" là đủ
+ -chưa xử lí thiếu trường dữ liệu
+ -res chỉ cần trả về thông báo
+
+ PUT/profile
+ -đặt sai đường dẫn: '/profile/edit' , dòng 55 chỉ cần "/" là đủ
+ -báo lỗi nếu thiếu trường dữ liệu + mã 400badreq
+
+ DELETE/profile
+ -đặt sai đường dẫn: '/profile/delete' , dòng 76 chỉ cần "/" là đủ
+ -chưa xử lí thiếu thiếu id 
+ -chưa xử lí không tìm thấy đối tượng
+
+
+
+**Data for profile chưa hoàn thiện
+ -cần thêm dữ liệu sao cho tương đồng giữa firestore và mongodb

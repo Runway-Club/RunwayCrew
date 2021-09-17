@@ -98,6 +98,7 @@ router.put("/", async (req, res) => {
 });
 router.delete('/', async (req, res)=>{
     let _id = req.body._id
+    console.log(_id)
     try {
         await atcSchema.findByIdAndDelete(_id);
         res.status(200)

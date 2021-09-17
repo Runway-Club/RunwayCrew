@@ -1,0 +1,19 @@
+**CRUD role còn lỗi
+
+ GET/roles
+ -ok
+
+ GET/roles?id=123
+ -bỏ trường id và chỉ sử dụng duy nhất _id. tìm kiếm theo _id 
+ -chưa xử lí tìm kiếm thất bại(_id ko tồn tại)
+
+ POST/role
+ -giá trị có thể null nhưng trường dữ liệu phải đầy đủ.
+ -chưa xử lí thiếu trường dữ liệu. 
+
+ PUT/roles
+ -trường dữ liệu phải đầy đủ.
+ -xử lí thiếu trường dữ liệu
+
+ DELETE/roles
+ -chưa xử lý xóa thất bại do ko tìm thấy _id khớp

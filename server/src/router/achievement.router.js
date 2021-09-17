@@ -11,7 +11,7 @@ router.get('/', async (req, res)=>{
     if(!id){
         res.send(await achievement.find());
     }else{
-        res.send(await achievement.findOne({id:id}));
+        res.send(await achievement.findOne({_id:id}));
     }
 })
 

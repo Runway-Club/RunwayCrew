@@ -1,0 +1,28 @@
+**CRUD contribute còn lỗi
+
+ GET/contri
+ -ok
+
+ GET/contri?id=123
+ -chưa xử lí không tìm thấy đối tượng gây treo api vì không có res
+
+ POST/contri
+ -đặt sai đường dẫn: '/contri/contribute' , dòng 34 chỉ cần "/" là đủ
+ -lỗi phát sinh từ server là 500
+ -chưa xử lí thiếu trường dữ liệu
+
+ PUT/contri
+ -đặt sai đường dẫn: '/contri/edit' , dòng 55 chỉ cần "/" là đủ
+ -khi update cần đầy đủ thông tin đối tượng, vd thiếu field uid làm sao cập nhật uid
+ -cần xứ lí và trả về thông báo thiếu trường dữ liệu + mã lỗi 400 badreq
+
+ DELETE/contri
+ -đặt sai đường dẫn: '/contri/delete' , dòng 71 chỉ cần "/" là đủ
+ -chưa xử lí thiếu thiếu id 
+ -chưa xử lí không tìm thấy đối tượng
+ -luôn trả về 'delete' mặc dù không tìm thấy id, thiếu trường id
+
+
+
+**Data for contribute chưa hoàn thiện
+ -cần thêm dữ liệu sao cho tương đồng giữa firestore và mongodb
