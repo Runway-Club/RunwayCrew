@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        let _id = req.body._id
+        let _id = req.body.id
         let resdb = await atc.findByIdAndUpdate(_id, {
             address: req.body.address,
             email: req.body.email,
@@ -83,11 +83,11 @@ router.put("/", async (req, res) => {
             roles: req.body.roles,
             selectedRoles: req.body.selectedRoles,
         }, { rawResult: true });
-        
-        if(!resdb.lastErrorObject.updatedExisting){
+
+        if (!resdb.lastErrorObject.updatedExisting) {
             res.send({ mess: `[${req.body._id}] is not found` })
         }
-        else{
+        else {
             res.send({ mess: `[${req.body._id}] is updated` })
         }
     } catch (err) {
@@ -96,12 +96,35 @@ router.put("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-router.delete('/', async (req, res)=>{
-    let _id = req.body._id
+router.delete('/', async (req, res) => {
+    let _id = req.query.id
     try {
-        await atcSchema.findByIdAndDelete(_id);
-        res.status(200)
-        res.send({mess : ` [${req.body._id}] is deleted`})
+        if(req.query.id == undefined){
+            res.status(400)
+            res.send(`[id] field is missing`)
+        }
+        atc.findByIdAndDelete(_id, function (err, docs) {
+            if (err) {
+                res.status(404)
+                res.send(`[${_id}] not found`)
+            }
+            else {
+                res.status(200)
+                res.send({ mess: ` [${_id}] is deleted` })
+            }
+        });
+
+        // let resDB = atc.findByIdAndDelete(_id, { rawResult: true })
+        // if (!resDB.lastErrorObject.updatedExisting) {
+        //     res.status(404)
+        //     res.send(`[${_id}] not found`)
+        // }
+        // else {
+        //     res.status(200)
+        //     res.send({ mess: ` [${req.body._id}] is deleted` })
+        // }
+
+
     } catch (err) {
         console.log(err);
         res.status(500)

@@ -1,0 +1,26 @@
+**CRUD skill còn lỗi
+
+ GET/skill
+ -ok
+
+ GET/skill?id=123
+ -lỗi: không tìm thấy đối tượng với id nhập vào
+ -chưa xử lý không tìm thấy đối tượng
+
+ POST/skill
+ -phương thức khởi tạo không cần trường 'id' do đã có _id của mongo
+ -chưa thông báo thiếu trường dữ liệu. user bắt buộc phải có field dù field đó rỗng ""
+
+ PUT/skill
+ -chưa báo thiếu trường
+
+ DELETE/skill
+ -chưa báo thiếu id
+ -id nhận từ req.query, không phải body
+ -api lỗi 
+ -chưa xử lý tìm không thấy đối tượng
+
+
+
+**Data for skills chưa hoàn thiện
+ -cần thêm dữ liệu sao cho tương đồng giữa firestore và mongodb

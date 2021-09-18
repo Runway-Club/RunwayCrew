@@ -9,6 +9,9 @@ import { Achievement } from 'src/models/achievement.model';
 import { Skill } from 'src/models/skill.model';
 import { UserProfile } from 'src/models/user-profile.model';
 
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-achievement',
   templateUrl: './achievement.component.html',
@@ -21,7 +24,8 @@ export class AchievementComponent implements OnInit {
     private skillService: SkillService,
     private profileService: ProfileService,
     private contributionService: ContributionService,
-    private dialog: NbDialogService) { }
+    private dialog: NbDialogService,
+    private HttpClient:HttpClient) { }
 
   ngOnInit(): void {
     this.loadPage();
@@ -40,7 +44,10 @@ export class AchievementComponent implements OnInit {
       this.achievements.length = 0;
       this.achievements.push(...achievements);
     })
+    // this.getAllAchievements();
   }
+
+  
 
   public page = 0;
   public size = 50;
@@ -51,6 +58,14 @@ export class AchievementComponent implements OnInit {
   public profiles: UserProfile[] = [];
   public selectedProvidedUser?: UserProfile;
   public skipAchievement: boolean = false;
+
+  public achievementsTest: Achievement[] = [];
+
+  // async getAllAchievements(){
+  //   return await this.HttpClient.get<Achievement[]>('http://localhost:8080/achievements').subscribe((data)=>{
+  //     this.achievementsTest = data;
+  //   })
+  // }
 
   public addEmptyAchievement() {
     this.achievements.push({

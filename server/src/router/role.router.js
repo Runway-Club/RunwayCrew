@@ -7,31 +7,38 @@ const role = mongoose.model('roles', roleSchema);
 
 router.get('/', async (req, res)=>{
     let {id} = req.query;
-
     if(!id){
-        res.send(await role.find());
+        res.status(200).send(await role.find());
     }else{
-        res.send(await role.findOne({id:id}));
+        role.findById(id, (err, result) => {
+            if (err) {
+                res.status(404).send({ message: `${id} not found !` });
+            } else {
+                res.status(200).send(result);
+            }
+        })
     }
 })
 
 router.post('/', async (req, res)=>{
-    let {id, description, image, actor, name} = req.body;
+    let {description, image, actor, name} = req.body;
     try{
-        const _role = new role({
-            id:id,
-            description:description,
-            image:image,
-            metadata:{
-                actor:actor,
-                created: Date.now().toString(),
-                updated: Date.now().toString(),
-            },
-            name:name
-        })
-        await _role.save();
-        res.status(200);
-        res.send({role: _role});
+        if(description && image && actor && name){
+            const _role = new role({
+                description:description,
+                image:image,
+                metadata:{
+                    actor:actor,
+                    created: Date.now().toString(),
+                    updated: Date.now().toString(),
+                },
+                name:name
+            })
+            await _role.save();
+            res.status(201).send({ message: `${_role._id} created` });
+        }else{
+            res.status(400).send(`not enough value !`);
+        }
     }catch(err){
         console.log(err)
         res.status(500)
@@ -39,30 +46,43 @@ router.post('/', async (req, res)=>{
     }
 })
 router.put('/', async (req, res)=>{
-    let {_id} = req.query;
     let {id, description, image, name, actor} = req.body;
     try{
-        await role.findByIdAndUpdate(
-        _id, 
-        {
-            "id":id,
-            "description":description,
-            "image":image,
-            "metadata.actor":actor,
-            "metadata.updated": Date.now().toString(),
-            "name":name
-        },
-        {rawResult: true});
-        res.send(`updated ${_id}`);
+        if(id && description && image && name &&actor){
+            role.findByIdAndUpdate(
+                id, 
+            {
+                "description":description,
+                "image":image,
+                "metadata.actor":actor,
+                "metadata.updated": Date.now().toString(),
+                "name":name
+            },
+            (err, result)=>{
+                if(err){
+                    res.status(404).send(`${id} not found !`);
+                }else{
+                    res.status(200).send(`${id} updated !`)
+                }
+            });
+        }else{
+            res.status(400).send(`not enough value !`);
+        }
     }catch(err){
+        res.status(500);
         console.error(err);
     }
 })
 router.delete('/', async (req, res)=>{
-    let {_id} = req.query;
+    let {id} = req.query;
     try {
-        await role.findByIdAndDelete(_id);
-        res.send(`deleted ${_id}`)
+        role.findByIdAndDelete(id,(err, doc)=>{
+            if(err){
+                res.status(404).send(`${id} not found !`)
+            }else{
+                res.status(200).send(`${id} deleted !`)
+            }
+        });
     } catch (err) {
         console.error(err);
     }
