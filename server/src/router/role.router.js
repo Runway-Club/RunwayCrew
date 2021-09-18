@@ -21,18 +21,14 @@ router.get('/', async (req, res)=>{
 })
 
 router.post('/', async (req, res)=>{
-    let {description, image, actor, name} = req.body;
+    let {description, image, name , metadata} = req.body;
     try{
-        if(description && image && actor && name){
+        if(description && image && metadata && name){
             const _role = new role({
-                description:description,
-                image:image,
-                metadata:{
-                    actor:actor,
-                    created: Date.now().toString(),
-                    updated: Date.now().toString(),
-                },
-                name:name
+                description: description,
+                image: image,
+                metadata: metadata,
+                name: name
             })
             await _role.save();
             res.status(201).send({ message: `${_role._id} created` });
@@ -46,16 +42,15 @@ router.post('/', async (req, res)=>{
     }
 })
 router.put('/', async (req, res)=>{
-    let {id, description, image, name, actor} = req.body;
+    let {_id, description, image, name, metadata} = req.body;
     try{
-        if(id && description && image && name &&actor){
+        if(_id && description && image && name && metadata){
             role.findByIdAndUpdate(
-                id, 
+                _id, 
             {
                 "description":description,
                 "image":image,
-                "metadata.actor":actor,
-                "metadata.updated": Date.now().toString(),
+                "metadata":metadata,
                 "name":name
             },
             (err, result)=>{
