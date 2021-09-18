@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     let { credit, description, exp, image, name, metadata, skill } = req.body;
     try {
-        if (credit && description && exp && image && skill && metadata) {
+        if (credit && description && exp && image && skill && metadata && name) {
             const _achievement = new achievement({
                 credit: credit,
                 exp: exp,

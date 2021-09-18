@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
         }
     }
 });
-router.post("/contribute", async (req, res) =>{
+router.post("/", async (req, res) =>{
     try {
         let {credit, email,exp, uid} = req.body
         const fluffy = new Contribute({
@@ -52,29 +52,39 @@ router.post("/contribute", async (req, res) =>{
         res.send({ mess: 'Server err' })
     }
 });
-router.put("/edit", async(req,res)=>{
+router.put("/", async(req,res)=>{
     const id = req.body.id;
     const credit = req.body.credit;
     const email = req.body.email;
     const exp = req.body.exp;
+    const uid = req.body.uid;
     console.log(id);
     try {
-        await Contribute.findByIdAndUpdate(id, {"credit":credit, "exp":exp, "email": email});
-        res.status(200)
-        res.send("ok")
+        let resdb = await Contribute.findByIdAndUpdate(id, 
+            {"credit":credit,
+             "exp":exp,
+             "email": email,
+             "uid":uid
+            }, {rawResult: true});
+            if(!resdb.lastErrorObject.updatedExisting){
+                res.send({ mess: `[${req.body._id}] is not found` })
+            }
+            else{
+                res.send({ mess: `[${req.body._id}] is updated` })
+            }
     } catch (error) {
         console.log(error)
         res.status(400)
-        res.send("lỗi")
+        res.send("Bad")
     }
 })
-router.delete("/delete", async (req,res)=> {
-    const {id} = req.query;
+router.delete("/", async (req,res)=> {
+    const {id} = req.query.id;
 
     try{
         await Contribute.findByIdAndDelete(id);
         res.status(200)
-        res.send("Delete")
+        res.send({mess:`ok`})
     } catch (error) {
         console.log(err)
         res.status(400)
