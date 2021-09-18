@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-router.post("/profiles", async (req, res) =>{
+router.post("/", async (req, res) =>{
     try {
         let {address, actor, created, updated, dob, email, facebook,gender, linkIn, name, phoneNumber, photoUrl, update, uid} = req.body
         const fluffy = new Profile({
@@ -88,7 +88,7 @@ router.put("/", async(req,res)=>{
             }
     } catch (error) {
         console.log(err)
-            res.status(400)
+            res.status(500)
             res.send({ mess: 'Server err' })
     }
 })

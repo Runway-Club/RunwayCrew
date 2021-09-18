@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
         }
     }
 });
-router.post("/contribute", async (req, res) =>{
+router.post("/", async (req, res) =>{
     try {
         let {credit, email,exp, uid} = req.body
         const fluffy = new Contribute({
@@ -52,7 +52,7 @@ router.post("/contribute", async (req, res) =>{
         res.send({ mess: 'Server err' })
     }
 });
-router.put("/edit", async(req,res)=>{
+router.put("/", async(req,res)=>{
     const id = req.body.id;
     const credit = req.body.credit;
     const email = req.body.email;
@@ -82,17 +82,9 @@ router.delete("/", async (req,res)=> {
     const {id} = req.query.id;
 
     try{
-        await Contribute.findByIdAndDelete(id, function(err, doc){
-            if (err){
-                res.status(404)
-                res.send({mess : ` [${req.body._id}] is deleted`})
-            }
-            else{
-                res.status(200)
-                res.send({mess:`ok`},doc)
-            }
-        });
-        
+        await Contribute.findByIdAndDelete(id);
+        res.status(200)
+        res.send({mess:`ok`})
     } catch (error) {
         console.log(err)
         res.status(400)
