@@ -21,26 +21,17 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let { credit, description, exp, image, actor, name, skillId } = req.body;
+    let { metadata, credit, description, exp, image, name, skill } = req.body;
     try {
-        if (credit && description && exp && image && actor && name && skillId) {
+        if (metadata && credit && description && exp && image && name && skill) {
             const _achievement = new achievement({
                 credit: credit,
                 exp: exp,
                 description: description,
                 image: image,
-                metadata: {
-                    actor: actor,
-                    created: Date.now().toString(),
-                    updated: Date.now().toString(),
-                },
+                metadata: metadata,
                 name: name,
-                skill: [
-                    {
-                        exp: exp,
-                        skillId: skillId
-                    }
-                ]
+                skill: skill
             })
             await _achievement.save();
             res.status(201).send({ message: `${_achievement._id} created` });
@@ -55,9 +46,9 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-    let { id, exp, description, image, name, actor, credit } = req.body;
+    let { id, exp, description, image, name, credit } = req.body;
     try {
-        if (id && exp && description && image && name && actor && credit) {
+        if (id && exp && description && image && name  && credit) {
             achievement.findByIdAndUpdate(
                 id,
                 {
@@ -75,7 +66,7 @@ router.put('/', async (req, res) => {
                         res.status(200).send(`${id} updated !`);
                     }
                 });
-        }else{
+        } else {
             res.status(400).send(`not enough value !`)
         }
     } catch (err) {
