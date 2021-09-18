@@ -1,22 +1,38 @@
 const app = require('express');
 const profilesSchema = require('../../schemas/profile.schema')
 
+
 let mongoose = require('mongoose');
 const router = app.Router();
 
 const Profile = mongoose.model('profiles',profilesSchema)
 router.get("/", async (req, res) => {
-    try {
-        let data;
-        data = await Profile.find()
-        res.status(200)
-        res.send(data)
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
+    const {id} = req.query;
+    if(!id) {
+        try {
+            let data;
+            data = await Profile.find()
+            res.status(200)
+            res.send(data)
+        } catch (err) {
+            console.log(err)
+            res.status(400)
+            res.send({ mess: 'Server err' })
+        }
+    }
+    else{
+        try {
+            res.send(await Profile.findById(id))
+        } catch (error) {
+            console.log(err)
+            res.status(400)
+            res.send({ mess: 'Server err' })
+        }
     }
 });
+
+
+
 router.post("/", async (req, res) =>{
     try {
         let {address, actor, created, updated, dob, email, facebook,gender, linkIn, name, phoneNumber, photoUrl, update, uid} = req.body
@@ -43,7 +59,7 @@ router.post("/", async (req, res) =>{
             uid: uid,
         });
         await fluffy.save();
-        res.status(200)
+        res.status(201)
         res.send({ mess: fluffy })
     } 
     catch (err) {
@@ -69,7 +85,6 @@ router.put("/", async(req,res)=>{
     try {
         let resdb= await Profile.findByIdAndUpdate(id ,
             {"address":address,
-             "contribMetadata":contribMetadata,
              "actor":actor,"created":created,
              "dob":dob,"email":email,
              "facebook":facebook,
@@ -81,26 +96,40 @@ router.put("/", async(req,res)=>{
              "update":update
             },{ rawResult: true });
             if(!resdb.lastErrorObject.updatedExisting){
+                res.status(400)
                 res.send({ mess: `[${req.body.id}] not found` })
             }
             else{
+                res.status(200)
                 res.send({ mess: `[${req.body.id}] updated` })
             }
     } catch (error) {
-        console.log(err)
+        console.log(error)
             res.status(500)
             res.send({ mess: 'Server err' })
     }
 })
 router.delete("/", async(req,res)=>{
-    const {id}= req.query;
+    const id= req.query.id;
     try {
-        await Profile.findByIdAndDelete(id);
-        res.status(200)
-        res.send({mess: 'ok'})
+        
+        Profile.findByIdAndDelete(id, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                if(docs != null){
+                    res.status(200)
+                    res.send({mess: "ok ", docs})
+                }else{
+                    res.status(404)
+                    res.send({mess: "Not Faund", })
+                }
+            }
+        });
     } catch (error) {
         console.log(err)
-        res.status(400)
+        res.status(500)
         res.send({ mess: 'Server err' })
     }
 })
