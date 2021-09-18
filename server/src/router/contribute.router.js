@@ -57,24 +57,42 @@ router.put("/edit", async(req,res)=>{
     const credit = req.body.credit;
     const email = req.body.email;
     const exp = req.body.exp;
+    const uid = req.body.uid;
     console.log(id);
     try {
-        await Contribute.findByIdAndUpdate(id, {"credit":credit, "exp":exp, "email": email});
-        res.status(200)
-        res.send("ok")
+        let resdb = await Contribute.findByIdAndUpdate(id, 
+            {"credit":credit,
+             "exp":exp,
+             "email": email,
+             "uid":uid
+            }, {rawResult: true});
+            if(!resdb.lastErrorObject.updatedExisting){
+                res.send({ mess: `[${req.body._id}] is not found` })
+            }
+            else{
+                res.send({ mess: `[${req.body._id}] is updated` })
+            }
     } catch (error) {
         console.log(error)
         res.status(400)
-        res.send("lỗi")
+        res.send("Bad")
     }
 })
-router.delete("/delete", async (req,res)=> {
-    const {id} = req.query;
+router.delete("/", async (req,res)=> {
+    const {id} = req.query.id;
 
     try{
-        await Contribute.findByIdAndDelete(id);
-        res.status(200)
-        res.send("Delete")
+        await Contribute.findByIdAndDelete(id, function(err, doc){
+            if (err){
+                res.status(404)
+                res.send({mess : ` [${req.body._id}] is deleted`})
+            }
+            else{
+                res.status(200)
+                res.send({mess:`ok`},doc)
+            }
+        });
+        
     } catch (error) {
         console.log(err)
         res.status(400)

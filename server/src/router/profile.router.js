@@ -52,8 +52,8 @@ router.post("/profiles", async (req, res) =>{
         res.send({ mess: 'Server err' })
     }
 });
-router.put("/edit", async(req,res)=>{
-    const id = req.query;
+router.put("/", async(req,res)=>{
+    const id = req.body.id;
     const address = req.body.address;
     const actor = req.body.actor;
     const created = req.body.created;
@@ -64,17 +64,36 @@ router.put("/edit", async(req,res)=>{
     const linkIn = req.body.linkIn;
     const name = req.body.name;
     const phoneNumber = req.body.phoneNumber;
+    const photoUrl = req.body.photoUrl;
     const update = req.body.update;
     try {
-        await Profile.findByIdAndUpdate(id ,{"address":address, "contribMetadata":contribMetadata,"actor":actor,"created":created,"dob":dob,"email":email,"facebook":facebook,"gender":gender,"linkIn":linkIn,"name":name,"phoneNumber":phoneNumber,"update":update})
+        let resdb= await Profile.findByIdAndUpdate(id ,
+            {"address":address,
+             "contribMetadata":contribMetadata,
+             "actor":actor,"created":created,
+             "dob":dob,"email":email,
+             "facebook":facebook,
+             "gender":gender,
+             "linkIn":linkIn,
+             "name":name,
+             "phoneNumber":phoneNumber,
+             "photoUrl":photoUrl,
+             "update":update
+            },{ rawResult: true });
+            if(!resdb.lastErrorObject.updatedExisting){
+                res.send({ mess: `[${req.body.id}] not found` })
+            }
+            else{
+                res.send({ mess: `[${req.body.id}] updated` })
+            }
     } catch (error) {
         console.log(err)
             res.status(400)
             res.send({ mess: 'Server err' })
     }
 })
-router.delete("/delete", async(req,res)=>{
-    const {id}= req.body;
+router.delete("/", async(req,res)=>{
+    const {id}= req.query;
     try {
         await Profile.findByIdAndDelete(id);
         res.status(200)
