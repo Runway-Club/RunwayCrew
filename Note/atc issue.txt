@@ -1,0 +1,27 @@
+**CRUD atc còn lỗi
+
+ GET/atc
+ -ok
+
+ GET/atc?id=123
+ -lỗi: không tìm thấy đối tượng với id nhập vào(chỉ trả về user đầu tiên?)
+ -chưa xử lý không tìm thấy đối tượng
+
+ POST/atc 
+ -phương thức khởi tạo không cần trường 'id' do đã có _id của mongo
+ -chưa thông báo thiếu trường dữ liệu. user bắt buộc phải có field dù field đó rỗng ""
+ -API req thiếu uid
+
+ PUT/atc
+ -chưa báo thiếu trường
+
+ DELETE/atc
+ -chưa báo thiếu id
+ -id nhận từ req.query không phải body
+ -api bị lỗi gây Server err, không trả về res
+ -chưa xử lý tìm không thấy đối tượng
+
+
+
+**Data for atc chưa hoàn thiện
+ -em cần thêm dữ liệu sao cho tương đồng giữa firestore và mongodb

@@ -8,8 +8,8 @@ const atc = mongoose.model('atc', atcSchema);
 router.get("/", async (req, res) => {
     try {
         let data;
-        if (req.query.uid != undefined)
-            data = await atc.findOne({ uid: req.query['uid'] })
+        if (req.query.id != undefined)
+            data = await atc.findOne({ id: req.query['id'] })
         else
             data = await atc.find()
         res.status(200)
@@ -24,11 +24,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
+        let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
         const fluffy = new atc({
             address: address,
             email: email,
-            uid: uid,
+            id: id,
             contribMetadata: {
                 actor: actor,
                 created: Date.now().toString(),
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        let _id = req.body._id
+        let _id = req.body.id
         let resdb = await atc.findByIdAndUpdate(_id, {
             address: req.body.address,
             email: req.body.email,
@@ -83,15 +83,50 @@ router.put("/", async (req, res) => {
             roles: req.body.roles,
             selectedRoles: req.body.selectedRoles,
         }, { rawResult: true });
-        
-        if(!resdb.lastErrorObject.updatedExisting){
+
+        if (!resdb.lastErrorObject.updatedExisting) {
             res.send({ mess: `[${req.body._id}] is not found` })
         }
-        else{
+        else {
             res.send({ mess: `[${req.body._id}] is updated` })
         }
     } catch (err) {
         console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
+router.delete('/', async (req, res) => {
+    let _id = req.query.id
+    try {
+        if(req.query.id == undefined){
+            res.status(400)
+            res.send(`[id] field is missing`)
+        }
+        atc.findByIdAndDelete(_id, function (err, docs) {
+            if (err) {
+                res.status(404)
+                res.send(`[${_id}] not found`)
+            }
+            else {
+                res.status(200)
+                res.send({ mess: ` [${_id}] is deleted` })
+            }
+        });
+
+        // let resDB = atc.findByIdAndDelete(_id, { rawResult: true })
+        // if (!resDB.lastErrorObject.updatedExisting) {
+        //     res.status(404)
+        //     res.send(`[${_id}] not found`)
+        // }
+        // else {
+        //     res.status(200)
+        //     res.send({ mess: ` [${req.body._id}] is deleted` })
+        // }
+
+
+    } catch (err) {
+        console.log(err);
         res.status(500)
         res.send({ mess: 'Server err' })
     }
