@@ -76,9 +76,9 @@ router.put("/", async (req, res) => {
     }
 });
 router.delete('/', async (req, res)=>{
-    let _id = req.body._id
+    let id = req.body.id
     try {
-        await skillSchema.findByIdAndDelete(_id);
+        await skillSchema.findByIdAndDelete(id);
         res.status(200)
         res.send({mess : ` [${req.body._id}] is deleted`})
     } catch (err) {
