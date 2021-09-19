@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let { metadata, credit, description, exp, image, name, skill } = req.body;
+    let { credit, description, exp, image, name, metadata, skill } = req.body;
     try {
-        if (metadata && credit && description && exp && image && name && skill) {
+        if (credit && description && exp && image && skill && metadata && name) {
             const _achievement = new achievement({
                 credit: credit,
                 exp: exp,
@@ -46,19 +46,19 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-    let { id, exp, description, image, name, credit } = req.body;
+    let { _id, exp, description, image, name, metadata, credit, skill } = req.body;
     try {
-        if (id && exp && description && image && name  && credit) {
+        if (_id && exp && description && image && name && metadata && credit && skill) {
             achievement.findByIdAndUpdate(
-                id,
+                _id,
                 {
                     "credit": credit,
                     "description": description,
                     "image": image,
-                    "metadata.actor": actor,
-                    "metadata.updated": Date.now().toString(),
+                    "metadata": metadata,
                     "name": name,
-                    "exp": exp
+                    "exp": exp,
+                    "skill": skill
                 }, (err, result) => {
                     if (err) {
                         res.status(404).send(`${id} not found !`);
