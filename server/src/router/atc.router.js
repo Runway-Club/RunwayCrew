@@ -24,16 +24,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
+        let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl,profileMetadata, contribMetadata, roles, selectedRoles } = req.body
         const fluffy = new atc({
             address: address,
             email: email,
-            id: id,
-            contribMetadata: {
-                actor: actor,
-                created: Date.now().toString(),
-                updated: Date.now().toString(),
-            },
+            contribMetadata: contribMetadata,
             dob: dob,
             facebook: facebook,
             gender: gender,
@@ -41,9 +36,7 @@ router.post("/", async (req, res) => {
             name: name,
             phoneNumber: phoneNumber,
             photoUrl: photoUrl,
-            profileMetadata: {
-                updated: Date.now().toString(),
-            },
+            profileMetadata: profileMetadata,
             roles: roles,
             selectedRoles: selectedRoles,
         });

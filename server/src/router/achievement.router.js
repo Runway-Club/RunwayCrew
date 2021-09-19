@@ -21,17 +21,26 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let { credit, description, exp, image, name, metadata, skill } = req.body;
+    let { credit, description, exp, image, actor, name, skillId } = req.body;
     try {
-        if (credit && description && exp && image && skill && metadata && name) {
+        if (credit && description && exp && image && actor && name && skillId) {
             const _achievement = new achievement({
                 credit: credit,
                 exp: exp,
                 description: description,
                 image: image,
-                metadata: metadata,
+                metadata: {
+                    actor: actor,
+                    created: Date.now().toString(),
+                    updated: Date.now().toString(),
+                },
                 name: name,
-                skill: skill
+                skill: [
+                    {
+                        exp: exp,
+                        skillId: skillId
+                    }
+                ]
             })
             await _achievement.save();
             res.status(201).send({ message: `${_achievement._id} created` });
@@ -46,19 +55,19 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-    let { _id, exp, description, image, name, metadata, credit, skill } = req.body;
+    let { id, exp, description, image, name, actor, credit } = req.body;
     try {
-        if (_id && exp && description && image && name && metadata && credit && skill) {
+        if (id && exp && description && image && name && actor && credit) {
             achievement.findByIdAndUpdate(
-                _id,
+                id,
                 {
                     "credit": credit,
                     "description": description,
                     "image": image,
-                    "metadata": metadata,
+                    "metadata.actor": actor,
+                    "metadata.updated": Date.now().toString(),
                     "name": name,
-                    "exp": exp,
-                    "skill": skill
+                    "exp": exp
                 }, (err, result) => {
                     if (err) {
                         res.status(404).send(`${id} not found !`);
@@ -66,7 +75,7 @@ router.put('/', async (req, res) => {
                         res.status(200).send(`${id} updated !`);
                     }
                 });
-        } else {
+        }else{
             res.status(400).send(`not enough value !`)
         }
     } catch (err) {
