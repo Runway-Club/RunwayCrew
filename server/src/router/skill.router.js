@@ -6,28 +6,36 @@ const router = app.Router();
 const skill = mongoose.model('skill', skillSchema);
 
 router.get("/", async (req, res) => {
-    try {
-        let data;
-        if (req.query.id!= undefined)
-            data = await skill.findOne({ id: req.query['id'] })
-        else
-            data = await skill.find()
-        res.status(200)
-        res.send(data)
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
-    }
+    let {id} = req.query;
+    if(!id) {
+      try {
+          let data;
+          data = await skill.find()
+          res.status(200)
+          res.send(data)
+      } catch (err) {
+          console.log(err)
+          res.status(404)
+          res.send({ mess: 'Server err' })
+      }
+  }
+  else{
+      try {
+          res.send(await skill.findById(id))
+      } catch (error) {
+          console.log(err)
+          res.status(404)
+          res.send({ mess: 'Server err' })
+      }
+  }
 });
 
 
 router.post("/", async (req, res) => {
     try {
-        let { description, id, image, actor, name} = req.body
+        let { description, image, actor, name} = req.body
         const fluffy = new skill({
             description: description,
-            id: id,
             image: image,
             levels:[],
             metadata:{
@@ -75,12 +83,24 @@ router.put("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-router.delete('/', async (req, res)=>{
-    let _id = req.body._id
+router.delete('/', async (req, res) => {
+    let _id = req.query.id
     try {
-        await skillSchema.findByIdAndDelete(_id);
-        res.status(200)
-        res.send({mess : ` [${req.body._id}] is deleted`})
+        if(req.query.id == undefined){
+            res.status(400)
+            res.send(`[id] field is missing`)
+        }
+        skill.findByIdAndDelete(_id, function (err, docs) {
+            if (err) {
+                res.status(404)
+                res.send(`[${_id}] not found`)
+            }
+            else {
+                res.status(200)
+                res.send({ mess: ` [${_id}] is deleted` })
+            }
+        });
+
     } catch (err) {
         console.log(err);
         res.status(500)
