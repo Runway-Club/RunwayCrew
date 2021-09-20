@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
 const roleSchema = new mongoose.Schema({
-    id: String,
-    description: String,
-    image: String,
-    metadata: {
-        actor: String,
-        created: String,
-        updated: String
-    },
-    name:String,
+    description: '',
+    id: '',
+    image: '',
+    metadata: { actor: '', created: 0, updated: 0 },
+    name: ''
 });
 
 module.exports = roleSchema;

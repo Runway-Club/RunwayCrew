@@ -2,26 +2,20 @@ const mongoose = require('mongoose');
 
 
 const atcSchema = new mongoose.Schema({
-    address: String,
-    contribMetadata: {
-        actor: String,
-        created: String,
-        updated: String,
-    },
-    dob: String,
-    email: String,
-    facebook: String,
-    gender:String,
-    linkIn:String,
-    name:String,
-    phoneNumber:String,
-    photoUrl:String,
-    profileMetadata:{
-        updated:Number,
-    },
-    roles:[],
-    selectedRoles:[],
-    uid:String,
+    address : '',
+    contribMetadata : { created: 0, actor: '', updated: 0 },
+    dob : '',
+    email : '',
+    facebook : '',
+    gender : '',
+    linkIn : '',
+    name : '',
+    phoneNumber : '',
+    photoUrl : '',
+    profileMetadata : { updated: 0 },
+    roles :[],
+    selectedRoles :[],
+    uid : ''
   
 });
 

@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
 
 const achievementSchema = new mongoose.Schema({
-    id: String,
-    credit: Number,
-    description: String,
-    exp: Number,
-    image: String,
-    metadata:{
-        actor: String,
-        created: String,
-        updated: String,
-    },
-    name: String,
-    skill:[]
+    credit : 0,
+        description : '',
+        exp : 0,
+        image : '',
+        metadata : { created: 0, actor: '', updated: 0 },
+        name : '',
+        skills : [],
+        id:''
 });
 
 module.exports = achievementSchema;

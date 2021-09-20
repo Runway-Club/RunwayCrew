@@ -2,16 +2,12 @@ const mongoose = require('mongoose');
 
 
 const skillSchema = new mongoose.Schema({
-    description: String,
-    id:String,
-    image: String,
-    levels:[],
-    metadata:{
-        actor: String,
-        created: String,
-        updated: String,
-    },
-    name:String,
+    description: '',
+    id: '',
+    image: '',
+    levels: [],
+    metadata: { actor: '', updated: 0, created: 0 },
+    name: ''
 });
 
 
