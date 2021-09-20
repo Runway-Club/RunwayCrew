@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     try {
         let data;
         if (req.query.id!= undefined)
-            data = await skill.findOne({ id: req.query['id'] })
+            data = await skill.findOne({_id: req.query['id'] })
         else
             data = await skill.find()
         res.status(200)
@@ -76,11 +76,15 @@ router.put("/", async (req, res) => {
     }
 });
 router.delete('/', async (req, res)=>{
-    let id = req.body.id
+    let {id} = req.query
     try {
-        await skillSchema.findByIdAndDelete(id);
-        res.status(200)
-        res.send({mess : ` [${req.body._id}] is deleted`})
+        skill.findByIdAndDelete(id,(err, doc) => {
+            if (err) {
+                res.status(404).send({ message: `${id} does not exits !` });
+            } else {
+                res.status(200).send({ message: `deleted ${id}` });
+            }
+        });
     } catch (err) {
         console.log(err);
         res.status(500)

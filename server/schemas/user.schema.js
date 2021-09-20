@@ -1,12 +1,19 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: {
-        firstName: String,
-        lastName: String,
-    },
-    loginTime: [],
-    email: String,
+    contribMetadata : { created: 0, actor: '', updated: 0 },
+    dob : '',
+    email : '',
+    facebook : '',
+    gender : '',
+    linkIn : '',
+    name : '',
+    phoneNumber : '',
+    photoUrl : '',
+    profileMetadata : { updated: 0 },
+    roles :[],
+    selectedRoles :[],
+    uid : ''
 });
 
 
