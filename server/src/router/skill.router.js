@@ -8,19 +8,28 @@ const SkillModel = require('../../model/skill.model')
 const shareService = require('../service/share.service');
 
 router.get("/", async (req, res) => {
-    try {
-        let data;
-        if (req.query.id!= undefined)
-            data = await skill.findOne({_id: req.query['id'] })
-        else
-            data = await skill.find()
-        res.status(200)
-        res.send(data)
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
-    }
+    let {id} = req.query;
+    if(!id) {
+      try {
+          let data;
+          data = await skill.find()
+          res.status(200)
+          res.send(data)
+      } catch (err) {
+          console.log(err)
+          res.status(404)
+          res.send({ mess: 'Server err' })
+      }
+  }
+  else{
+      try {
+          res.send(await skill.findById(id))
+      } catch (error) {
+          console.log(err)
+          res.status(404)
+          res.send({ mess: 'Server err' })
+      }
+  }
 });
 // router.post("/", async (req, res) => {
 //     try {
@@ -94,6 +103,7 @@ router.put("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
+<<<<<<< HEAD
 router.delete('/', async (req, res)=>{
     let {id} = req.query
     try {
@@ -104,6 +114,26 @@ router.delete('/', async (req, res)=>{
                 res.status(200).send({ message: `deleted ${id}` });
             }
         });
+=======
+router.delete('/', async (req, res) => {
+    let _id = req.query.id
+    try {
+        if(req.query.id == undefined){
+            res.status(400)
+            res.send(`[id] field is missing`)
+        }
+        skill.findByIdAndDelete(_id, function (err, docs) {
+            if (err) {
+                res.status(404)
+                res.send(`[${_id}] not found`)
+            }
+            else {
+                res.status(200)
+                res.send({ mess: ` [${_id}] is deleted` })
+            }
+        });
+
+>>>>>>> f79e6f7693cd82fc3ea439fc2bc5286078cb8b5f
     } catch (err) {
         console.log(err);
         res.status(500)

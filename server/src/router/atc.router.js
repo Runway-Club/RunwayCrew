@@ -22,6 +22,14 @@ router.get("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
+ 
+router.get('/:id', async (req, res) => {
+    atc.findById(req.query.id, function(err){
+      if (err) console.log(err);
+      res.status(404)
+      res.send({mess:`[${id}] not found`})
+    })
+});
 
 
 // router.post("/", async (req, res) => {
@@ -74,39 +82,41 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
+        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
         let _id = req.body.id
         let resdb = await atc.findByIdAndUpdate(_id, {
-            address: req.body.address,
-            email: req.body.email,
-            uid: req.body.uid,
+            address: address,
+            email: email,
+            uid: uid,
             contribMetadata: {
-                actor: req.body.actor,
+                actor: actor,
                 created: 0,
                 updated: 0,
             },
-            dob: req.body.dob,
-            facebook: req.body.facebook,
-            gender: req.body.gender,
-            linkIn: req.body.linkIn,
-            name: req.body.name,
-            phoneNumber: req.body.phoneNumber,
-            photoUrl: req.body.photoUrl,
+            dob: dob,
+            facebook: facebook,
+            gender: gender,
+            linkIn: linkIn,
+            name: name,
+            phoneNumber: phoneNumber,
+            photoUrl: photoUrl,
             profileMetadata: {
                 updated: 0,
             },
-            roles: req.body.roles,
-            selectedRoles: req.body.selectedRoles,
+            roles: roles,
+            selectedRoles: selectedRoles,
         }, { rawResult: true });
 
         if (!resdb.lastErrorObject.updatedExisting) {
-            res.send({ mess: `[${req.body._id}] is not found` })
+            res.status(404).send({ mess: `[${req.body._id}] is not found` })
         }
         else {
-            res.send({ mess: `[${req.body._id}] is updated` })
+            res.status(200).send({ mess: `[${req.body._id}] is updated` })
         }
+        
     } catch (err) {
         console.log(err)
-        res.status(500)
+        res.status(400)
         res.send({ mess: 'Server err' })
     }
 });
@@ -115,12 +125,12 @@ router.delete('/', async (req, res) => {
     try {
         if(req.query.id == undefined){
             res.status(400)
-            res.send(`[id] field is missing`)
+            res.send({mess:`[id] field is missing`})
         }
         atc.findByIdAndDelete(_id, function (err, docs) {
             if (err) {
                 res.status(404)
-                res.send(`[${_id}] not found`)
+                res.send({mess:`[${_id}] not found`})
             }
             else {
                 res.status(200)
