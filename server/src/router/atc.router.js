@@ -2,8 +2,10 @@ const app = require('express');
 const atcSchema = require('../../schemas/atc.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
-
 const atc = mongoose.model('atc', atcSchema);
+
+const ATCModel = require('../../model/atc.model')
+const shareService = require('../service/share.service');
 
 router.get("/", async (req, res) => {
     try {
@@ -22,32 +24,51 @@ router.get("/", async (req, res) => {
 });
 
 
+// router.post("/", async (req, res) => {
+//     try {
+//         let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl,profileMetadata, contribMetadata, roles, selectedRoles } = req.body
+//         const fluffy = new atc({
+//             address: address,
+//             email: email,
+//             contribMetadata: contribMetadata,
+//             dob: dob,
+//             facebook: facebook,
+//             gender: gender,
+//             linkIn: linkIn,
+//             name: name,
+//             phoneNumber: phoneNumber,
+//             photoUrl: photoUrl,
+//             profileMetadata: profileMetadata,
+//             roles: roles,
+//             selectedRoles: selectedRoles,
+//         });
+//         await fluffy.save();
+//         res.status(200)
+//         res.send({ mess: 'Created' })
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500)
+//         res.send({ mess: 'Server err' })
+//     }
+// });
+
 router.post("/", async (req, res) => {
     try {
-        let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl,profileMetadata, contribMetadata, roles, selectedRoles } = req.body
-        const fluffy = new atc({
-            address: address,
-            email: email,
-            contribMetadata: contribMetadata,
-            dob: dob,
-            facebook: facebook,
-            gender: gender,
-            linkIn: linkIn,
-            name: name,
-            phoneNumber: phoneNumber,
-            photoUrl: photoUrl,
-            profileMetadata: profileMetadata,
-            roles: roles,
-            selectedRoles: selectedRoles,
-        });
-        await fluffy.save();
-        res.status(200)
-        res.send({ mess: 'Created' })
+        let { err, data } = shareService.parseBodyToObject(new ATCModel(), req.body)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }
+        else {
+            let newATC = new atc(data)
+            await newATC.save().then(savedDoc => {
+                if (savedDoc === newATC)
+                    return res.status(201).send({ mess: `User [${savedDoc._id}] is created` })
+            })
+        }
     } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
-
     }
 });
 

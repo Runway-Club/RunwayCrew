@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+    address : '',
     contribMetadata : { created: 0, actor: '', updated: 0 },
     dob : '',
     email : '',

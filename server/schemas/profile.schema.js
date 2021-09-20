@@ -1,25 +1,19 @@
 const mongoose = require('mongoose');
 
 const profile = new mongoose.Schema({
-    address: String,
-    contribMetadata:{
-        actor: String,
-        created: Number,
-        update: Number,
-    },
-    dob: String,
-    email: String,
-    facebook: String,
-    gender: String,
-    linkIn: String,
-    name: String,
-    phoneNumber: String,
-    photoUrl: String,
-    profileMetadata:{
-        update: Number,
-    },
-    roles:[],
-    selectedRoles:[],
-    uid: String,
+    address: '',
+    contribMetadata: { updated: 0, actor: '', created: 0 },
+    dob: '',
+    email: '',
+    facebook: '',
+    gender: '',
+    linkIn: '',
+    name: '',
+    phoneNumber: '',
+    photoUrl: '',
+    profileMetadata: { updated: 0 },
+    roles: [],
+    selectedRoles: [],
+    uid: ''
 })
 module.exports = profile;

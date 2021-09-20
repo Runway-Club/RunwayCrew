@@ -1,11 +1,12 @@
 
-class Skill {
+class SkillModel {
     constructor() {
-        description = ''
-        id = ''
-        image = ''
-        levels = []
-        metadata = { actor: '', updated= 0, created= 0 }
+        this.description = ''
+        this.id = ''
+        this.image = ''
+        this.levels = []
+        this.metadata = { actor: '', updated: 0, created: 0 }
+        this.name = ''
     }
 }
-module.exports = Skill
+module.exports = SkillModel

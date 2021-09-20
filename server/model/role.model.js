@@ -1,10 +1,10 @@
-class Role {
+class RoleModel {
     constructor() {
-        description = ''
-        id = ''
-        image = ''
-        metadata = { actor: '', created: 0, updated: 0 }
-        name = ''
+        this.description = ''
+        this.id = ''
+        this.image = ''
+        this.metadata = { actor: '', created: 0, updated: 0 }
+        this.name = ''
     }
 }
-module.exports = Role
+module.exports = RoleModel

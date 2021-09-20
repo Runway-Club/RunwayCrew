@@ -2,8 +2,10 @@ const app = require('express');
 const skillSchema = require('../../schemas/skill.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
-
 const skill = mongoose.model('skill', skillSchema);
+
+const SkillModel = require('../../model/skill.model')
+const shareService = require('../service/share.service');
 
 router.get("/", async (req, res) => {
     try {
@@ -20,31 +22,48 @@ router.get("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
+// router.post("/", async (req, res) => {
+//     try {
+//         let { description, id, image, actor, name} = req.body
+//         const fluffy = new skill({
+//             description: description,
+//             id: id,
+//             image: image,
+//             levels:[],
+//             metadata:{
+//                 actor: actor,
+//                 created: Date.now().toString(),
+//                 updated: Date.now().toString(),
+//             },
+//             name: name,
+//         });
+//         await fluffy.save();
+//         res.status(200)
+//         res.send({ mess: 'Created' })
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500)
+//         res.send({ mess: 'Server err' })
 
-
+//     }
+// });
 router.post("/", async (req, res) => {
     try {
-        let { description, id, image, actor, name} = req.body
-        const fluffy = new skill({
-            description: description,
-            id: id,
-            image: image,
-            levels:[],
-            metadata:{
-                actor: actor,
-                created: Date.now().toString(),
-                updated: Date.now().toString(),
-            },
-            name: name,
-        });
-        await fluffy.save();
-        res.status(200)
-        res.send({ mess: 'Created' })
+        let { err, data } = shareService.parseBodyToObject(new SkillModel(), req.body)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }
+        else {
+            let newSkill = new skill(data)
+            await newSkill.save().then(savedDoc => {
+                if (savedDoc === newSkill)
+                    return res.status(201).send({ mess: `Skill [${savedDoc._id}] is created` })
+            })
+        }
     } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
-
     }
 });
 router.put("/", async (req, res) => {

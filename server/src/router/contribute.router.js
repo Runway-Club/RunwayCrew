@@ -1,11 +1,12 @@
 const app = require('express');
 const contributeSchema = require('../../schemas/contribute.schema')
-
 let mongoose = require('mongoose');
 const contribute = require('../../schemas/contribute.schema');
 const router = app.Router();
-
 const Contribute = mongoose.model('contribute', contributeSchema)
+
+const ContriModel = require('../../model/contribution.model')
+const shareService = require('../service/share.service');
 
 router.get("/", async (req, res) => {
     const { id } = req.query;
@@ -31,22 +32,41 @@ router.get("/", async (req, res) => {
         }
     }
 });
+// router.post("/", async (req, res) => {
+//     try {
+//         let { credit, email, exp, uid, achievements, skills } = req.body
+//         const fluffy = new Contribute({
+//             achievements: achievements,
+//             credit: credit,
+//             email: email,
+//             exp: exp,
+//             uid: uid,
+//             skills: skills,
+//         });
+//         await fluffy.save();
+//         res.status(201)
+//         res.send({ mess: 'Created' })
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500)
+//         res.send({ mess: 'Server err' })
+//     }
+// });
 router.post("/", async (req, res) => {
     try {
-        let { credit, email, exp, uid, achievements, skills } = req.body
-        const fluffy = new Contribute({
-            achievements: achievements,
-            credit: credit,
-            email: email,
-            exp: exp,
-            uid: uid,
-            skills: skills,
-        });
-        await fluffy.save();
-        res.status(201)
-        res.send({ mess: 'Created' })
-    }
-    catch (err) {
+        let { err, data } = shareService.parseBodyToObject(new ContriModel(), req.body)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }
+        else {
+            let newcontri = new Contribute(data)
+            await newcontri.save().then(savedDoc => {
+                if (savedDoc === newcontri)
+                    return res.status(201).send({ mess: `Contribute [${savedDoc._id}] is created` })
+            })
+        }
+    } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })

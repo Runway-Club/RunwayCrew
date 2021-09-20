@@ -6,6 +6,10 @@ let mongoose = require('mongoose');
 const router = app.Router();
 
 const Profile = mongoose.model('profiles', profilesSchema)
+
+const ProfileModel = require('../../model/profile.model')
+const shareService = require('../service/share.service');
+
 router.get("/", async (req, res) => {
     const { id } = req.query;
     if (!id) {
@@ -33,30 +37,49 @@ router.get("/", async (req, res) => {
 
 
 
+// router.post("/", async (req, res) => {
+//     try {
+//         let { address,roles, contribMetadata, selectedRoles, profileMetadata, dob, email, facebook, gender, linkIn, name, phoneNumber, photoUrl, uid} = req.body
+//         const fluffy = new Profile({
+//             address: address,
+//             contribMetadata: contribMetadata,
+//             dob: dob,
+//             email: email,
+//             facebook: facebook,
+//             gender: gender,
+//             linkIn: linkIn,
+//             name: name,
+//             phoneNumber: phoneNumber,
+//             photoUrl: photoUrl,
+//             profileMetadata: profileMetadata,
+//             roles: roles,
+//             selectedRoles: selectedRoles,
+//             uid: uid,
+//         });
+//         await fluffy.save();
+//         res.status(201)
+//         res.send({ mess: fluffy })
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500)
+//         res.send({ mess: 'Server err' })
+//     }
+// });
 router.post("/", async (req, res) => {
     try {
-        let { address,roles, contribMetadata, selectedRoles, profileMetadata, dob, email, facebook, gender, linkIn, name, phoneNumber, photoUrl, uid} = req.body
-        const fluffy = new Profile({
-            address: address,
-            contribMetadata: contribMetadata,
-            dob: dob,
-            email: email,
-            facebook: facebook,
-            gender: gender,
-            linkIn: linkIn,
-            name: name,
-            phoneNumber: phoneNumber,
-            photoUrl: photoUrl,
-            profileMetadata: profileMetadata,
-            roles: roles,
-            selectedRoles: selectedRoles,
-            uid: uid,
-        });
-        await fluffy.save();
-        res.status(201)
-        res.send({ mess: fluffy })
-    }
-    catch (err) {
+        let { err, data } = shareService.parseBodyToObject(new ProfileModel(), req.body)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }
+        else {
+            let newProfile = new Profile(data)
+            await newProfile.save().then(savedDoc => {
+                if (savedDoc === newProfile)
+                    return res.status(201).send({ mess: `User [${savedDoc._id}] is created` })
+            })
+        }
+    } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })

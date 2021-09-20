@@ -2,7 +2,8 @@ const app = require('express');
 const achievementSchema = require('../../schemas/achievement.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
-
+const AchiModel = require('../../model/achievement.model')
+const shareService = require('../service/share.service')
 const achievement = mongoose.model('achievements', achievementSchema);
 
 router.get('/', async (req, res) => {
@@ -20,30 +21,50 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
-    let { credit, description, exp, image, name, metadata, skill } = req.body;
+// router.post('/', async (req, res) => {
+//     let { credit, description, exp, image, name, metadata, skill } = req.body;
+//     try {
+//         if (credit && description && exp && image && skill && metadata && name) {
+//             const _achievement = new achievement({
+//                 credit: credit,
+//                 exp: exp,
+//                 description: description,
+//                 image: image,
+//                 metadata: metadata,
+//                 name: name,
+//                 skill: skill
+//             })
+//             await _achievement.save();
+//             res.status(201).send({ message: `${_achievement._id} created` });
+//         } else {
+//             res.status(400).send({ message: `not enough value !` })
+//         }
+//     } catch (err) {
+//         console.log(err)
+//         res.status(500)
+//         res.send({ mess: 'Server err' })
+//     }
+// })
+
+router.post("/", async (req, res) => {
     try {
-        if (credit && description && exp && image && skill && metadata && name) {
-            const _achievement = new achievement({
-                credit: credit,
-                exp: exp,
-                description: description,
-                image: image,
-                metadata: metadata,
-                name: name,
-                skill: skill
+        let { err, data } = shareService.parseBodyToObject(new AchiModel(), req.body)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }
+        else {
+            let newAchi = new achievement(data)
+            await newAchi.save().then(savedDoc => {
+                if (savedDoc === newAchi)
+                    return res.status(201).send({ mess: `Achievement [${savedDoc._id}] is created` })
             })
-            await _achievement.save();
-            res.status(201).send({ message: `${_achievement._id} created` });
-        } else {
-            res.status(400).send({ message: `not enough value !` })
         }
     } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
     }
-})
+});
 
 router.put('/', async (req, res) => {
     let { _id, exp, description, image, name, metadata, credit, skill } = req.body;

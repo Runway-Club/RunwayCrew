@@ -1,12 +1,13 @@
-class Achievement {
+class AchiModel {
     constructor() {
-        credit = 0
-        description = ''
-        exp = 0
-        image = ''
-        metadata = { created: 0, actor: '', updated: 0 }
-        name = ''
-        skills = []
+        this.credit = 0
+        this.description = ''
+        this.exp = 0
+        this.image = ''
+        this.metadata = { created: 0, actor: '', updated: 0 }
+        this.name = ''
+        this.skills = []
+        this.id = ''
     }
 }
-module.exports = Achievement
+module.exports = AchiModel

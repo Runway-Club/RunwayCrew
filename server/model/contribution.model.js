@@ -1,11 +1,11 @@
-class Contribution {
+class ContriModel {
     constructor() {
-        achievements= []
-        credit= 0
-        email= ''
-        exp= 0
-        skills= []
-        uid= ''
+        this.achievements= []
+        this.credit= 0
+        this.email= ''
+        this.exp= 0
+        this.skills= []
+        this.uid= ''
     }
 }
-module.exports = Contribution
+module.exports = ContriModel

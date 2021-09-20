@@ -1,4 +1,4 @@
-class ATC {
+class ATCModel {
     constructor() {
         this.address = ''
         this.contribMetadata = { created: 0, actor: '', updated: 0 }
@@ -16,4 +16,4 @@ class ATC {
         this.uid = ''
     }
 }
-module.exports = ATC
+module.exports = ATCModel
