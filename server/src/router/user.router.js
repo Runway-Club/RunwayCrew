@@ -4,7 +4,6 @@ let mongoose = require('mongoose');
 const router = app.Router();
 const ATC = require('../../model/atc.model')
 const shareService = require('../service/share.service');
-const { route } = require('./skill.router');
 
 const userDB = mongoose.model('users', userSchema);
 
