@@ -82,10 +82,10 @@ router.put("/", async (req, res) => {
         }, { rawResult: true });
         
         if(!resdb.lastErrorObject.updatedExisting){
-            res.send({ mess: `[${req.body._id}] is not found` })
+            res.status(404).send({ mess: `[${req.body._id}] is not found` })
         }
         else{
-            res.send({ mess: `[${req.body._id}] is updated` })
+            res.status(200).send({ mess: `[${req.body._id}] is updated` })
         }
     } catch (err) {
         console.log(err)

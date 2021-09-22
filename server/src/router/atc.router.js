@@ -72,41 +72,39 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
-        let _id = req.body.id
+        let _id = req.body._id
         let resdb = await atcDB.findByIdAndUpdate(_id, {
-            address: address,
-            email: email,
-            uid: uid,
+            address: req.body.address,
+            email: req.body.email,
+            uid: req.body.uid,
             contribMetadata: {
-                actor: actor,
+                actor: req.body.actor,
                 created: 0,
                 updated: 0,
             },
-            dob: dob,
-            facebook: facebook,
-            gender: gender,
-            linkIn: linkIn,
-            name: name,
-            phoneNumber: phoneNumber,
-            photoUrl: photoUrl,
+            dob: req.body.dob,
+            facebook: req.body.facebook,
+            gender: req.body.gender,
+            linkIn: req.body.linkIn,
+            name: req.body.name,
+            phoneNumber: req.body.phoneNumber,
+            photoUrl: req.body.photoUrl,
             profileMetadata: {
                 updated: 0,
             },
-            roles: roles,
-            selectedRoles: selectedRoles,
+            roles: req.body.roles,
+            selectedRoles: req.body.selectedRoles,
         }, { rawResult: true });
-
-        if (!resdb.lastErrorObject.updatedExisting) {
+        
+        if(!resdb.lastErrorObject.updatedExisting){
             res.status(404).send({ mess: `[${req.body._id}] is not found` })
         }
-        else {
+        else{
             res.status(200).send({ mess: `[${req.body._id}] is updated` })
         }
-        
     } catch (err) {
         console.log(err)
-        res.status(400)
+        res.status(500)
         res.send({ mess: 'Server err' })
     }
 });
