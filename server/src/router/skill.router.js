@@ -112,6 +112,16 @@ router.delete('/', async (req, res) => {
         }
     });
         
+router.delete('/', async (req, res)=>{
+    let {id} = req.query
+    try {
+        skill.findByIdAndDelete(id,(err, doc) => {
+            if (err) {
+                res.status(404).send({ message: `${id} does not exits !` });
+            } else {
+                res.status(200).send({ message: `deleted ${id}` });
+            }
+        });
     } catch (err) {
         console.log(err);
         res.status(500)
