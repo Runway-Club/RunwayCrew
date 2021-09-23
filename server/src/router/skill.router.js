@@ -2,35 +2,25 @@ const app = require('express');
 const skillSchema = require('../../schemas/skill.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
-const skill = mongoose.model('skill', skillSchema);
+const skillDB = mongoose.model('skill', skillSchema);
 
 const SkillModel = require('../../model/skill.model')
 const shareService = require('../service/share.service');
 
-router.get("/", async (req, res) => {
-    let {id} = req.query;
-    if(!id) {
-      try {
-          let data;
-          data = await skill.find()
-          res.status(200)
-          res.send(data)
-      } catch (err) {
-          console.log(err)
-          res.status(404)
-          res.send({ mess: 'Server err' })
-      }
-  }
-  else{
-      try {
-          res.send(await skill.findById(id))
-      } catch (error) {
-          console.log(err)
-          res.status(404)
-          res.send({ mess: 'Server err' })
-      }
-  }
-});
+router.get('/', async (req, res) => {
+    let { id } = req.query;
+    if (!id) {
+        res.status(200).send(await skillDB.find());
+    } else {
+        skillDB.findById(id, (err, result) => {
+            if (err) {
+                res.status(404).send({ message: `${id} not found !` });
+            } else {
+                res.status(200).send(result);
+            }
+        })
+    }
+})
 // router.post("/", async (req, res) => {
 //     try {
 //         let { description, id, image, actor, name} = req.body
@@ -63,7 +53,7 @@ router.post("/", async (req, res) => {
             return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
         }
         else {
-            let newSkill = new skill(data)
+            let newSkill = new skillDB (data)
             await newSkill.save().then(savedDoc => {
                 if (savedDoc === newSkill)
                     return res.status(201).send({ mess: `Skill [${savedDoc._id}] is created` })
@@ -78,7 +68,7 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
     try {
         let _id = req.body._id
-        let resdb = await skill.findByIdAndUpdate(_id, {
+        let resdb = await skillDB.findByIdAndUpdate(_id, {
             description: req.body.description,
             image: req.body.image,
             uid: req.body.uid,
@@ -92,10 +82,10 @@ router.put("/", async (req, res) => {
         }, { rawResult: true });
         
         if(!resdb.lastErrorObject.updatedExisting){
-            res.send({ mess: `[${req.body._id}] is not found` })
+            res.status(404).send({ mess: `[${req.body._id}] is not found` })
         }
         else{
-            res.send({ mess: `[${req.body._id}] is updated` })
+            res.status(200).send({ mess: `[${req.body._id}] is updated` })
         }
     } catch (err) {
         console.log(err)
@@ -125,7 +115,7 @@ router.delete('/', async (req, res) => {
         console.log(err);
         res.status(500)
         res.send({ mess: 'Server err' })
-    }
+        }
 });
-
+        
 module.exports = router;
