@@ -2,35 +2,25 @@ const app = require('express');
 const atcSchema = require('../../schemas/atc.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
-const atc = mongoose.model('atc', atcSchema);
+const atcDB = mongoose.model('atc', atcSchema);
 
 const ATCModel = require('../../model/atc.model')
 const shareService = require('../service/share.service');
 
-router.get("/", async (req, res) => {
-    try {
-        let data;
-        if (req.query.id != undefined)
-            data = await atc.findOne({ id: req.query['id'] })
-        else
-            data = await atc.find()
-        res.status(200)
-        res.send(data)
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
+router.get('/', async (req, res) => {
+    let { id } = req.query;
+    if (!id) {
+        res.status(200).send(await atcDB.find());
+    } else {
+        atcDB.findById(id, (err, result) => {
+            if (err) {
+                res.status(404).send({ message: `${id} not found !` });
+            } else {
+                res.status(200).send(result);
+            }
+        })
     }
-});
- 
-router.get('/:id', async (req, res) => {
-    atc.findById(req.query.id, function(err){
-      if (err) console.log(err);
-      res.status(404)
-      res.send({mess:`[${id}] not found`})
-    })
-});
-
+})
 
 // router.post("/", async (req, res) => {
 //     try {
@@ -67,10 +57,10 @@ router.post("/", async (req, res) => {
             return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
         }
         else {
-            let newATC = new atc(data)
-            await newATC.save().then(savedDoc => {
-                if (savedDoc === newATC)
-                    return res.status(201).send({ mess: `User [${savedDoc._id}] is created` })
+            let newAtc = new atcDB(data)
+            await newAtc.save().then(savedDoc => {
+                if (savedDoc === newAtc)
+                    return res.status(201).send({ mess: `Atc [${savedDoc._id}] is created` })
             })
         }
     } catch (err) {
@@ -82,41 +72,39 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        let { address, email, uid, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl, actor, roles, selectedRoles } = req.body
-        let _id = req.body.id
-        let resdb = await atc.findByIdAndUpdate(_id, {
-            address: address,
-            email: email,
-            uid: uid,
+        let _id = req.body._id
+        let resdb = await atcDB.findByIdAndUpdate(_id, {
+            address: req.body.address,
+            email: req.body.email,
+            uid: req.body.uid,
             contribMetadata: {
-                actor: actor,
+                actor: req.body.actor,
                 created: 0,
                 updated: 0,
             },
-            dob: dob,
-            facebook: facebook,
-            gender: gender,
-            linkIn: linkIn,
-            name: name,
-            phoneNumber: phoneNumber,
-            photoUrl: photoUrl,
+            dob: req.body.dob,
+            facebook: req.body.facebook,
+            gender: req.body.gender,
+            linkIn: req.body.linkIn,
+            name: req.body.name,
+            phoneNumber: req.body.phoneNumber,
+            photoUrl: req.body.photoUrl,
             profileMetadata: {
                 updated: 0,
             },
-            roles: roles,
-            selectedRoles: selectedRoles,
+            roles: req.body.roles,
+            selectedRoles: req.body.selectedRoles,
         }, { rawResult: true });
-
-        if (!resdb.lastErrorObject.updatedExisting) {
+        
+        if(!resdb.lastErrorObject.updatedExisting){
             res.status(404).send({ mess: `[${req.body._id}] is not found` })
         }
-        else {
+        else{
             res.status(200).send({ mess: `[${req.body._id}] is updated` })
         }
-        
     } catch (err) {
         console.log(err)
-        res.status(400)
+        res.status(500)
         res.send({ mess: 'Server err' })
     }
 });
@@ -127,7 +115,7 @@ router.delete('/', async (req, res) => {
             res.status(400)
             res.send({mess:`[id] field is missing`})
         }
-        atc.findByIdAndDelete(_id, function (err, docs) {
+        atcDB.findByIdAndDelete(_id, function (err, docs) {
             if (err) {
                 res.status(404)
                 res.send({mess:`[${_id}] not found`})
@@ -137,18 +125,6 @@ router.delete('/', async (req, res) => {
                 res.send({ mess: ` [${_id}] is deleted` })
             }
         });
-
-        // let resDB = atc.findByIdAndDelete(_id, { rawResult: true })
-        // if (!resDB.lastErrorObject.updatedExisting) {
-        //     res.status(404)
-        //     res.send(`[${_id}] not found`)
-        // }
-        // else {
-        //     res.status(200)
-        //     res.send({ mess: ` [${req.body._id}] is deleted` })
-        // }
-
-
     } catch (err) {
         console.log(err);
         res.status(500)
