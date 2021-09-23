@@ -103,24 +103,16 @@ router.put("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-router.delete('/', async (req, res) => {
-    let _id = req.query.id
+router.delete('/', async (req, res)=>{
+    let {id} = req.query
     try {
-        if(req.query.id == undefined){
-            res.status(400)
-            res.send(`[id] field is missing`)
-        }
-        skill.findByIdAndDelete(_id, function (err, docs) {
+        skill.findByIdAndDelete(id,(err, doc) => {
             if (err) {
-                res.status(404)
-                res.send(`[${_id}] not found`)
-            }
-            else {
-                res.status(200)
-                res.send({ mess: ` [${_id}] is deleted` })
+                res.status(404).send({ message: `${id} does not exits !` });
+            } else {
+                res.status(200).send({ message: `deleted ${id}` });
             }
         });
-
     } catch (err) {
         console.log(err);
         res.status(500)

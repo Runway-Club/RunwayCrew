@@ -4,14 +4,14 @@ let mongoose = require('mongoose');
 const router = app.Router();
 const AchiModel = require('../../model/achievement.model')
 const shareService = require('../service/share.service')
-const achievement = mongoose.model('achievements', achievementSchema);
+const achievementDB = mongoose.model('achievements', achievementSchema);
 
 router.get('/', async (req, res) => {
     let { id } = req.query;
     if (!id) {
-        res.status(200).send(await achievement.find());
+        res.status(200).send(await achievementDB.find());
     } else {
-        achievement.findById(id, (err, result) => {
+        achievementDB.findById(id, (err, result) => {
             if (err) {
                 res.status(404).send({ message: `${id} not found !` });
             } else {
@@ -67,32 +67,55 @@ router.post("/", async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    let { _id, exp, description, image, name, metadata, credit, skill } = req.body;
     try {
-        if (_id && exp && description && image && name && metadata && credit && skill) {
-            achievement.findByIdAndUpdate(
-                _id,
-                {
-                    "credit": credit,
-                    "description": description,
-                    "image": image,
-                    "metadata": metadata,
-                    "name": name,
-                    "exp": exp,
-                    "skill": skill
-                }, (err, result) => {
-                    if (err) {
-                        res.status(404).send(`${id} not found !`);
-                    } else {
-                        res.status(200).send(`${id} updated !`);
+        let { err, data } = shareService.parseBodyToObject(new AchiModel(), req.body);
+        const _id = req.body._id;
+        if(_id == undefined){
+            return res.status(400).send({ message: `id empty` });
+        }else{
+            if(err != null){
+                return res.status(400).send({mess: `Some field is missing: [${err}]. Please, check your data.` });
+            }else{
+                achievementDB.findByIdAndUpdate(_id, data, (err, result)=>{
+                    if(err){
+                        return res.status(404).send({ message: `${_id} does not exits !` });
+                    }else{
+                        return res.status(200).send({ mess: `Achievement [${_id}] is updated !` });
                     }
-                });
-        } else {
-            res.status(400).send(`not enough value !`)
+                })
+            }
         }
     } catch (err) {
+        res.status(500);
         console.error(err);
     }
+   
+    // let { _id, exp, description, image, name, metadata, credit, skill } = req.body;
+    // try {
+    //     if (_id && exp && description && image && name && metadata && credit && skill) {
+    //         achievement.findByIdAndUpdate(
+    //             _id,
+    //             {
+    //                 "credit": credit,
+    //                 "description": description,
+    //                 "image": image,
+    //                 "metadata": metadata,
+    //                 "name": name,
+    //                 "exp": exp,
+    //                 "skill": skill
+    //             }, (err, result) => {
+    //                 if (err) {
+    //                     res.status(404).send(`${id} not found !`);
+    //                 } else {
+    //                     res.status(200).send(`${id} updated !`);
+    //                 }
+    //             });
+    //     } else {
+    //         res.status(400).send(`not enough value !`)
+    //     }
+    // } catch (err) {
+    //     console.error(err);
+    // }
 })
 router.delete('/', async (req, res) => {
     let { id } = req.query;
@@ -100,7 +123,7 @@ router.delete('/', async (req, res) => {
         res.status(400).send({ message: `id empty` })
     } else {
         try {
-            achievement.findByIdAndDelete(id, (err, doc) => {
+            achievementDB.findByIdAndDelete(id, (err, doc) => {
                 if (err) {
                     res.status(404).send({ message: `${id} does not exits !` });
                 } else {
