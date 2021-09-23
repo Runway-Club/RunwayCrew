@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
             return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
         }
         else {
-            let newAchi = new achievement(data)
+            let newAchi = new achievementDB(data)
             await newAchi.save().then(savedDoc => {
                 if (savedDoc === newAchi)
                     return res.status(201).send({ mess: `Achievement [${savedDoc._id}] is created` })

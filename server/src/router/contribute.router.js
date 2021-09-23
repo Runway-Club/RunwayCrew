@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
     else {
         try {
             res.send(await Contribute.findById(id))
-        } catch (error) {
+        } catch (err) {
             console.log(err)
             res.status(500)
             res.send({ mess: 'Server err' })
@@ -84,8 +84,6 @@ router.put("/", async (req, res) => {
             return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
         }
         else{
-            
-           
             await newcontri.findByIdAndUpdate.then(data => {
                 if (!data) {
                   res.status(404).send({

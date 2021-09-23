@@ -99,8 +99,9 @@ router.delete('/', async (req, res) => {
         if(req.query.id == undefined){
             res.status(400)
             res.send(`[id] field is missing`)
+            return
         }
-        skill.findByIdAndDelete(_id, function (err, docs) {
+        skillDB.findByIdAndDelete(_id, function (err, docs) {
             if (err) {
                 res.status(404)
                 res.send(`[${_id}] not found`)
