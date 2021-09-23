@@ -103,18 +103,6 @@ router.put("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-<<<<<<< HEAD
-router.delete('/', async (req, res)=>{
-    let {id} = req.query
-    try {
-        skill.findByIdAndDelete(id,(err, doc) => {
-            if (err) {
-                res.status(404).send({ message: `${id} does not exits !` });
-            } else {
-                res.status(200).send({ message: `deleted ${id}` });
-            }
-        });
-=======
 router.delete('/', async (req, res) => {
     let _id = req.query.id
     try {
@@ -133,7 +121,6 @@ router.delete('/', async (req, res) => {
             }
         });
 
->>>>>>> f79e6f7693cd82fc3ea439fc2bc5286078cb8b5f
     } catch (err) {
         console.log(err);
         res.status(500)

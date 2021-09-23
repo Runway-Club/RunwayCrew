@@ -74,24 +74,44 @@ router.post("/", async (req, res) => {
 });
 router.put("/", async (req, res) => {
     const id = req.body.id;
-    const credit = req.body.credit;
-    const email = req.body.email;
-    const exp = req.body.exp;
-    const uid = req.body.uid;
+    // const credit = req.body.credit;
+    // const email = req.body.email;
+    // const exp = req.body.exp;
+    // const uid = req.body.uid;
     try {
-        let resdb = await Contribute.findByIdAndUpdate(id,
-            {
-                "credit": credit,
-                "exp": exp,
-                "email": email,
-                "uid": uid
-            }, { rawResult: true });
-        if (!resdb.lastErrorObject.updatedExisting) {
-            res.send({ mess: `[${req.body.id}] not found` })
+        let {err, data} = shareService.parseBodyToObject(new ContriModel(),req.body)
+        if (err!=null){
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
         }
-        else {
-            res.send({ mess: `[${req.body.id}] updated` })
+        else{
+            
+           
+            await newcontri.findByIdAndUpdate.then(data => {
+                if (!data) {
+                  res.status(404).send({
+                    message: `404`
+                  });
+                }
+                else{
+                    res.send({ message: "Tutorial was updated successfully." });
+                }
+              })
+            
         }
+    // } catch (err) {
+    //     console.log(err)
+    //     res.status(500)
+    //     res.send({ mess: 'Server err' })
+    // }
+    // try {
+    //     let resdb = await Contribute.findByIdAndUpdate(id,
+    //         {
+    //             "credit": credit,
+    //             "exp": exp,
+    //             "email": email,
+    //             "uid": uid
+    //         }, { rawResult: true });
+        
     } catch (error) {
         console.log(error)
         res.status(400)
