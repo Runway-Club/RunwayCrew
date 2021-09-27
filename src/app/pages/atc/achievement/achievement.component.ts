@@ -69,6 +69,7 @@ export class AchievementComponent implements OnInit {
 
   public addEmptyAchievement() {
     this.achievements.push({
+      _id:'',
       id: Date.now().toString(),
       name: "",
       description: "",

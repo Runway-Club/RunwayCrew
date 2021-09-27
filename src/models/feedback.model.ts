@@ -1,4 +1,5 @@
 export interface Feedback {
+  _id:string,
   fromId: string,
   fromEmail: string,
   subject: string,

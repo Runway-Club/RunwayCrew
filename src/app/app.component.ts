@@ -9,6 +9,7 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { AchievementService } from './services/achievement.service';
+import { ATCService } from './services/atc.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ProfileService } from './services/profile.service';
 import { FileUploadComponent } from './shared/file-upload/file-upload.component';
@@ -52,13 +53,14 @@ export class AppComponent implements AfterViewInit {
     private dialog: NbDialogService,
     private auth: AuthenticationService,
     private profileService: ProfileService,
+    private atcService: ATCService,
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private router: Router,
     private toast: NbToastrService,
     private authService: AngularFireAuth
   ) {
-    this.profileService.isATC().then((isAtc) => {
+    this.atcService.isATC().then((isAtc) => {
       if (isAtc) {
         this.menus.push({
           icon: 'admin_panel_settings',

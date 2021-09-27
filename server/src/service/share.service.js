@@ -7,9 +7,6 @@ class ShareService {
         try {
             let err = ''
             let hasNullFil = false
-            // if (object['_id'] != undefined) {
-            //     delete object['_id']
-            // }
             for (let [key, value] of Object.entries(object)) {
 
 

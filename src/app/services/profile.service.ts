@@ -50,6 +50,7 @@ export class ProfileService {
       },
     };
     let contribution: UserContribution = {
+      _id: '',
       uid: this.currentUser.uid,
       email: this.currentUser.email ?? '',
       credit: 0,
@@ -118,24 +119,6 @@ export class ProfileService {
     return this.utils.getAll<UserProfile>('profiles');
   }
 
-  public async isATC(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.auth.authState.subscribe(async (state) => {
-        if (state) {
-          this.currentUser = state;
-          let atc = (
-            await this.db
-              .collection('atc')
-              .doc(this.currentUser.uid)
-              .get()
-              .toPromise()
-          ).exists;
-          resolve(atc);
-        }
-      });
-    });
-  }
-
   public async isRegistrated(): Promise<boolean> {
     return new Promise((resolve) => {
       this.auth.authState.subscribe(async (state) => {
@@ -154,37 +137,15 @@ export class ProfileService {
     });
   }
 
-  public async addToATC(profile: UserProfile) {
-    await this.db.collection('atc').doc(profile.uid).set(profile);
-  }
-
-  public async removeFromATC(id: string) {
-    await this.db.collection('atc').doc(id).delete();
-  }
-
-  public getATCMembers(): Observable<UserProfile[]> {
-    return this.utils.getAll('atc');
-  }
-
   public async getPaginate(size: number, roleId?: string, last?: UserProfile): Promise<UserProfile[]> {
     let query: Query<any> = this.db.collection("profiles").ref;
     if (roleId) {
       query = query.where("roles", 'array-contains', roleId);
-    }
-    if (last) {
-      // query = query.startAfter(last?.uid);
     }
     return (await query
       .limit(size)
       .orderBy("profileMetadata.updated")
       .get()).docs.map((d) => <UserProfile>d.data())
   }
-
-  // public async getNumOfProfile(roleId?:string) {
-  //   return new Promise<number>(async (resolve) => {
-  //     let snapshot = await (await this.db.collection("profiles").ref.where("roles.id",'array-contains',roleId).get())..snapshotChanges().toPromise();
-  //     resolve(snapshot.length);
-  //   });
-  // }
 
 }

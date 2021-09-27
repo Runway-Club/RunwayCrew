@@ -15,8 +15,8 @@ const atcSchema = new mongoose.Schema({
     profileMetadata : { updated: 0 },
     roles :[],
     selectedRoles :[],
-    uid : ''
-  
+    uid : '',
+    id:''
 });
 
 
