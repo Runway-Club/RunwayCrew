@@ -67,48 +67,49 @@ router.post("/", async (req, res) => {
 });
 router.put("/", async (req, res) => {
     try {
-        let _id = req.body._id
-        let resdb = await skillDB.findByIdAndUpdate(_id, {
-            description: req.body.description,
-            image: req.body.image,
-            uid: req.body.uid,
-            levels: req.body.levels,
-            metadata: {
-                actor: req.body.actor,
-                created: 0,
-                updated: 0,
-            },
-            name: req.body.name,
-        }, { rawResult: true });
-        
-        if(!resdb.lastErrorObject.updatedExisting){
-            res.status(404).send({ mess: `[${req.body._id}] is not found` })
+        let _id = req.body._id;
+        let {err, data} = shareService.parseBodyToObject( new skillModel(), req.body);
+        if (_id ==  undefined) {
+            return res.status(400).send({ mess: `[${req.body._id}] is not found` })
         }
-        else{
-            res.status(200).send({ mess: `[${req.body._id}] is updated` })
+        else {
+            if (err != null) {
+                return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+            }
+            else {
+                   skillDB.findByIdAndUpdate(_id, data, (err, result)=>{
+                    if (err) {
+                       return res.status(404).send({ mess: `${_id} is not found`})  
+                    }else 
+                    {
+                        return res.status(200).send({mess: `${_id} is update`})
+                    }
+                   })
+                }
         }
     } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
     }
+       
 });
 
 router.delete('/', async (req, res) => {
     let _id = req.query.id
     try {
         if(req.query.id == undefined){
-        res.status(400)
-        res.send(`[id] field is missing`)
+            res.status(400)
+            res.send(`[id] field is missing`)
         }
         skillDB.findByIdAndDelete(_id, function (err, docs) {
         if (err) {
-        res.status(404)
-        res.send(`[${_id}] not found`)
+            res.status(404)
+            res.send(`[${_id}] not found`)
         }
         else {
-        res.status(200)
-        res.send({ mess: ` [${_id}] is deleted` })
+            res.status(200)
+            res.send({ mess: ` [${_id}] is deleted` })
         }
     });
         

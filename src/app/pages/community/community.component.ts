@@ -11,6 +11,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Achievement } from 'src/models/achievement.model';
 import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-community',
@@ -44,6 +45,7 @@ export class CommunityComponent implements OnInit {
     });
 
     this.getData()
+   
     //this.cloneATCCollection()
     //this.cloneAchiCollection()
     //this.cloneContriCollection()
@@ -98,6 +100,7 @@ export class CommunityComponent implements OnInit {
       console.log({ skills: data })
     })
   }
+ 
   cloneAchiCollection() {
     this.utils.getAll<Achievement>("achievements").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {

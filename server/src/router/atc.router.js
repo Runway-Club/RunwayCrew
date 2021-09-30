@@ -22,34 +22,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-// router.post("/", async (req, res) => {
-//     try {
-//         let { address, email, id, dob, name, linkIn, gender, facebook, phoneNumber, photoUrl,profileMetadata, contribMetadata, roles, selectedRoles } = req.body
-//         const fluffy = new atc({
-//             address: address,
-//             email: email,
-//             contribMetadata: contribMetadata,
-//             dob: dob,
-//             facebook: facebook,
-//             gender: gender,
-//             linkIn: linkIn,
-//             name: name,
-//             phoneNumber: phoneNumber,
-//             photoUrl: photoUrl,
-//             profileMetadata: profileMetadata,
-//             roles: roles,
-//             selectedRoles: selectedRoles,
-//         });
-//         await fluffy.save();
-//         res.status(200)
-//         res.send({ mess: 'Created' })
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500)
-//         res.send({ mess: 'Server err' })
-//     }
-// });
-
 router.post("/", async (req, res) => {
     try {
         let { err, data } = shareService.parseBodyToObject(new ATCModel(), req.body)
@@ -72,41 +44,32 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     try {
-        let _id = req.body._id
-        let resdb = await atcDB.findByIdAndUpdate(_id, {
-            address: req.body.address,
-            email: req.body.email,
-            uid: req.body.uid,
-            contribMetadata: {
-                actor: req.body.actor,
-                created: 0,
-                updated: 0,
-            },
-            dob: req.body.dob,
-            facebook: req.body.facebook,
-            gender: req.body.gender,
-            linkIn: req.body.linkIn,
-            name: req.body.name,
-            phoneNumber: req.body.phoneNumber,
-            photoUrl: req.body.photoUrl,
-            profileMetadata: {
-                updated: 0,
-            },
-            roles: req.body.roles,
-            selectedRoles: req.body.selectedRoles,
-        }, { rawResult: true });
-        
-        if(!resdb.lastErrorObject.updatedExisting){
-            res.status(404).send({ mess: `[${req.body._id}] is not found` })
+        let _id = req.body._id;
+        let {err, data} = shareService.parseBodyToObject( new ATCModel(), req.body);
+        if (_id ==  undefined) {
+            return res.status(400).send({ mess: `[${req.body._id}] is not found` })
         }
-        else{
-            res.status(200).send({ mess: `[${req.body._id}] is updated` })
+        else {
+            if (err != null) {
+                return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+            }
+            else {
+                   atcDB.findByIdAndUpdate(_id, data, (err, result)=>{
+                    if (err) {
+                       return res.status(404).send({ mess: `${_id} is not found`})  
+                    }else 
+                    {
+                        return res.status(200).send({mess: `${_id} is update`})
+                    }
+                   })
+                }
         }
     } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
     }
+       
 });
 router.delete('/', async (req, res) => {
     let _id = req.query.id
