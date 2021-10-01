@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ATCService } from 'src/app/services/atc.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { Role } from 'src/models/role.model';
@@ -12,6 +13,7 @@ import { UserProfile } from 'src/models/user-profile.model';
 export class MembersComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
+    private atcService: ATCService,
     private roleService: RoleService
   ) { }
   selectedTypeUser = '';
@@ -36,7 +38,7 @@ export class MembersComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
-    this.profileService.getATCMembers().subscribe((profiles) => {
+    this.atcService.getATCMembers().subscribe((profiles) => {
       this.atcMembers.length = 0;
       // console.log(profiles);
       this.atcMembers.push(...profiles);
@@ -116,14 +118,14 @@ export class MembersComponent implements OnInit {
     if (!this.selectedProfileForATCZone) {
       return;
     }
-    await this.profileService.addToATC(this.selectedProfileForATCZone);
+    await this.atcService.addToATC(this.selectedProfileForATCZone);
     window.location.reload();
   }
 
   public async removeFromATC(id: string) {
     // console.log(this.selectedProfileRemoveFromATC);
     // console.log(id);
-    await this.profileService.removeFromATC(id);
+    await this.atcService.removeFromATC(id);
     window.location.reload();
   }
   public changeTypeUser() {

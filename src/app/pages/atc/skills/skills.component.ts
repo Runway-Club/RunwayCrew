@@ -25,6 +25,7 @@ export class SkillsComponent implements OnInit {
 
   public addEmptySkill() {
     this.skills.push({
+      _id:'',
       id: "",
       name: "",
       description: "",

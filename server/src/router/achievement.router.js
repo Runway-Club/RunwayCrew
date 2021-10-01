@@ -4,14 +4,14 @@ let mongoose = require('mongoose');
 const router = app.Router();
 const AchiModel = require('../../model/achievement.model')
 const shareService = require('../service/share.service')
-const achievement = mongoose.model('achievements', achievementSchema);
+const achievementDB = mongoose.model('achievements', achievementSchema);
 
 router.get('/', async (req, res) => {
     let { id } = req.query;
     if (!id) {
-        res.status(200).send(await achievement.find());
+        res.status(200).send(await achievementDB.find());
     } else {
-        achievement.findById(id, (err, result) => {
+        achievementDB.findById(id, (err, result) => {
             if (err) {
                 res.status(404).send({ message: `${id} not found !` });
             } else {
@@ -21,44 +21,16 @@ router.get('/', async (req, res) => {
     }
 })
 
-// router.post('/', async (req, res) => {
-//     let { credit, description, exp, image, name, metadata, skill } = req.body;
-//     try {
-//         if (credit && description && exp && image && skill && metadata && name) {
-//             const _achievement = new achievement({
-//                 credit: credit,
-//                 exp: exp,
-//                 description: description,
-//                 image: image,
-//                 metadata: metadata,
-//                 name: name,
-//                 skill: skill
-//             })
-//             await _achievement.save();
-//             res.status(201).send({ message: `${_achievement._id} created` });
-//         } else {
-//             res.status(400).send({ message: `not enough value !` })
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500)
-//         res.send({ mess: 'Server err' })
-//     }
-// })
-
 router.post("/", async (req, res) => {
     try {
-        let { err, data } = shareService.parseBodyToObject(new AchiModel(), req.body)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-        }
-        else {
-            let newAchi = new achievement(data)
-            await newAchi.save().then(savedDoc => {
-                if (savedDoc === newAchi)
-                    return res.status(201).send({ mess: `Achievement [${savedDoc._id}] is created` })
-            })
-        }
+        let dataAchi = AchiModel.anyToAchi(req.body, false)
+        let newAchi = new achievementDB(dataAchi)
+        newAchi.save().then(savedDoc => {
+            if (savedDoc === newAchi)
+                return res.status(201).send({ mess: `Achievement [${savedDoc._id}] is created` })
+            else
+                return res.status(500).send({ mess: 'Server err' })
+        })
     } catch (err) {
         console.log(err)
         res.status(500)
@@ -67,40 +39,33 @@ router.post("/", async (req, res) => {
 });
 
 router.put('/', async (req, res) => {
-    let { _id, exp, description, image, name, metadata, credit, skill } = req.body;
     try {
-        if (_id && exp && description && image && name && metadata && credit && skill) {
-            achievement.findByIdAndUpdate(
-                _id,
-                {
-                    "credit": credit,
-                    "description": description,
-                    "image": image,
-                    "metadata": metadata,
-                    "name": name,
-                    "exp": exp,
-                    "skill": skill
-                }, (err, result) => {
-                    if (err) {
-                        res.status(404).send(`${id} not found !`);
-                    } else {
-                        res.status(200).send(`${id} updated !`);
-                    }
-                });
+        let dataAchi = AchiModel.anyToAchi(req.body, true)
+        if (dataAchi._id == '') {
+            return res.status(400).send({ message: `[_id] missing` });
         } else {
-            res.status(400).send(`not enough value !`)
+            achievementDB.findByIdAndUpdate(dataAchi._id, dataAchi, (err, result) => {
+                if (err) {
+                    return res.status(404).send({ message: `Achievement [${dataAchi._id}] does not exits !` });
+                } else {
+                    return res.status(200).send({ mess: `Achievement [${dataAchi._id}] is updated !` });
+                }
+            })
         }
     } catch (err) {
+        res.status(500);
         console.error(err);
     }
 })
+
+
 router.delete('/', async (req, res) => {
     let { id } = req.query;
     if (id == undefined) {
         res.status(400).send({ message: `id empty` })
     } else {
         try {
-            achievement.findByIdAndDelete(id, (err, doc) => {
+            achievementDB.findByIdAndDelete(id, (err, doc) => {
                 if (err) {
                     res.status(404).send({ message: `${id} does not exits !` });
                 } else {

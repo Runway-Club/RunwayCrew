@@ -24,17 +24,14 @@ router.get('/', async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        let { err, data } = shareService.parseBodyToObject(new ATCModel(), req.body)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-        }
-        else {
-            let newAtc = new atcDB(data)
-            await newAtc.save().then(savedDoc => {
-                if (savedDoc === newAtc)
-                    return res.status(201).send({ mess: `Atc [${savedDoc._id}] is created` })
-            })
-        }
+        let dataATC = ATCModel.anyToATC(req.body, false)
+        let newATC = new atcDB(dataATC)
+        newATC.save().then(savedDoc => {
+            if (savedDoc === newATC)
+                return res.status(201).send({ mess: `ATC [${savedDoc._id}] is created` })
+            else
+                return res.status(500).send({ mess: 'Server err' })
+        })
     } catch (err) {
         console.log(err)
         res.status(500)
@@ -42,41 +39,33 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/", async (req, res) => {
+router.put('/', async (req, res) => {
     try {
-        let _id = req.body._id;
-        let {err, data} = shareService.parseBodyToObject( new ATCModel(), req.body);
-        if (_id ==  undefined) {
-            return res.status(400).send({ mess: `[${req.body._id}] is not found` })
-        }
-        else {
-            if (err != null) {
-                return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-            }
-            else {
-                   atcDB.findByIdAndUpdate(_id, data, (err, result)=>{
-                    if (err) {
-                       return res.status(404).send({ mess: `${_id} is not found`})  
-                    }else 
-                    {
-                        return res.status(200).send({mess: `${_id} is update`})
-                    }
-                   })
+        let dataATC = ATCModel.anyToATC(req.body, true)
+        if (dataATC._id == '') {
+            return res.status(400).send({ message: `[_id] missing` });
+        } else {
+            atcDB.findByIdAndUpdate(dataATC._id, dataATC, (err, result) => {
+                if (err) {
+                    return res.status(404).send({ message: `ATC [${dataATC._id}] does not exits !` });
+                } else {
+                    return res.status(200).send({ mess: `ATC [${dataATC._id}] is updated !` });
                 }
+            })
         }
     } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
+        res.status(500);
+        console.error(err);
     }
-       
-});
+})
+
 router.delete('/', async (req, res) => {
     let _id = req.query.id
     try {
         if(req.query.id == undefined){
             res.status(400)
             res.send({mess:`[id] field is missing`})
+            return
         }
         atcDB.findByIdAndDelete(_id, function (err, docs) {
             if (err) {
@@ -95,4 +84,4 @@ router.delete('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router

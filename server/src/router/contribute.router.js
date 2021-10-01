@@ -1,69 +1,28 @@
 const app = require('express');
-const contributeSchema = require('../../schemas/contribute.schema')
 let mongoose = require('mongoose');
-const contribute = require('../../schemas/contribute.schema');
+const contributeSchema = require('../../schemas/contribute.schema');
 const router = app.Router();
-const Contribute = mongoose.model('contribute', contributeSchema)
+const contributeDB = mongoose.model('contribute', contributeSchema)
 
 const ContriModel = require('../../model/contribution.model')
 const shareService = require('../service/share.service');
 
 router.get("/", async (req, res) => {
     const { id } = req.query;
-    if (!id) {
-        try {
-            let data;
-            data = await Contribute.find()
-            res.status(200)
-            res.send(data)
-        } catch (err) {
-            console.log(err)
-            res.status(500)
-            res.send({ mess: 'Server err' })
-        }
-    }
-    else {
-        try {
-            res.send(await Contribute.findById(id))
-        } catch (error) {
-            console.log(err)
-            res.status(500)
-            res.send({ mess: 'Server err' })
-        }
-    }
-});
-// router.post("/", async (req, res) => {
-//     try {
-//         let { credit, email, exp, uid, achievements, skills } = req.body
-//         const fluffy = new Contribute({
-//             achievements: achievements,
-//             credit: credit,
-//             email: email,
-//             exp: exp,
-//             uid: uid,
-//             skills: skills,
-//         });
-//         await fluffy.save();
-//         res.status(201)
-//         res.send({ mess: 'Created' })
-//     }
-//     catch (err) {
-//         console.log(err)
-//         res.status(500)
-//         res.send({ mess: 'Server err' })
-//     }
-// });
-router.post("/", async (req, res) => {
     try {
-        let { err, data } = shareService.parseBodyToObject(new ContriModel(), req.body)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        let data;
+        if (id == undefined) {
+            data = await contributeDB.find()
+            return res.status(200).send(data)
         }
         else {
-            let newcontri = new Contribute(data)
-            await newcontri.save().then(savedDoc => {
-                if (savedDoc === newcontri)
-                    return res.status(201).send({ mess: `Contribute [${savedDoc._id}] is created` })
+            contributeDB.findById(id, (err, doc) => {
+                if (err) {
+                    return res.status(404).send({ mess: `[${id}] not found` })
+                }
+                else {
+                    return res.status(200).send(doc)
+                }
             })
         }
     } catch (err) {
@@ -72,50 +31,59 @@ router.post("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 });
-router.put("/", async (req, res) => {
-    const id = req.body.id;
-    const credit = req.body.credit;
-    const email = req.body.email;
-    const exp = req.body.exp;
-    const uid = req.body.uid;
-    try {
-        let resdb = await Contribute.findByIdAndUpdate(id,
-            {
-                "credit": credit,
-                "exp": exp,
-                "email": email,
-                "uid": uid
-            }, { rawResult: true });
-        if (!resdb.lastErrorObject.updatedExisting) {
-            res.send({ mess: `[${req.body.id}] not found` })
-        }
-        else {
-            res.send({ mess: `[${req.body.id}] updated` })
-        }
-    } catch (error) {
-        console.log(error)
-        res.status(400)
-        res.send("Server error")
-    }
-})
-router.delete("/", async (req, res) => {
-    const id = req.query.id;
 
+router.post("/", async (req, res) => {
     try {
-        await Contribute.findByIdAndDelete(id, (err, docs) => {
-            if (err) {
-                res.send({ mess: "Not Faund", docs })
-            }
-            else {
-                res.status(200)
-                res.send({ mess: `ok`, docs })
-
-            }
-        });
-    } catch (errr) {
+        let dataContri = ContriModel.anyToContri(req.body, false)
+        let newContri = new contributeDB(dataContri)
+        newContri.save().then(savedDoc => {
+            if (savedDoc === newContri)
+                return res.status(201).send({ mess: `Contribute [${savedDoc._id}] is created` })
+            else
+                return res.status(500).send({ mess: 'Server err' })
+        })
+    } catch (err) {
         console.log(err)
         res.status(500)
         res.send({ mess: 'Server err' })
+    }
+});
+
+router.put('/', async (req, res) => {
+    try {
+        let dataContri = ContriModel.anyToContri(req.body, true)
+        if (dataContri._id == '') {
+            return res.status(400).send({ message: `[_id] missing` });
+        } else {
+            contributeDB.findByIdAndUpdate(dataContri._id, dataContri, (err, result) => {
+                if (err) {
+                    return res.status(404).send({ message: `Contribute [${dataContri._id}] does not exits !` });
+                } else {
+                    return res.status(200).send({ mess: `Contribute [${dataContri._id}] is updated !` });
+                }
+            })
+        }
+    } catch (err) {
+        res.status(500);
+        console.error(err);
+    }
+})
+
+router.delete("/", async (req, res) => {
+    try {
+        const id = req.query.id;
+        if (!id) {
+            return res.status(400).send({ mess: `[id] is empty` })
+        }
+        contributeDB.findByIdAndDelete(id, function (err, docs) {
+            if (err)
+                return res.status(404).send({ mess: `Profile [${id}] not found` })
+            else
+                return res.status(200).send({ mess: `Profile [${id}] is deleted` })
+        });
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({ mess: 'Server err' })
     }
 })
 module.exports = router;

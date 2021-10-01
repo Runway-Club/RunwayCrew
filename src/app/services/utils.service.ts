@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class UtilsService {
 
   private currentUser?: firebase.default.User;
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private HttpClient:HttpClient) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
         this.currentUser = state;
@@ -39,7 +41,8 @@ export class UtilsService {
       created: current,
       updated: current
     };
-    await this.db.collection(collectionName).doc(data.id).set(data);
+    // await this.db.collection(collectionName).doc(data.id).set(data);
+    await this.HttpClient.post(environment.endpoint + collectionName, data).toPromise().then(res=>console.log(res));
   }
   public async update(collectionName: string, data: any) {
     let user = this.currentUser;
@@ -51,11 +54,16 @@ export class UtilsService {
       actor: user.email,
       updated: Date.now()
     }
-    await this.db.collection(collectionName).doc(data.id).update(data);
+    // await this.db.collection(collectionName).doc(data.id).update(data);
+    await this.HttpClient.put(environment.endpoint + collectionName, data).toPromise().then(res=>console.log(res));
   }
 
   public async delete(collectionName: string, id: string) {
-    await this.db.collection(collectionName).doc(id).delete();
+    // await this.db.collection(collectionName).doc(id).delete();
+    await this.HttpClient.delete(environment.endpoint + collectionName +`?id=${id}`,{
+      observe: 'response',
+      responseType: 'blob',
+    }).toPromise();
   }
 
 }

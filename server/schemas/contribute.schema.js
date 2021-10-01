@@ -7,6 +7,7 @@ const contribute = new mongoose.Schema({
     exp: 0,
     skills: [],
     uid: '',
+    id:''
 });
 
 module.exports = contribute;

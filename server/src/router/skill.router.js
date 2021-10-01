@@ -21,79 +21,43 @@ router.get('/', async (req, res) => {
         })
     }
 })
-// router.post("/", async (req, res) => {
-//     try {
-//         let { description, id, image, actor, name} = req.body
-//         const fluffy = new skill({
-//             description: description,
-//             id: id,
-//             image: image,
-//             levels:[],
-//             metadata:{
-//                 actor: actor,
-//                 created: Date.now().toString(),
-//                 updated: Date.now().toString(),
-//             },
-//             name: name,
-//         });
-//         await fluffy.save();
-//         res.status(200)
-//         res.send({ mess: 'Created' })
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500)
-//         res.send({ mess: 'Server err' })
 
-//     }
-// });
 router.post("/", async (req, res) => {
     try {
-        let { err, data } = shareService.parseBodyToObject(new SkillModel(), req.body)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-        }
-        else {
-            let newSkill = new skillDB (data)
-            await newSkill.save().then(savedDoc => {
-                if (savedDoc === newSkill)
-                    return res.status(201).send({ mess: `Skill [${savedDoc._id}] is created` })
+        let dataSkill = SkillModel.anyToSkill(req.body, false)
+        let newSkill = new skillDB(dataSkill)
+        newSkill.save().then(savedDoc => {
+            if (savedDoc === newSkill)
+                return res.status(201).send({ mess: `Skill [${savedDoc._id}] is created` })
+            else
+                return res.status(500).send({ mess: 'Server err' })
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
+
+router.put('/', async (req, res) => {
+    try {
+        let dataSkill = SkillModel.anyToSkill(req.body, true)
+        if (dataSkill._id == '') {
+            return res.status(400).send({ message: `[_id] missing` });
+        } else {
+            skillDB.findByIdAndUpdate(dataSkill._id, dataSkill, (err, result) => {
+                if (err) {
+                    return res.status(404).send({ message: `Skill [${dataSkill._id}] does not exits !` });
+                } else {
+                    return res.status(200).send({ mess: `Skill [${dataSkill._id}] is updated !` });
+                }
             })
         }
     } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
+        res.status(500);
+        console.error(err);
     }
-});
-router.put("/", async (req, res) => {
-    try {
-        let _id = req.body._id;
-        let {err, data} = shareService.parseBodyToObject( new skillModel(), req.body);
-        if (_id ==  undefined) {
-            return res.status(400).send({ mess: `[${req.body._id}] is not found` })
-        }
-        else {
-            if (err != null) {
-                return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-            }
-            else {
-                   skillDB.findByIdAndUpdate(_id, data, (err, result)=>{
-                    if (err) {
-                       return res.status(404).send({ mess: `${_id} is not found`})  
-                    }else 
-                    {
-                        return res.status(200).send({mess: `${_id} is update`})
-                    }
-                   })
-                }
-        }
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
-    }
-       
-});
+})
 
 router.delete('/', async (req, res) => {
     let _id = req.query.id
@@ -101,18 +65,19 @@ router.delete('/', async (req, res) => {
         if(req.query.id == undefined){
             res.status(400)
             res.send(`[id] field is missing`)
+            return
         }
         skillDB.findByIdAndDelete(_id, function (err, docs) {
-        if (err) {
-            res.status(404)
-            res.send(`[${_id}] not found`)
-        }
-        else {
-            res.status(200)
-            res.send({ mess: ` [${_id}] is deleted` })
-        }
-    });
-        
+            if (err) {
+                res.status(404)
+                res.send(`[${_id}] not found`)
+            }
+            else {
+                res.status(200)
+                res.send({ mess: ` [${_id}] is deleted` })
+            }
+        });
+
     } catch (err) {
         console.log(err);
         res.status(500)

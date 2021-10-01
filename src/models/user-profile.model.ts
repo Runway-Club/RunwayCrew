@@ -3,6 +3,7 @@ import { Metadata } from "./metadata.model";
 import { Role } from "./role.model";
 
 export interface RegistrationProfile {
+  _id:string,
   name: string,
   dob: number,
   gender: string,
@@ -14,6 +15,7 @@ export interface RegistrationProfile {
   email: string
 }
 export interface UserProfile extends RegistrationProfile {
+  _id:string,
   uid: string,
   email: string,
   photoUrl: string,
@@ -24,6 +26,7 @@ export interface UserProfile extends RegistrationProfile {
 }
 
 export interface UserContribution {
+  _id:string,
   uid: string,
   email: string,
   credit: number,

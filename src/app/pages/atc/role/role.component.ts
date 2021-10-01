@@ -3,6 +3,7 @@ import { NbDialogService } from '@nebular/theme';
 import { RoleService } from 'src/app/services/role.service';
 import { FileUploadComponent } from 'src/app/shared/file-upload/file-upload.component';
 import { Role } from 'src/models/role.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-role',
@@ -11,7 +12,8 @@ import { Role } from 'src/models/role.model';
 })
 export class RoleComponent implements OnInit {
 
-  constructor(private dialog: NbDialogService, private roleService: RoleService) { }
+  constructor(private dialog: NbDialogService, private roleService: RoleService
+    ,private HttpClient:HttpClient) { }
 
   public roles: Role[] = [];
 
@@ -19,11 +21,13 @@ export class RoleComponent implements OnInit {
     this.roleService.getAll().subscribe((roles) => {
       this.roles.length = 0;
       this.roles.push(...roles);
+      console.log(this.roles)
     });
   }
 
   public addEmptyRole() {
     this.roles.push({
+      _id:'',
       id: "",
       name: "",
       description: "",
@@ -44,7 +48,12 @@ export class RoleComponent implements OnInit {
   }
 
   public async saveRole(i: number) {
-    await this.roleService.create(this.roles[i]);
+    const _id = this.roles[i]._id;
+    if(!_id){
+      return await this.roleService.create(this.roles[i]);
+    }else{
+      return await this.roleService.update(this.roles[i]);
+    }
   }
 
 }

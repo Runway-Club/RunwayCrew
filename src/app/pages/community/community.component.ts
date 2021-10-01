@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { SkillService } from 'src/app/services/skill.service';
+import { environment } from '../../../environments/environment.prod';
 import { Role } from 'src/models/role.model';
-import { UserContribution, UserProfile } from 'src/models/user-profile.model';
+import { RegistrationProfile, UserContribution, UserProfile } from 'src/models/user-profile.model';
 
 import { UtilsService } from 'src/app/services/utils.service';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Achievement } from 'src/models/achievement.model';
 import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
-import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-community',
@@ -46,6 +47,8 @@ export class CommunityComponent implements OnInit {
 
     this.getData()
    
+    // this.getData()
+    this.testPost()
     //this.cloneATCCollection()
     //this.cloneAchiCollection()
     //this.cloneContriCollection()
@@ -84,6 +87,9 @@ export class CommunityComponent implements OnInit {
     this.utils.getAll("achievements").subscribe(async (data) => {
       console.log({ achievements: data })
     })
+    this.utils.getAll("achievements").subscribe(async (data) => {
+      console.log({ achievements: data })
+    })
     this.utils.getAll("atc").subscribe(async (data) => {
       console.log({ atc: data })
     })
@@ -100,20 +106,29 @@ export class CommunityComponent implements OnInit {
       console.log({ skills: data })
     })
   }
- 
+  async testPost() {
+    let newATC: RegistrationProfile = {
+      _id: '',
+      address: '',
+      linkIn: '',
+      dob: 0,
+      email: '',
+      gender: '',
+      name: '',
+      phoneNumber: '',
+      selectedRoles: [],
+      facebook: '',
+    }
+    console.log(newATC)
+    await this.httpClient.post(environment.endpoint + 'atc', newATC).toPromise().then(res => {
+      console.log(res)
+    })
+  }
+
   cloneAchiCollection() {
     this.utils.getAll<Achievement>("achievements").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"achievements"', {
-          credit: datas[i].credit,
-          description: datas[i].description,
-          exp: datas[i].exp,
-          image: datas[i].image,
-          metadata: datas[i].metadata,
-          name: datas[i].name,
-          skills: datas[i].skills,
-          id: datas[i].id
-        }).toPromise().then(res => {
+        await this.httpClient.post<Achievement>(environment.endpoint + "achievements123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -122,22 +137,7 @@ export class CommunityComponent implements OnInit {
   cloneATCCollection() {
     this.utils.getAll<UserProfile>("atc").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"atc"', {
-          address: datas[i].address,
-          contribMetadata: datas[i].contribMetadata,
-          dob: datas[i].dob,
-          email: datas[i].email,
-          facebook: datas[i].facebook,
-          gender: datas[i].gender,
-          linkIn: datas[i].linkIn,
-          name: datas[i].name,
-          phoneNumber: datas[i].phoneNumber,
-          photoUrl: datas[i].photoUrl,
-          profileMetadata: datas[i].profileMetadata,
-          roles: datas[i].roles,
-          selectedRoles: datas[i].selectedRoles,
-          uid: datas[i].uid
-        }).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "atc123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -146,14 +146,7 @@ export class CommunityComponent implements OnInit {
   cloneContriCollection() {
     this.utils.getAll<Contribution>("contributions").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"contri"', {
-          achievements: datas[i].achievements,
-          credit: datas[i].credit,
-          email: datas[i].email,
-          exp: datas[i].exp,
-          skills: datas[i].skills,
-          uid: datas[i].uid
-        }).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "contri123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -162,22 +155,7 @@ export class CommunityComponent implements OnInit {
   cloneProfileCollection() {
     this.utils.getAll<UserProfile>("profiles").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"profile"', {
-          address: datas[i].address,
-          contribMetadata: datas[i].contribMetadata,
-          dob: datas[i].dob,
-          email: datas[i].email,
-          facebook: datas[i].facebook,
-          gender: datas[i].gender,
-          linkIn: datas[i].linkIn,
-          name: datas[i].name,
-          phoneNumber: datas[i].phoneNumber,
-          photoUrl: datas[i].photoUrl,
-          profileMetadata: datas[i].profileMetadata,
-          roles: datas[i].roles,
-          selectedRoles: datas[i].selectedRoles,
-          uid: datas[i].uid
-        }).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "profile123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -186,13 +164,7 @@ export class CommunityComponent implements OnInit {
   cloneRoleCollection() {
     this.utils.getAll<Role>("roles").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"roles"', {
-          description: datas[i].description,
-          id: datas[i].id,
-          image: datas[i].image,
-          metadata: datas[i].metadata,
-          name: datas[i].name
-        }).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "roles123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -201,14 +173,7 @@ export class CommunityComponent implements OnInit {
   cloneSkillCollection() {
     this.utils.getAll<Skill>("skills").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post('http://localhost:8080/"skill"', {
-          description: datas[i].description,
-          id: datas[i].id,
-          image: datas[i].image,
-          metadata: datas[i].metadata,
-          name: datas[i].name,
-          levels: datas[i].levels
-        }).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "skill123", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
