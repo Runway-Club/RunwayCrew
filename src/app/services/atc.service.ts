@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, Query } from '@angular/fire/firestore';
@@ -8,7 +9,7 @@ import {
   UserProfile,
 } from 'src/models/user-profile.model';
 import { UtilsService } from './utils.service';
-
+import { environment } from 'src/environments/environment.prod';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +18,8 @@ export class ATCService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private utils: UtilsService
+    private utils: UtilsService, 
+    private HttpClient : HttpClient
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -53,6 +55,7 @@ export class ATCService {
   }
 
   public getATCMembers(): Observable<UserProfile[]> {
-    return this.utils.getAll('atc');
+    // return this.utils.getAll('atc');
+    return this.HttpClient.get<UserProfile[]>(environment.endpoint+'atc');
   }
 }
