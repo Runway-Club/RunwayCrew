@@ -8,10 +8,6 @@ import { FileUploadComponent } from 'src/app/shared/file-upload/file-upload.comp
 import { Achievement } from 'src/models/achievement.model';
 import { Skill } from 'src/models/skill.model';
 import { UserProfile } from 'src/models/user-profile.model';
-
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
 @Component({
   selector: 'app-achievement',
   templateUrl: './achievement.component.html',
@@ -24,11 +20,10 @@ export class AchievementComponent implements OnInit {
     private skillService: SkillService,
     private profileService: ProfileService,
     private contributionService: ContributionService,
-    private dialog: NbDialogService,
-    private HttpClient:HttpClient) { }
+    private dialog: NbDialogService) { }
 
   ngOnInit(): void {
-    this.loadPage();
+    // this.loadPage();
     this.skillService.getAll().subscribe((skills) => {
       if (!skills) {
         return;
@@ -44,28 +39,15 @@ export class AchievementComponent implements OnInit {
       this.achievements.length = 0;
       this.achievements.push(...achievements);
     })
-    // this.getAllAchievements();
   }
-
-  
-
   public page = 0;
   public size = 50;
-
   public achievements: Achievement[] = [];
   public skills: Skill[] = [];
   public selectedProvidingAchievement?: Achievement;
   public profiles: UserProfile[] = [];
   public selectedProvidedUser?: UserProfile;
   public skipAchievement: boolean = false;
-
-  public achievementsTest: Achievement[] = [];
-
-  // async getAllAchievements(){
-  //   return await this.HttpClient.get<Achievement[]>('http://localhost:8080/achievements').subscribe((data)=>{
-  //     this.achievementsTest = data;
-  //   })
-  // }
 
   public addEmptyAchievement() {
     this.achievements.push({
@@ -92,14 +74,19 @@ export class AchievementComponent implements OnInit {
   }
 
   public async saveAchievement(i: number) {
-    await this.achievementService.create(this.achievements[i]);
+    const _id = this.achievements[i]._id;
+    if(!_id){
+      await this.achievementService.create(this.achievements[i]);
+    }else{
+      await this.achievementService.update(this.achievements[i]);
+    }
   }
 
-  public async loadPage() {
-    let achievements = await this.achievementService.getPaginate(this.page * this.size, this.size);
-    this.achievements.length = 0;
-    this.achievements.push(...achievements.docs.map((d) => <Achievement>d.data()));
-  }
+  // public async loadPage() {
+  //   let achievements = await this.achievementService.getPaginate(this.page * this.size, this.size);
+  //   this.achievements.length = 0;
+  //   this.achievements.push(...achievements.docs.map((d) => <Achievement>d.data()));
+  // }
 
   public async addNewSkill(achievement: Achievement) {
     achievement.skills.push({

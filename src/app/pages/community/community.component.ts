@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { SkillService } from 'src/app/services/skill.service';
-import { environment } from '../../../environments/environment.prod'
+import { environment } from '../../../environments/environment.prod';
 import { Role } from 'src/models/role.model';
 import { RegistrationProfile, UserContribution, UserProfile } from 'src/models/user-profile.model';
 
@@ -45,6 +45,8 @@ export class CommunityComponent implements OnInit {
       this.roles.push(...roles);
     });
 
+    this.getData()
+   
     // this.getData()
     this.testPost()
     //this.cloneATCCollection()
@@ -128,6 +130,7 @@ export class CommunityComponent implements OnInit {
       console.log(res)
     })
   }
+
   cloneAchiCollection() {
     this.utils.getAll<Achievement>("achievements").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
