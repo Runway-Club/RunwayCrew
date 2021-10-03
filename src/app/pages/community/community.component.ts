@@ -13,6 +13,7 @@ import { Achievement } from 'src/models/achievement.model';
 import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
 
+
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
@@ -104,20 +105,26 @@ export class CommunityComponent implements OnInit {
     })
   }
   async testPost() {
-    let newATC: RegistrationProfile = {
-      _id: '',
-      address: '',
-      linkIn: '',
-      dob: 0,
-      email: '',
-      gender: '',
-      name: '',
+    let newATC: UserProfile={
+      _id:'',
+      address:'HCM',
+      dob:0,
+      email:'test@gaml.com',
+      gender:'male',
+      name:'',
       phoneNumber: '',
-      selectedRoles: [],
-      facebook: '',
+      photoUrl:'',
+      roles:[],
+      selectedRoles:[],
+      uid:'',
+      contribMetadata:{},
+      facebook:'',
+      linkIn:'',
+      profileMetadata:{}
     }
-    console.log(newATC)
-    await this.httpClient.post(environment.endpoint + 'atc', newATC).toPromise().then(res => {
+
+
+    await this.httpClient.post(environment.endpoint+'atc', newATC).toPromise().then((res) => {
       console.log(res)
     })
   }
