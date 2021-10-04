@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, Query } from '@angular/fire/firestore';
+import { environment } from '../../environments/environment.prod'
 import { Observable } from 'rxjs';
 import {
   RegistrationProfile,
@@ -8,6 +10,8 @@ import {
   UserProfile,
 } from 'src/models/user-profile.model';
 import { UtilsService } from './utils.service';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Collection } from 'mongoose';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +19,7 @@ import { UtilsService } from './utils.service';
 export class ProfileService {
   private currentUser?: firebase.default.User;
   constructor(
+    private httpClient: HttpClient,
     private auth: AngularFireAuth,
     private db: AngularFirestore,
     private utils: UtilsService
@@ -24,6 +29,38 @@ export class ProfileService {
         this.currentUser = state;
       }
     });
+  }
+  public async get(id: string): Promise<ProfileService> {
+    return this.httpClient.get<ProfileService>(environment.endpoint + `Profile`).toPromise();
+  }
+  public getAll(): Observable<ProfileService[]> {
+    return this.httpClient.get<ProfileService[]>(environment.endpoint + "Profile");
+  }
+  public async update(registration: RegistrationProfile) {
+    let currentTime = Date.now();
+    // Prepare user data
+    if (!this.currentUser) {
+      throw 'Unauthenticated';
+    }
+    let currentProfile = await this.db
+      .collection('profiles')
+      .doc(this.currentUser.uid)
+      .get()
+      .toPromise();
+    let updated: UserProfile = <UserProfile>currentProfile.data();
+    updated = {
+      ...updated,
+      ...registration,
+      photoUrl: this.currentUser.photoURL ?? '',
+      profileMetadata: {
+        updated: currentTime,
+      },
+    };
+
+    await this.db
+      .collection('profiles')
+      .doc(this.currentUser.uid)
+      .update(updated);
   }
 
   public async create(registration: RegistrationProfile) {
@@ -58,66 +95,35 @@ export class ProfileService {
       exp: 0,
     };
     // Create data
+    //await this.httpClient.put(environment.endpoint, Observable<ProfileService>)
 
-    await this.db.collection('profiles').doc(this.currentUser.uid).set(profile);
-    await this.db
-      .collection('contributions')
-      .doc(this.currentUser.uid)
-      .set(contribution);
+    // await this.db.collection('profiles').doc(this.currentUser.uid).set(profile);
+    // await this.db
+    //   .collection('contributions')
+    //   .doc(this.currentUser.uid)
+    //   .set(contribution);
   }
 
-  public async update(registration: RegistrationProfile) {
-    let currentTime = Date.now();
-    // Prepare user data
-    if (!this.currentUser) {
-      throw 'Unauthenticated';
-    }
-    let currentProfile = await this.db
-      .collection('profiles')
-      .doc(this.currentUser.uid)
-      .get()
-      .toPromise();
-    let updated: UserProfile = <UserProfile>currentProfile.data();
-    updated = {
-      ...updated,
-      ...registration,
-      photoUrl: this.currentUser.photoURL ?? '',
-      profileMetadata: {
-        updated: currentTime,
-      },
-    };
-
-    await this.db
-      .collection('profiles')
-      .doc(this.currentUser.uid)
-      .update(updated);
-  }
+  
 
   public async updateProfile(profile: UserProfile) {
-    await this.db
-      .collection('profiles')
-      .doc(profile.uid)
-      .update({
-        ...profile,
-        profileMetadata: {
-          ...profile.profileMetadata,
-          updated: Date.now(),
-        },
-      });
+    console.log(profile);
+    // await this.httpClient.put(environment.endpoint,   )
+    // await this.db
+    //   .collection('profiles')
+    //   .doc(profile.uid)
+    //   .update({
+    //     ...profile,
+    //     profileMetadata: {
+    //       ...profile.profileMetadata,
+    //       updated: Date.now(),
+    //     },
+    //   });
   }
 
-  public async get(uid?: string): Promise<UserProfile> {
-    let profile = await this.db
-      .collection('profiles')
-      .doc(uid ?? this.currentUser?.uid)
-      .get()
-      .toPromise();
-    return <UserProfile>profile.data();
-  }
+  
 
-  public getAll(): Observable<UserProfile[]> {
-    return this.utils.getAll<UserProfile>('profiles');
-  }
+  
 
   public async isRegistrated(): Promise<boolean> {
     return new Promise((resolve) => {
