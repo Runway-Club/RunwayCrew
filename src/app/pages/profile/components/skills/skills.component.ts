@@ -12,7 +12,8 @@ export class SkillsComponent implements OnInit {
   @Input() uid = '';
   public loadDone = false;
   constructor(public contributeSv: ContributionService) { }
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
   public async get() {
     this.skills = await (await this.contributeSv.get()).skills;
     // console.log(typeof (this.skills));

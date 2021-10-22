@@ -34,7 +34,6 @@ export class BodyComponent {
   ngOnInit(): void {
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
-      console.log(this.userProfile);
     }, 500);
   }
 

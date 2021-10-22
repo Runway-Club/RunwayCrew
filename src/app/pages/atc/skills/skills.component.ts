@@ -46,7 +46,12 @@ export class SkillsComponent implements OnInit {
   }
 
   public async saveSkill(i: number) {
-    await this.skillService.create(this.skills[i]);
+    const _id = this.skills[i]._id;
+    if(!_id){
+      return await this.skillService.create(this.skills[i]);
+    }else{
+      return await this.skillService.update(this.skills[i]);
+    }
   }
 
 }
