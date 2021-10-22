@@ -27,6 +27,7 @@ export interface UserProfile extends RegistrationProfile {
 
 export interface UserContribution {
   _id:string,
+  id:string,
   uid: string,
   email: string,
   credit: number,

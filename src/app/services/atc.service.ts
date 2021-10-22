@@ -33,13 +33,20 @@ export class ATCService {
       this.auth.authState.subscribe(async (state) => {
         if (state) {
           this.currentUser = state;
-          let atc = (
-            await this.db
-              .collection('atc')
-              .doc(this.currentUser.uid)
-              .get()
-              .toPromise()
-          ).exists;
+          let atc = false;
+          let checkAtc = await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${state.uid}`).toPromise()
+          if(checkAtc == ''){
+            atc = false;
+          }else{
+            atc = true;
+          }
+          // let atc = (
+          //   await this.db
+          //     .collection('atc')
+          //     .doc(this.currentUser.uid)
+          //     .get()
+          //     .toPromise()
+          // ).exists;
           resolve(atc);
         }
       });
@@ -47,15 +54,20 @@ export class ATCService {
   }
 
   public async addToATC(profile: UserProfile) {
-    await this.db.collection('atc').doc(profile.uid).set(profile);
+    // await this.db.collection('atc').doc(profile.uid).set(profile);
+    await this.HttpClient.post(environment.endpoint + 'atc', profile).toPromise().then(res=>console.log(res));
   }
 
   public async removeFromATC(id: string) {
-    await this.db.collection('atc').doc(id).delete();
+    // await this.db.collection('atc').doc(id).delete();
+    await this.HttpClient.delete(environment.endpoint + 'atc' +`?id=${id}`,{
+      observe: 'response',
+      responseType: 'blob',
+    }).toPromise();
   }
 
   public getATCMembers(): Observable<UserProfile[]> {
     // return this.utils.getAll('atc');
-    return this.HttpClient.get<UserProfile[]>(environment.endpoint+'atc');
+    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'atc');
   }
 }

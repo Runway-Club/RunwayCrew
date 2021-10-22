@@ -45,13 +45,12 @@ export class CommunityComponent implements OnInit {
       this.roles.push(...roles);
     });
 
-    this.getData()
-   
     // this.getData()
-    this.testPost()
-    //this.cloneATCCollection()
+    // this.getData()
+    // this.testPost()
+    // this.cloneATCCollection()
     //this.cloneAchiCollection()
-    //this.cloneContriCollection()
+    // this.cloneContriCollection()
     //this.cloneProfileCollection()
     //this.cloneRoleCollection()
     //this.cloneSkillCollection()
@@ -66,7 +65,7 @@ export class CommunityComponent implements OnInit {
     return true;
   }
   public async getCommonSkill() {
-    this.commonSkill = await (await this.skillSv.get('common')).levels;
+    this.commonSkill = await (await this.skillSv.get('614854c1a58a2a2a3c8e428b')).levels;
   }
   public async goNext() {
     this.lasts.push(this.data[this.data.length - 1]);
@@ -137,7 +136,7 @@ export class CommunityComponent implements OnInit {
   cloneATCCollection() {
     this.utils.getAll<UserProfile>("atc").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post(environment.endpoint + "atc123", datas[i]).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "atc", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }
@@ -146,7 +145,7 @@ export class CommunityComponent implements OnInit {
   cloneContriCollection() {
     this.utils.getAll<Contribution>("contributions").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post(environment.endpoint + "contri123", datas[i]).toPromise().then(res => {
+        await this.httpClient.post(environment.endpoint + "contri", datas[i]).toPromise().then(res => {
           console.log(res)
         })
       }

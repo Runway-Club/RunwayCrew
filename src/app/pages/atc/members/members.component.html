@@ -62,7 +62,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
         </nb-card-header>
         <nb-card-body style="display: flex; align-items: center; justify-content: center">
             <button *ngIf='selectedProfileRemoveFromATC' nbButton size="giant" shape="round" outline
-                (click)='removeFromATC(selectedProfileRemoveFromATC.uid)'>
+                (click)='removeFromATC(selectedProfileRemoveFromATC._id)'>
                 <nb-icon icon="person-remove-outline" status="danger" [options]="{ animation: { type: 'shake' } }">
                 </nb-icon>
             </button>
@@ -98,7 +98,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                     </div> -->
                     <div>
                         <!-- <a [href]="'/profile?id='+profile.uid" target="_blank">Xem</a> -->
-                        <a href="./profile?id={{profile.uid}}" target="_blank" nbTooltip='Xem'
+                        <a href="./profile?id={{profile._id}}" target="_blank" nbTooltip='Xem'
                             style="font-weight: bold; text-decoration: none;">
                             <nb-icon icon="navigation-2-outline"></nb-icon>
                         </a>

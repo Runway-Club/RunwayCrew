@@ -15,7 +15,12 @@ export class SkillService {
 
   public async get(id: string): Promise<Skill> {
     // return this.utils.get<Skill>("skills", id);
-    return this.HttpClient.get<Skill>(environment.endpoint+`?id=${id}`).toPromise();
+    return this.HttpClient.get<Skill>(environment.endpoint+`skill?id=${id}`).toPromise();
+  }
+
+  public async getSkillId(id: string): Promise<Skill> {
+    // return this.utils.get<Skill>("skills", id);
+    return this.HttpClient.get<Skill>(environment.endpoint+`skill/id?skillId=${id}`).toPromise();
   }
 
   public getAll(): Observable<Skill[]> {
@@ -25,16 +30,44 @@ export class SkillService {
 
   public async create(skill: Skill) {
     // await this.utils.create("skills", skill);
-    await this.HttpClient.post(environment.endpoint , skill).toPromise().then(res=>console.log(res));
+    let user = this.utils.currentUser;
+    if (!user) {
+      throw "Unauthenticated";
+    }
+    let current = Date.now();
+    let body = {
+      ...skill,
+      metadata : {
+        actor: user.email,
+        created: current,
+        updated: current
+      }
+    }
+    await this.HttpClient.post(environment.endpoint + 'skill', body).toPromise().then(res=>console.log(res));
   }
 
   public async update(skill: Skill) {
     // await this.utils.update("skills", skill);
-    await this.HttpClient.put(environment.endpoint , skill).toPromise().then(res=>console.log(res));
+    let user = this.utils.currentUser;
+    if (!user) {
+      throw "Unauthenticated";
+    }
+    let body = {
+      ...skill,
+      metadata : {
+        ...skill.metadata,
+        actor: user.email,
+        updated: Date.now()
+      }
+    }
+    await this.HttpClient.put(environment.endpoint + 'skill', body).toPromise().then(res=>console.log(res));
   }
 
   public async delete(skillId: string) {
     // await this.utils.delete("skills", skillId);
-    await this.HttpClient.post(environment.endpoint , skillId).toPromise();
+    await this.HttpClient.delete(environment.endpoint + 'skill' +`?id=${skillId}`,{
+      observe: 'response',
+      responseType: 'blob',
+    }).toPromise();
   }
 }

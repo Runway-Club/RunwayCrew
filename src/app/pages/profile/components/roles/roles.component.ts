@@ -14,7 +14,7 @@ export class RolesComponent implements OnInit {
   @Input()
   public set roleIds(roles: string[]) {
     roles.map(async (r) => {
-      this.roles.push(await this.roleService.get(r));
+      this.roles.push(await this.roleService.getRoleId(r));
     })
   }
 

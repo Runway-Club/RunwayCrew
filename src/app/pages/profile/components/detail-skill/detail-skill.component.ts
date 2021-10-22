@@ -23,7 +23,7 @@ export class DetailSkillComponent implements OnInit {
     }, 0);
   }
   public async getSkillDetail() {
-    this.skillDetail = await this.skillSv.get(this.item.skillId);
+    this.skillDetail = await this.skillSv.getSkillId(this.item.skillId);
     this.getLevel();
     this.progressCal();
     this.loadDone = true;

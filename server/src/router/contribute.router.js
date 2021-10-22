@@ -7,6 +7,31 @@ const contributeDB = mongoose.model('contribute', contributeSchema)
 const ContriModel = require('../../model/contribution.model')
 const shareService = require('../service/share.service');
 
+router.get("/uid", async (req, res) => {
+    const {uid} = req.query;
+    try {
+        let data;
+        if (uid == undefined) {
+            data = await contributeDB.find()
+            return res.status(200).send(data)
+        }
+        else {
+            contributeDB.find({uid:uid}, (err, doc) => {
+                if (err) {
+                    return res.status(404).send({ mess: `[${uid}] not found` })
+                }
+                else {
+                    return res.status(200).send(doc[0])
+                }
+            })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+})
+
 router.get("/", async (req, res) => {
     const { id } = req.query;
     try {

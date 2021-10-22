@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
     }, 0);
     this.activatedRouter.queryParams.subscribe(async (queries) => {
       this.uid = queries['id'];
-      console.log(this.uid);
       this.auth.authState.subscribe(async (state) => {
         if (!state || state.isAnonymous) {
           if (this.uid == undefined) {
@@ -65,10 +64,10 @@ export class ProfileComponent implements OnInit {
     this.userProfile = await this.profileSv.get(this.uid);
   }
   public async getContribute() {
-    this.contribute = await this.contributeSv.get(this.uid);
+    this.contribute = await this.contributeSv.getUID(this.userProfile.uid);
   }
   public async getCommonSkill() {
-    this.commonSkill = (await this.skillService.get('common')).levels;
+    this.commonSkill = (await this.skillService.get('614854c1a58a2a2a3c8e428b')).levels;
   }
   public getProgressbar() {
     let max = 0;

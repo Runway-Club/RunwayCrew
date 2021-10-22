@@ -23,7 +23,6 @@ export class LevelComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(async () => {
       this.skill = await this.getSkill();
-      // console.log(this.skill);
       this.checkLv();
       this.progressCalc();
       this.getRemainingExp();
@@ -32,7 +31,7 @@ export class LevelComponent implements OnInit {
     }, 100);
   }
   public async getSkill() {
-    let result = await this.contrib.get(this.uid);
+    let result = await this.contrib.getUID(this.uid);
     return result;
   }
   public checkLv() {

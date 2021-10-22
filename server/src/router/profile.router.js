@@ -33,6 +33,29 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/uid", async (req, res) => {
+    try {
+        const { uid } = req.query;
+        if (uid) {
+            ProfileDB.find({uid:uid}, (err, doc) => {
+                if (err) {
+                    return res.status(404).send({ mess: `ID [${id}] not found` })
+                }
+                else {
+                    return res.status(200).send(doc)
+                }
+            })
+        }
+        else {
+            return res.status(200).send(await ProfileDB.find())
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+});
+
 router.post("/", async (req, res) => {
     try {
         let dataProfile = ProfileModel.anyToProfile(req.body, false)
