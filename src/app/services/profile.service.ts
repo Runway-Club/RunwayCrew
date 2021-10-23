@@ -30,11 +30,11 @@ export class ProfileService {
       }
     });
   }
-  public async get(id: string): Promise<ProfileService> {
-    return this.httpClient.get<ProfileService>(environment.endpoint + `Profile`).toPromise();
+  public async get(id: string): Promise<UserProfile> {
+    return this.httpClient.get<UserProfile>(environment.endpoint + `Profile`).toPromise();
   }
-  public getAll(): Observable<ProfileService[]> {
-    return this.httpClient.get<ProfileService[]>(environment.endpoint + "Profile");
+  public getAll(): Observable<UserProfile[]> {
+    return this.httpClient.get<UserProfile[]>(environment.endpoint + "Profile");
   }
   public async update(registration: RegistrationProfile) {
     let currentTime = Date.now();

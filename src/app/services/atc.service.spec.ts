@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AtcService } from './atc.service';
+import { ATCService } from './atc.service';
 
 describe('AtcService', () => {
-  let service: AtcService;
+  let service: ATCService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AtcService);
+    service = TestBed.inject(ATCService);
   });
 
   it('should be created', () => {
