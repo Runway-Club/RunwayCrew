@@ -104,6 +104,9 @@ export class AchievementComponent implements OnInit {
       return;
     }
     try {
+      // console.log(this.selectedProvidingAchievement)
+      // console.log(this.selectedProvidedUser?._id)
+      // console.log(this.skipAchievement)
       await this.contributionService.provide(this.selectedProvidingAchievement, this.selectedProvidedUser?.uid, this.skipAchievement)
       this.selectedProvidedUser = undefined;
       this.selectedProvidingAchievement = undefined;

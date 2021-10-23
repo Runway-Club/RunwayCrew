@@ -22,6 +22,21 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/uid', async (req, res) => {
+    let { uid } = req.query;
+    if (!uid) {
+        res.status(200).send(await atcDB.find());
+    } else {
+        atcDB.find({uid:uid}, (err, result) => {
+            if (err) {
+                res.status(404).send({ message: `${id} not found !` });
+            } else {
+                res.status(200).send(result);
+            }
+        })
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         let dataATC = ATCModel.anyToATC(req.body, false)

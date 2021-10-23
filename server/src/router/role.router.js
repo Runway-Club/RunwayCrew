@@ -8,6 +8,22 @@ const roleDB = mongoose.model('roles', roleSchema);
 const RoleModel = require('../../model/role.model')
 const shareService = require('../service/share.service');
 
+router.get('/id', async (req, res) => {
+    let { roleId } = req.query;
+    if (!roleId) {
+        res.status(200).send(await roleDB.find());
+    } else {
+        roleDB.find({id:roleId}, (err, doc) => {
+            if (err) {
+                return res.status(404).send({ mess: `[${roleId}] not found` })
+            }
+            else {
+                return res.status(200).send(doc[0])
+            }
+        })
+    }
+})
+
 router.get('/', async (req, res) => {
     let { id } = req.query;
     if (!id) {

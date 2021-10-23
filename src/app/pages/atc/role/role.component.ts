@@ -21,7 +21,6 @@ export class RoleComponent implements OnInit {
     this.roleService.getAll().subscribe((roles) => {
       this.roles.length = 0;
       this.roles.push(...roles);
-      console.log(this.roles)
     });
   }
 

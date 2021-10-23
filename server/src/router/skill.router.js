@@ -22,6 +22,22 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/id', async (req, res) => {
+    let { skillId } = req.query;
+    if (!skillId) {
+        res.status(200).send(await skillDB.find());
+    } else {
+        skillDB.find({id:skillId}, (err, doc) => {
+            if (err) {
+                return res.status(404).send({ mess: `[${skillId}] not found` })
+            }
+            else {
+                return res.status(200).send(doc[0])
+            }
+        })
+    }
+})
+
 router.post("/", async (req, res) => {
     try {
         let dataSkill = SkillModel.anyToSkill(req.body, false)

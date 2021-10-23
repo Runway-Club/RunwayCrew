@@ -29,8 +29,6 @@ export class MembersComponent implements OnInit {
   public selectedProfileRemoveFromATC!: UserProfile;
   ngOnInit(): void {
     this.profileService.getAll().subscribe((profiles) => {
-      // console.log(profiles);
-
       this.profiles.length = 0;
       this.profiles.push(...profiles);
     });
@@ -43,7 +41,6 @@ export class MembersComponent implements OnInit {
       // console.log(profiles);
       this.atcMembers.push(...profiles);
     });
-    console.log(this.roles);
   }
 
   public getRoleString(profile: UserProfile) {
