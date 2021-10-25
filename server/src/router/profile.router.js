@@ -33,6 +33,29 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get('/community', async (req, res)=>{
+    try {
+        let {size, roleId, last} = req.query;
+        if(roleId === 'undefined'){
+            let response = await ProfileDB
+                .find()
+                .sort({"profileMetadata.updated": 1})
+                .limit(size)
+            return res.status(200).send(response)
+        }else{
+            let response = await ProfileDB
+                .find({roles: roleId})
+                .sort({"profileMetadata.updated": 1})
+                .limit(size)
+            return res.status(200).send(response)
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+})
+
 router.get("/uid", async (req, res) => {
     try {
         const { uid } = req.query;
