@@ -74,8 +74,14 @@ export class ContributionService {
       contrib.achievements?.push(achievement);
       contrib.exp += achievement.exp;
     }
-    console.log(contrib)
     await this.HttpClient.put(environment.endpoint + 'contri', contrib).toPromise()
+    await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${uid}`).subscribe(async (res:any)=>{
+      const body = {
+        ...res[0],
+        profileMetadata: { updated: Date.now() }
+      }
+      await this.HttpClient.put(environment.endpoint + `profile`, body).toPromise()
+    })
     // await this.db.collection("contributions").doc(uid).update(contrib);
     // await this.db.collection("profiles").doc(uid).update({ profileMetadata: { updated: Date.now() } });
   }

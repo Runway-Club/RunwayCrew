@@ -221,7 +221,7 @@ export class ProfileService {
     //   .limit(size)
     //   .orderBy("profileMetadata.updated")
     //   .get()).docs.map((d) => <UserProfile>d.data())
-    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'profile').toPromise()
+    return this.HttpClient.get<UserProfile[]>(environment.endpoint + `profile/community?size=${size}&roleId=${roleId}`).toPromise()
   }
 
 }
