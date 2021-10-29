@@ -28,41 +28,6 @@ export class ProfileService {
       }
     });
   }
-<<<<<<< HEAD
-  public async get(id: string): Promise<UserProfile> {
-    return this.httpClient.get<UserProfile>(environment.endpoint + `Profile`).toPromise();
-  }
-  public getAll(): Observable<UserProfile[]> {
-    return this.httpClient.get<UserProfile[]>(environment.endpoint + "Profile");
-  }
-  public async update(registration: RegistrationProfile) {
-    let currentTime = Date.now();
-    // Prepare user data
-    if (!this.currentUser) {
-      throw 'Unauthenticated';
-    }
-    let currentProfile = await this.db
-      .collection('profiles')
-      .doc(this.currentUser.uid)
-      .get()
-      .toPromise();
-    let updated: UserProfile = <UserProfile>currentProfile.data();
-    updated = {
-      ...updated,
-      ...registration,
-      photoUrl: this.currentUser.photoURL ?? '',
-      profileMetadata: {
-        updated: currentTime,
-      },
-    };
-
-    await this.db
-      .collection('profiles')
-      .doc(this.currentUser.uid)
-      .update(updated);
-  }
-=======
->>>>>>> acf677fb8d2d4e5611c0b32152c933c32b55c09e
 
   public async create(registration: RegistrationProfile) {
     let currentTime = Date.now();
@@ -161,7 +126,7 @@ export class ProfileService {
       }
     }
     console.log(body)
-    // await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res=>console.log(res));
+    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res=>console.log(res));
   }
 
   public async get(uid?: string): Promise<UserProfile> {
@@ -177,7 +142,6 @@ export class ProfileService {
 
   public async getUid(uid?: string): Promise<UserProfile> {
     let user = this.HttpClient.get<UserProfile>(environment.endpoint + `profile/uid?uid=${uid}`).toPromise()
-    console.log(user)
     return user
   }
 
@@ -221,7 +185,7 @@ export class ProfileService {
     //   .limit(size)
     //   .orderBy("profileMetadata.updated")
     //   .get()).docs.map((d) => <UserProfile>d.data())
-    return this.HttpClient.get<UserProfile[]>(environment.endpoint + `profile/community?size=${size}&roleId=${roleId}`).toPromise()
+    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'profile').toPromise()
   }
 
 }

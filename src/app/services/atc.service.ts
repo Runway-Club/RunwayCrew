@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, Query } from '@angular/fire/firestore';
@@ -18,8 +18,8 @@ export class ATCService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private utils: UtilsService, 
-    private HttpClient : HttpClient
+    private utils: UtilsService,
+    private HttpClient: HttpClient
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -34,10 +34,10 @@ export class ATCService {
         if (state) {
           this.currentUser = state;
           let atc = false;
-          let checkAtc = await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${state.uid}`).toPromise()
-          if(checkAtc == ''){
+          let checkAtc = await this.HttpClient.get(environment.endpoint + `atc/uid?uid=${state.uid}`).toPromise()
+          if (checkAtc == null) {
             atc = false;
-          }else{
+          } else {
             atc = true;
           }
           // let atc = (
@@ -55,12 +55,12 @@ export class ATCService {
 
   public async addToATC(profile: UserProfile) {
     // await this.db.collection('atc').doc(profile.uid).set(profile);
-    await this.HttpClient.post(environment.endpoint + 'atc', profile).toPromise().then(res=>console.log(res));
+    await this.HttpClient.post(environment.endpoint + 'atc', profile).toPromise().then(res => console.log(res));
   }
 
   public async removeFromATC(id: string) {
     // await this.db.collection('atc').doc(id).delete();
-    await this.HttpClient.delete(environment.endpoint + 'atc' +`?id=${id}`,{
+    await this.HttpClient.delete(environment.endpoint + 'atc' + `?id=${id}`, {
       observe: 'response',
       responseType: 'blob',
     }).toPromise();

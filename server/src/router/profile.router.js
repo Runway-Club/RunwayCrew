@@ -60,7 +60,7 @@ router.get("/uid", async (req, res) => {
     try {
         const { uid } = req.query;
         if (uid) {
-            ProfileDB.find({uid:uid}, (err, doc) => {
+            ProfileDB.findOne({uid:uid}, (err, doc) => {
                 if (err) {
                     return res.status(404).send({ mess: `ID [${id}] not found` })
                 }

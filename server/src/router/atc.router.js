@@ -27,7 +27,7 @@ router.get('/uid', async (req, res) => {
     if (!uid) {
         res.status(200).send(await atcDB.find());
     } else {
-        atcDB.find({uid:uid}, (err, result) => {
+        atcDB.findOne({uid:uid}, (err, result) => {
             if (err) {
                 res.status(404).send({ message: `${id} not found !` });
             } else {

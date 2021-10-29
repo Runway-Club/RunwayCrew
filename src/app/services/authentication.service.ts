@@ -10,10 +10,11 @@ export class AuthenticationService {
     this.auth.authState.subscribe((user) => {
       if (this.user == null && user != null) {
         this.user = user;
-        localStorage.setItem('userId', user.uid);
       } else if (this.user != null) {
-        console.log(`Hello + ${this.user.displayName}`);
         // this.cookieService.set('email', user?.email ?? "", { expires: 1 });
+      }
+      if (user != null) {
+        localStorage.setItem('userId', user.uid);
       }
     });
   }

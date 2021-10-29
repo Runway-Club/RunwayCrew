@@ -60,18 +60,20 @@ export class AppComponent implements AfterViewInit {
     private toast: NbToastrService,
     private authService: AngularFireAuth
   ) {
-    this.atcService.isATC().then((isAtc) => {
-      if (isAtc) {
-        this.menus.push({
-          icon: 'admin_panel_settings',
-          type: 'parent',
-          name: 'ATC Zone',
-          link: 'atc',
-        });
-      }
-    });
+
     this.authService.authState.subscribe((state) => {
       if (state) {
+        this.atcService.isATC().then((isAtc) => {
+          if (isAtc) {
+            this.menus.push({
+              icon: 'admin_panel_settings',
+              type: 'parent',
+              name: 'ATC Zone',
+              link: 'atc',
+            });
+          }
+        });
+
         if (this.menus[0].name.toLowerCase() != 'profile') {
           this.menus.unshift({
             type: 'menu',
