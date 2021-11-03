@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/RunwayCrew",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
