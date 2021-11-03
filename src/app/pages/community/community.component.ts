@@ -45,7 +45,6 @@ export class CommunityComponent implements OnInit {
       this.roles.push(...roles);
     });
 
-    this.getData()
     // this.testPost()
     // this.cloneATCCollection()
     //this.cloneAchiCollection()

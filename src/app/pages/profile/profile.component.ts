@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
     private profileSv: ProfileService,
     private skillService: SkillService,
     private router: Router
-  ) {}
+  ) { }
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getProfile();
@@ -61,8 +61,9 @@ export class ProfileComponent implements OnInit {
     return false;
   }
   public async getProfile() {
-    if(this.uid == undefined){
-      let res = await this.profileSv.getUid(localStorage.getItem('userId')??'')
+    console.log(this.uid)
+    if (this.uid == undefined || this.uid == '' || this.uid == null) {
+      let res = await this.profileSv.getUid(localStorage.getItem('userId') ?? '')
       this.uid = res._id
     }
     this.userProfile = await this.profileSv.get(this.uid);
