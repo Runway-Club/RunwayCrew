@@ -3,7 +3,7 @@
     <nb-card-header>
         Các thành tựu trong hệ thống
     </nb-card-header>
-    <nb-card-body>
+    <nb-card-body *ngIf="loadDoneAchi" >
         <nb-list>
             <nb-list-item *ngFor="let achievement of achievements; let i = index" style="width: 100%;">
                 <nb-accordion style="width: 100%;">
@@ -61,6 +61,9 @@
             </nb-list-item>
         </nb-list>
     </nb-card-body>
+    <nb-card-body *ngIf="!loadDoneAchi" >
+        <app-spinner></app-spinner>
+    </nb-card-body>
     <nb-card-footer>
         <button nbButton (click)="addEmptyAchievement()">
             <nb-icon icon='plus-outline'></nb-icon>
@@ -75,7 +78,7 @@
     <nb-card-body>
         <i>Lưu ý: Thành tựu không thể thu hồi!</i>
     </nb-card-body>
-    <nb-card-body>
+    <nb-card-body *ngIf="loadDoneSkills && loadDoneProfiles" >
         <p>Chọn thành tựu</p>
         <nb-select [(ngModel)]="selectedProvidingAchievement" fullWidth>
             <nb-option *ngFor="let achievement of achievements" [value]="achievement">
@@ -90,6 +93,9 @@
         </nb-select>
         <p>Lưu thành tựu vào hồ sơ thành viên</p>
         <nb-toggle [(ngModel)]="!skipAchievement"></nb-toggle>
+    </nb-card-body>
+    <nb-card-body *ngIf="!loadDoneSkills && !loadDoneProfiles" >
+        <app-spinner></app-spinner>
     </nb-card-body>
     <nb-card-body *ngIf="selectedProvidingAchievement && selectedProvidedUser">
         <nb-card>

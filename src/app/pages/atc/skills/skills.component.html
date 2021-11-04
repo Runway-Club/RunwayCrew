@@ -3,7 +3,7 @@
     <nb-card-header>
         Các kỹ năng trong hệ thống
     </nb-card-header>
-    <nb-card-body>
+    <nb-card-body *ngIf="loadDone" >
         <nb-list>
             <nb-list-item *ngFor="let skill of skills; let i = index" style="width: 100%;">
                 <nb-accordion style="width: 100%;">
@@ -48,6 +48,9 @@
                 </nb-accordion>
             </nb-list-item>
         </nb-list>
+    </nb-card-body>
+    <nb-card-body *ngIf="!loadDone" >
+        <app-spinner></app-spinner>
     </nb-card-body>
     <nb-card-footer>
         <button nbButton (click)="addEmptySkill()">

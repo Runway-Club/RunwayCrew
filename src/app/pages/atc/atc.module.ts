@@ -9,6 +9,7 @@ import {
   NbLayoutModule,
   NbTooltipModule,
 } from '@nebular/theme';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [AtcComponent],
@@ -19,6 +20,7 @@ import {
     NbButtonModule,
     NbTooltipModule,
     NbActionsModule,
+    SharedModule
   ],
 })
 export class AtcModule {}

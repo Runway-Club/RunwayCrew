@@ -1,5 +1,4 @@
-<div style="display: flex; flex-direction: row; justify-content: center;">
-
+<div *ngIf="loadDone" style="display: flex; flex-direction: row; justify-content: center;">
     <div class="parent">
         <div>
             <h2 style="color:#426EF0; text-align: center;">Runway Club's members</h2>
@@ -34,4 +33,7 @@
             </button>
         </div> -->
     </div>
+</div>
+<div *ngIf="!loadDone" >
+    <app-spinner></app-spinner>
 </div>
