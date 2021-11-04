@@ -12,12 +12,15 @@ import { Skill } from 'src/models/skill.model';
 })
 export class SkillsComponent implements OnInit {
 
+  public loadDone = false;
+
   constructor(private dialog: NbDialogService, private skillService: SkillService) { }
 
   ngOnInit(): void {
     this.skillService.getAll().subscribe((skills) => {
       this.skills.length = 0;
       this.skills.push(...skills);
+      this.loadDone = true;
     })
   }
 

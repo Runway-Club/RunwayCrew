@@ -18,6 +18,7 @@ import {
 import { LevelComponent } from './components/level/level.component';
 import { FormsModule } from '@angular/forms';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [CommunityComponent, ListUserComponent, LevelComponent],
@@ -35,6 +36,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     CommunityRoutingModule,
     FormsModule,
     RoundProgressModule,
+    SharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

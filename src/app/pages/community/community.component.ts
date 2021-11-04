@@ -25,6 +25,8 @@ export class CommunityComponent implements OnInit {
   public roles: Role[] = [];
   public selectedRoleId?: string = undefined;
   public lasts: UserProfile[] = [];
+  public loadDone = false;
+
   constructor(
     private profileSv: ProfileService,
     private skillSv: SkillService,
@@ -39,12 +41,12 @@ export class CommunityComponent implements OnInit {
     setTimeout(async () => {
       await this.getUsers();
       await this.getCommonSkill();
+      this.loadDone = true;
     }, 0);
     this.roleService.getAll().subscribe((roles) => {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
-
     // this.testPost()
     // this.cloneATCCollection()
     //this.cloneAchiCollection()

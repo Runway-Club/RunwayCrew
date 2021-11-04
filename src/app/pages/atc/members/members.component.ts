@@ -27,19 +27,27 @@ export class MembersComponent implements OnInit {
   public selectedProfileForReclaim?: UserProfile;
   public selectedProfileForATCZone?: UserProfile;
   public selectedProfileRemoveFromATC!: UserProfile;
+
+  public loadDoneATC = false;
+  public loadDoneProfiles = false;
+  public loadDoneRoles = false;
+
   ngOnInit(): void {
     this.profileService.getAll().subscribe((profiles) => {
       this.profiles.length = 0;
       this.profiles.push(...profiles);
+      this.loadDoneProfiles = true;
     });
     this.roleService.getAll().subscribe((roles) => {
       this.roles.length = 0;
       this.roles.push(...roles);
+      this.loadDoneRoles = true;
     });
     this.atcService.getATCMembers().subscribe((profiles) => {
       this.atcMembers.length = 0;
       // console.log(profiles);
       this.atcMembers.push(...profiles);
+      this.loadDoneATC = true;
     });
   }
 

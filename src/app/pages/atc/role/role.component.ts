@@ -16,11 +16,13 @@ export class RoleComponent implements OnInit {
     ,private HttpClient:HttpClient) { }
 
   public roles: Role[] = [];
+  public loadDone = false;
 
   ngOnInit(): void {
     this.roleService.getAll().subscribe((roles) => {
       this.roles.length = 0;
       this.roles.push(...roles);
+      this.loadDone = true;
     });
   }
 

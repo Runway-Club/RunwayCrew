@@ -30,14 +30,17 @@ export class AchievementComponent implements OnInit {
       }
       this.skills.length = 0;
       this.skills.push(...skills)
+      this.loadDoneSkills = true;
     });
     this.profileService.getAll().subscribe((profiles) => {
       this.profiles.length = 0;
       this.profiles.push(...profiles);
+      this.loadDoneProfiles = true;
     });
     this.achievementService.getAll().subscribe((achievements) => {
       this.achievements.length = 0;
       this.achievements.push(...achievements);
+      this.loadDoneAchi = true;
     })
   }
   public page = 0;
@@ -48,6 +51,9 @@ export class AchievementComponent implements OnInit {
   public profiles: UserProfile[] = [];
   public selectedProvidedUser?: UserProfile;
   public skipAchievement: boolean = false;
+  public loadDoneSkills = false;
+  public loadDoneProfiles = false;
+  public loadDoneAchi = false;
 
   public addEmptyAchievement() {
     this.achievements.push({
