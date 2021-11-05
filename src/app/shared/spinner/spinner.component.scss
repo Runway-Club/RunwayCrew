@@ -1,19 +1,9 @@
-:root {
-  --sk-size-height: 40px;
-  --sk-size-width: 40px;
-  --sk-color: #333;
-}
-
 /* Wave spinner */
 .wave-spinner {
   font-size: 10px;
   margin: 0 auto;
   width: 100px;
   height: 50px;
-
-  position: absolute;
-  top: calc(50% - 67px);
-  left: calc(50% - 100px / 2);
 }
 
 .wave-spinner > div {

@@ -6,13 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./atc.component.scss']
 })
 export class AtcComponent implements OnInit {
-  isClick = false;
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  enableDisableRule(){
-    this.isClick = !this.isClick;
   }
 }
