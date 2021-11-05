@@ -1,10 +1,10 @@
 <nb-layout-header subheader>
     <h2 style="font-size: 1rem; color: grey;">ATC Zone</h2>
     <nb-actions>
-        <nb-action icon="people-outline" nbTooltip="Quản lý thành viên" routerLink='members'>
+        <nb-action icon="people-outline" nbTooltip="Quản lý thành viên" routerLink='members' (click)="enableDisableRule()" [ngClass]="{'disable-nb-icon' : isClick, 'enable-nb-icon': !isClick}">
             Thành viên
         </nb-action>
-        <nb-action icon="briefcase-outline" nbTooltip="Quản lý vai trò" routerLink='roles'>
+        <nb-action icon="briefcase-outline" nbTooltip="Quản lý vai trò" routerLink='roles' class="blue" status="danger">
             Vai trò
         </nb-action>
         <nb-action icon="activity-outline" nbTooltip="Quản lý kỹ năng" routerLink='skills'>
