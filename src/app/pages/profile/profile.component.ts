@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit {
     return false;
   }
   public async getProfile() {
-    console.log(this.uid)
     if (this.uid == undefined || this.uid == '' || this.uid == null) {
       let res = await this.profileSv.getUid(localStorage.getItem('userId') ?? '')
       this.uid = res._id
