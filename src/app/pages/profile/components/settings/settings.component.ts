@@ -7,7 +7,7 @@ import { UserProfile } from 'src/models/user-profile.model';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class  SettingsComponent implements OnInit {
 
   user?: UserProfile;
   sharingOpts = [
@@ -44,14 +44,14 @@ export class SettingsComponent implements OnInit {
     } else {
       this.selectedItem.splice(idx, 1);
     }
-    console.log(v);
-    console.log(this.selectedItem);
-    console.log('done');
+    // console.log(v);
+    // console.log(this.selectedItem);
+    // console.log('done');
   }
   compareById(v1: any, v2: any): boolean {
     return v1.value === v2.value;
   }
   afterSettings() {
-
+    console.log(this.selectedItem)
   }
 }

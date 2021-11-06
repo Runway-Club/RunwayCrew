@@ -75,6 +75,7 @@ export class BodyComponent {
     return false;
   }
   onSettings(userProfile: UserProfile) {
+    // console.log(userProfile)
     let dialog = this.dialog.open(SettingsComponent, {
       context: {
         user: { ...userProfile },

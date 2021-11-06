@@ -6,12 +6,14 @@
     <div style="float: right;">
 
 
+      <button *ngIf="checkEditPermission()" style="margin-right: 5px;" nbButton type="button" status='primary' value="Edit" outline shape='semi-round' size="small" (click)="onSettings(userProfile)">
+        <nb-icon icon="settings-2-outline"> </nb-icon>
+      </button>
+
       <button *ngIf="checkEditPermission()" nbButton type="button" status='primary' value="Edit" (click)="onEdit()"
         outline shape='semi-round' size="small" [disabled]="updateBtn=='Update'?false:true">
         <nb-icon icon="edit-outline"> </nb-icon>
       </button>
-
-
 
       <button *ngIf="isUpdate" nbButton type="submit" status='success' value="Confirm" (click)="onUpdate()" outline
         shape='semi-round' size="small" style="margin-left: 5px;" shape='semi-round'>Update</button>
