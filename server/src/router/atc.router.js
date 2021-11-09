@@ -3,11 +3,17 @@ const atcSchema = require('../../schemas/atc.schema');
 let mongoose = require('mongoose');
 const router = app.Router();
 const atcDB = mongoose.model('atc', atcSchema);
-
+const verifyToken = require('../verify-token');
 const ATCModel = require('../../model/atc.model')
-const shareService = require('../service/share.service');
+const shareService = require('../service/share.service')
 
-router.get('/', async (req, res) => {
+
+router.get('/', verifyToken, async (req, res) => {
+
+    let user = await shareService.getUserOfToken(req)
+    console.log(`UID [${user.uid}] call get/atc`)
+    
+
     let { id } = req.query;
     if (!id) {
         res.status(200).send(await atcDB.find());
@@ -27,7 +33,7 @@ router.get('/uid', async (req, res) => {
     if (!uid) {
         res.status(200).send(await atcDB.find());
     } else {
-        atcDB.findOne({uid:uid}, (err, result) => {
+        atcDB.findOne({ uid: uid }, (err, result) => {
             if (err) {
                 res.status(404).send({ message: `${id} not found !` });
             } else {
@@ -77,15 +83,15 @@ router.put('/', async (req, res) => {
 router.delete('/', async (req, res) => {
     let _id = req.query.id
     try {
-        if(req.query.id == undefined){
+        if (req.query.id == undefined) {
             res.status(400)
-            res.send({mess:`[id] field is missing`})
+            res.send({ mess: `[id] field is missing` })
             return
         }
         atcDB.findByIdAndDelete(_id, function (err, docs) {
             if (err) {
                 res.status(404)
-                res.send({mess:`[${_id}] not found`})
+                res.send({ mess: `[${_id}] not found` })
             }
             else {
                 res.status(200)

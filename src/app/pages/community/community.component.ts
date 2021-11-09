@@ -12,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Achievement } from 'src/models/achievement.model';
 import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -31,10 +32,9 @@ export class CommunityComponent implements OnInit {
     private profileSv: ProfileService,
     private skillSv: SkillService,
     private roleService: RoleService,
-
+    private auth: AuthenticationService,
     private httpClient: HttpClient,
     private utils: UtilsService,
-    private db: AngularFirestore
   ) { }
 
   ngOnInit(): void {
@@ -47,13 +47,6 @@ export class CommunityComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
-    // this.testPost()
-    // this.cloneATCCollection()
-    //this.cloneAchiCollection()
-    // this.cloneContriCollection()
-    //this.cloneProfileCollection()
-    //this.cloneRoleCollection()
-    //this.cloneSkillCollection()
   }
   public async getUsers() {
     let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
@@ -82,29 +75,7 @@ export class CommunityComponent implements OnInit {
     await this.getUsers();
   }
 
-  async getData() {
-    this.utils.getAll("achievements").subscribe(async (data) => {
-      console.log({ achievements: data })
-    })
-    this.utils.getAll("achievements").subscribe(async (data) => {
-      console.log({ achievements: data })
-    })
-    this.utils.getAll("atc").subscribe(async (data) => {
-      console.log({ atc: data })
-    })
-    this.utils.getAll("contributions").subscribe(async (data) => {
-      console.log({ contributions: data })
-    })
-    this.utils.getAll("profiles").subscribe(async (data) => {
-      console.log({ profiles: data })
-    })
-    this.utils.getAll("roles").subscribe(async (data) => {
-      console.log({ roles: data })
-    })
-    this.utils.getAll("skills").subscribe(async (data) => {
-      console.log({ skills: data })
-    })
-  }
+
   async testPost() {
     let newATC: UserProfile={
       _id:'',

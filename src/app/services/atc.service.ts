@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, Query } from '@angular/fire/firestore';
@@ -10,6 +10,7 @@ import {
 } from 'src/models/user-profile.model';
 import { UtilsService } from './utils.service';
 import { environment } from 'src/environments/environment.prod';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +18,8 @@ export class ATCService {
   private currentUser?: firebase.default.User;
   constructor(
     private auth: AngularFireAuth,
-    private db: AngularFirestore,
-    private utils: UtilsService,
-    private HttpClient: HttpClient
+    private HttpClient: HttpClient,
+    private authService: AuthenticationService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -54,20 +54,21 @@ export class ATCService {
   }
 
   public async addToATC(profile: UserProfile) {
-    // await this.db.collection('atc').doc(profile.uid).set(profile);
     await this.HttpClient.post(environment.endpoint + 'atc', profile).toPromise().then(res => console.log(res));
   }
 
   public async removeFromATC(id: string) {
-    // await this.db.collection('atc').doc(id).delete();
     await this.HttpClient.delete(environment.endpoint + 'atc' + `?id=${id}`, {
       observe: 'response',
       responseType: 'blob',
     }).toPromise();
   }
 
-  public getATCMembers(): Observable<UserProfile[]> {
-    // return this.utils.getAll('atc');
-    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'atc');
+  public getATCMembers(token: string): Observable<UserProfile[]> {
+    console.log({token:token})
+    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'atc', {
+      headers: new HttpHeaders()
+        .set('Authorization', token)
+    });
   }
 }

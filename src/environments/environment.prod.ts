@@ -9,6 +9,6 @@ export const environment = {
     appId: "1:747328898219:web:7f5c61ba2f00eeaa8563ee",
     measurementId: "G-GRZ989634P"
   },
-  // endpoint:'http://localhost:8080/'
-  endpoint:'https://server.crew.runwayclub.dev/'
+  endpoint:'http://localhost:8080/'
+  //endpoint:'https://server.crew.runwayclub.dev/'
 };

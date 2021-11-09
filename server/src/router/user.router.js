@@ -1,46 +1,38 @@
 const app = require('express');
-const userSchema = require('../../schemas/user.schema');
+let mongoose = require('mongoose');
+
 const achiSchema = require('../../schemas/achievement.schema');
 const atcSchema = require('../../schemas/atc.schema');
 const contriSchema = require('../../schemas/contribute.schema');
 const profileSchema = require('../../schemas/profile.schema');
 const roleSchema = require('../../schemas/role.schema');
 const skillSchema = require('../../schemas/skill.schema');
-let mongoose = require('mongoose');
+
+const ProfileDB = mongoose.model('profiles', profileSchema)
 const router = app.Router();
-const ATCModel = require('../../model/atc.model')
-const shareService = require('../service/share.service');
-
-const userDB = mongoose.model('users', userSchema);
-
-//getall user
-router.get("/", async (req, res) => {
-    try {
-        res.status(200).send(await userDB.find())
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send({ mess: "Server err" })
-    }
-})
+const generateToken = require('../generate-token');
 
 //create user
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
-        let { err, data } = shareService.parseBodyToObject(new ATCModel(), req.body)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-        }
-        else {
-            let newUser = new userDB(data)
-            await newUser.save().then(savedDoc => {
-                if (savedDoc === newUser)
-                    return res.status(201).send({ mess: `User [${savedDoc._id}] is created` })
+        let uid = req.body.uid ?? '';
+        if (uid != '') {
+            ProfileDB.findOne({ uid: uid }, (err, doc) => {
+                if (err || doc == null) {
+                    return res.status(401).send({ mess: `Login failed` })
+                }
+                else {
+                    generateToken(res, doc._id, uid);
+                    res.status(200).send({ mess: "Login successfully" });
+                }
             })
         }
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
+        else {
+            return res.status(401).send({ mess: "Login failed, miss uid in body" })
+        }
+    }
+    catch (err) {
+        res.status(401).send(err);
     }
 });
 

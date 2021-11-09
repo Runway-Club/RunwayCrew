@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ATCService } from 'src/app/services/atc.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { Role } from 'src/models/role.model';
@@ -14,7 +15,8 @@ export class MembersComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private atcService: ATCService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private authSevice: AuthenticationService
   ) { }
   selectedTypeUser = '';
   countRolesOfUser: number = 0;
@@ -32,7 +34,7 @@ export class MembersComponent implements OnInit {
   public loadDoneProfiles = false;
   public loadDoneRoles = false;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.profileService.getAll().subscribe((profiles) => {
       this.profiles.length = 0;
       this.profiles.push(...profiles);
@@ -43,9 +45,8 @@ export class MembersComponent implements OnInit {
       this.roles.push(...roles);
       this.loadDoneRoles = true;
     });
-    this.atcService.getATCMembers().subscribe((profiles) => {
+    this.atcService.getATCMembers(this.authSevice.token).subscribe((profiles) => {
       this.atcMembers.length = 0;
-      // console.log(profiles);
       this.atcMembers.push(...profiles);
       this.loadDoneATC = true;
     });

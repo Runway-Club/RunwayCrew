@@ -92,19 +92,19 @@ export class AppComponent implements AfterViewInit {
     // throw new Error('Method not implemented.');
   }
   userInfo: any;
-  async signInWithGG() {
-    try {
-      await this.auth.signInWithGoogle().then((data) => {
-        this.userInfo = data;
-      });
-      this.toast.success(
-        `Chào mừng ${this.userInfo.email} đến với Runway Crew`,
-        'Đăng nhập thành công'
-      );
-    } catch (e) {
-      this.toast.danger(`Thử đăng nhập lại nhé`, 'Đăng nhập thất bại');
-    }
-  }
+  // async signInWithGG() {
+  //   try {
+  //     await this.auth.signInWithGoogle().then(async (data) => {
+  //       this.userInfo = data;
+  //     });
+  //     this.toast.success(
+  //       `Chào mừng ${this.userInfo.email} đến với Runway Crew`,
+  //       'Đăng nhập thành công'
+  //     );
+  //   } catch (e) {
+  //     this.toast.danger(`Thử đăng nhập lại nhé`, 'Đăng nhập thất bại');
+  //   }
+  // }
   openDialog() {
     this.dialog.open(FileUploadComponent);
   }

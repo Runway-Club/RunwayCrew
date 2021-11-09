@@ -1,3 +1,5 @@
+const admin = require('firebase-admin');
+
 class ShareService {
 
     // Dùng {err,data} để nhận dữ liệu
@@ -31,6 +33,24 @@ class ShareService {
         } catch (error) {
             console.log(error)
             return { err: '..', data: null }
+        }
+    }
+
+    /**
+     * 
+     * @param {String} req 
+     * @returns {admin.auth.DecodedIdToken}
+     */
+    static async getUserOfToken(req) {
+        const idToken = req.header('Authorization')
+        try {
+            if (!idToken) {
+                return null;
+            }
+            let user = await admin.auth().verifyIdToken(idToken)
+            return user
+        } catch (err) {
+            return null;
         }
     }
 }
