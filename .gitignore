@@ -45,4 +45,4 @@ testem.log
 Thumbs.db
 
 .firebase/hosting.*
-./server/src/serviceAccountKeys.json
+server/src/serviceAccountKeys.json
