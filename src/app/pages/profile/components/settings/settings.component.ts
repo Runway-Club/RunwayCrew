@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { UserProfile } from 'src/models/user-profile.model';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class  SettingsComponent implements OnInit {
+
+  formControl = new FormControl();
 
   user?: UserProfile;
   sharingOpts = [
     {
-      value: 'employer',
-      description: 'Nhà tuyển dụng'
+      value: 'Everyone',
+      description: 'Tất cả mọi người truy cập Runway-Crew'
     },
     {
-      value: 'corium',
-      description: 'Thành viên chủ chốt'
+      value: 'Member',
+      description: 'Các thành viên nhưng chưa có vai trò'
     },
     {
-      value: 'others',
-      description: 'Others'
+      value: 'Core Member',
+      description: 'Các thành viên đã có vai trò'
     },
   ];
   selectedItem: Array<string> = [];
@@ -52,6 +55,6 @@ export class  SettingsComponent implements OnInit {
     return v1.value === v2.value;
   }
   afterSettings() {
-    console.log(this.selectedItem)
+    console.log(this.formControl.value)
   }
 }
