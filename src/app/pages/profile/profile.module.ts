@@ -13,12 +13,13 @@ import {
   NbLayoutModule,
   NbListModule,
   NbProgressBarModule,
+  NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SkillsComponent } from './components/skills/skills.component';
 import { DetailSkillComponent } from './components/detail-skill/detail-skill.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -45,6 +46,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
   imports: [
     CommonModule,
     ProfileRoutingModule,
+    NbRadioModule,
     FormsModule,
     NbInputModule,
     NbFormFieldModule,
@@ -61,6 +63,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     NbSidebarModule,
     SharedModule,
     RoundProgressModule,
+    ReactiveFormsModule 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
