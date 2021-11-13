@@ -47,6 +47,7 @@ export class CommunityComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
+    // this.cloneProfileCollection()
   }
   public async getUsers() {
     let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
@@ -134,7 +135,7 @@ export class CommunityComponent implements OnInit {
       for (let i = 0; i < datas.length; i++) {
         const newProfile = {
           ...datas[i],
-          styleUserRead:''
+          styleUserRead:'Everyone'
         }
         await this.httpClient.post(environment.endpoint + "profile", newProfile).toPromise().then(res => {
           console.log(res)
