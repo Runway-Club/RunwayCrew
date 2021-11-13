@@ -49,22 +49,26 @@
       </nb-form-field>
       <nb-form-field>
         <label>Day of birth</label>
-        <input [type]="checkEditPermission()? ' date':'password'" nbInput [disabled]="!isUpdate"
+        <!-- <input [type]="checkEditPermission()? ' date':'password'" nbInput [disabled]="!isUpdate" -->
+        <input [type]='"date"' nbInput [disabled]="!isUpdate"
           [(ngModel)]='userProfile!.dob' fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Phone number</label>
-        <input [type]="checkEditPermission()? 'tel':'password'" nbInput [disabled]="!isUpdate"
+        <!-- <input [type]="checkEditPermission()? 'tel':'password'" nbInput [disabled]="!isUpdate" -->
+        <input [type]="'tel'" nbInput [disabled]="!isUpdate"
           [(ngModel)]="userProfile!.phoneNumber" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Address</label>
-        <input [type]="checkEditPermission()? 'text':'password'" nbInput [disabled]="!isUpdate"
+        <!-- <input [type]="checkEditPermission()? 'text':'password'" nbInput [disabled]="!isUpdate" -->
+        <input [type]="'text'" nbInput [disabled]="!isUpdate"
           [(ngModel)]="userProfile!.address" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>
         <label>Facebook</label>
-        <input [type]="checkEditPermission()? ' url':'password'" nbInput [disabled]="!isUpdate"
+        <!-- <input [type]="checkEditPermission()? ' url':'password'" nbInput [disabled]="!isUpdate" -->
+        <input [type]="'url'" nbInput [disabled]="!isUpdate"
           [(ngModel)]="userProfile!.facebook" fullWidth style="color: #000;" [ngModelOptions]="{standalone: true}">
       </nb-form-field>
       <nb-form-field>

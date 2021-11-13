@@ -79,7 +79,7 @@ router.get("/", async (req, res) => {
                         }
                     })
                     }).catch(function (error) {
-                        res.status(401).send('UNAUTHORIZED REQUEST!');
+                        res.status(400).send('Bad reqest!');
                     });
                 }
         }
