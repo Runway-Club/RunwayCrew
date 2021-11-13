@@ -17,6 +17,7 @@ class ProfileModel {
         this.uid = ''
         this.id = ''
         this._id = ''
+        this.styleUserRead = ''
     }
 
     /**

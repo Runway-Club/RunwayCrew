@@ -92,7 +92,8 @@ export class CommunityComponent implements OnInit {
       contribMetadata:{},
       facebook:'',
       linkIn:'',
-      profileMetadata:{}
+      profileMetadata:{},
+      styleUserRead:''
     }
 
 
@@ -131,7 +132,11 @@ export class CommunityComponent implements OnInit {
   cloneProfileCollection() {
     this.utils.getAll<UserProfile>("profiles").subscribe(async (datas) => {
       for (let i = 0; i < datas.length; i++) {
-        await this.httpClient.post(environment.endpoint + "profile123", datas[i]).toPromise().then(res => {
+        const newProfile = {
+          ...datas[i],
+          styleUserRead:''
+        }
+        await this.httpClient.post(environment.endpoint + "profile", newProfile).toPromise().then(res => {
           console.log(res)
         })
       }

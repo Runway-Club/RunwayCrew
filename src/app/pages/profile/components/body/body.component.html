@@ -24,7 +24,7 @@
   </nb-card-header>
   <nb-card-body>
 
-    <form class="form-registration" (ngSubmit)="onUpdate()">
+    <form *ngIf="userProfile.email" class="form-registration" (ngSubmit)="onUpdate()">
 
       <nb-form-field>
         <label>Email</label>

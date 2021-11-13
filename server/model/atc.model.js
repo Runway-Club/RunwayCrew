@@ -16,6 +16,7 @@ class ATCModel {
         this.uid = ''
         this.id = ''
         this._id = ''
+        this.styleUserRead = ''
     }
 
     /**

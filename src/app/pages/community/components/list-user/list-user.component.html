@@ -12,10 +12,8 @@
                 </div>
                 <div class="right-box">
                     <div class="name" style="padding-top:10px;">
-                        <a href="./profile?id={{user._id}}"
-                            style="font-size:1.2rem; font-weight: bold; text-decoration: none; color:#000">{{user.name}}</a>
+                        <a class="profile" (click)="getProfile(user._id)" >{{user.name}}</a>
                         <h4 *ngIf="!user.name">Chưa có tên</h4>
-
                     </div>
                     <app-level (newItemEvent)="getOutput($event)" [skillCommon]="commonSkill" [skill]="skill"
                         [uid]="user.uid"></app-level>

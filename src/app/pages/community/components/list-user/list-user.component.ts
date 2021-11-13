@@ -6,6 +6,7 @@ import { SkillService } from 'src/app/services/skill.service';
 import { Role } from 'src/models/role.model';
 import { Skill } from 'src/models/skill.model';
 import { UserContribution, UserProfile } from 'src/models/user-profile.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -28,7 +29,8 @@ export class ListUserComponent implements OnInit {
 
   constructor(
     private skillSv: SkillService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private Router:Router
   ) {}
 
   loaded!: Promise<boolean>;
@@ -61,5 +63,8 @@ export class ListUserComponent implements OnInit {
         return i.progress;
       }
     }
+  }
+  getProfile(id: string){
+    this.Router.navigate(['profile'], { queryParams: {id} })
   }
 }
