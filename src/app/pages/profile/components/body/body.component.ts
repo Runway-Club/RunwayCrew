@@ -35,6 +35,7 @@ export class BodyComponent {
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
     }, 500);
+    console.log(this.userProfile)
   }
 
   async onUpdate() {
