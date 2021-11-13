@@ -53,3 +53,12 @@
 .name {
   align-self: start;
 }
+.profile{
+  font-size:1.2rem; 
+  font-weight: bold; 
+  text-decoration: none; 
+  color:#000
+}
+.profile:hover{
+  cursor: pointer;
+}

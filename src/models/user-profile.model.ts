@@ -22,7 +22,8 @@ export interface UserProfile extends RegistrationProfile {
   name: string,
   roles: string[],
   profileMetadata?: Metadata,
-  contribMetadata?: Metadata
+  contribMetadata?: Metadata,
+  styleUserRead: string
 }
 
 export interface UserContribution {

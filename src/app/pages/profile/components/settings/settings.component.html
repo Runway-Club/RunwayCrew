@@ -4,7 +4,7 @@
         <div style="flex: 1 auto;"></div>
             <nb-card-body>
               <nb-radio-group [formControl]="formControl" name="reactive-forms-group">
-                <nb-radio *ngFor="let option of sharingOpts" value="1">{{option.value}} - {{option.description}}</nb-radio>
+                <nb-radio *ngFor="let option of sharingOpts" [checked]="option.checked" [value]="option.value" >{{option.value}} - {{option.description}}</nb-radio>
               </nb-radio-group>
             </nb-card-body>
     </nb-card-header>

@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { UserProfile } from 'src/models/user-profile.model';
 import { FormControl } from '@angular/forms';
+import { AuthenticationService } from '../../../../services/authentication.service'
+import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { ProfileService } from '../../../../services/profile.service'
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -16,24 +19,41 @@ export class  SettingsComponent implements OnInit {
   sharingOpts = [
     {
       value: 'Everyone',
-      description: 'Tất cả mọi người truy cập Runway-Crew'
+      description: 'Tất cả mọi người truy cập Runway-Crew',
+      checked: false
     },
     {
       value: 'Member',
-      description: 'Các thành viên nhưng chưa có vai trò'
+      description: 'Các thành viên nhưng chưa có vai trò',
+      checked: false
     },
     {
       value: 'Core Member',
-      description: 'Các thành viên đã có vai trò'
+      description: 'Các thành viên đã có vai trò',
+      checked: false
     },
+    {
+      value: 'Member and Core Member',
+      description: 'Các thành viên chưa có vai trò và đã có vai trò',
+      checked: false
+    }
   ];
   selectedItem: Array<string> = [];
   constructor(
     private dialogRef: NbDialogRef<SettingsComponent>,
+    private AuthService:AuthenticationService,
+    private toast: NbToastrService,
+    private ProfileService:ProfileService
   ) { }
 
   ngOnInit(): void {
+    for(let i = 0; i<this.sharingOpts.length; i++){
+      if(this.sharingOpts[i].value === this.user?.styleUserRead){
+        this.sharingOpts[i].checked = true;
+      }
+    }
   }
+
   afterCancel() {
     this.dialogRef.close();
   }
@@ -54,7 +74,20 @@ export class  SettingsComponent implements OnInit {
   compareById(v1: any, v2: any): boolean {
     return v1.value === v2.value;
   }
-  afterSettings() {
-    console.log(this.formControl.value)
+  async afterSettings() {
+    if (this.user === undefined) {
+      return;
+    } else {
+      let updateUser = {
+        ...this.user,
+        styleUserRead: this.formControl.value
+      }
+      await this.ProfileService.update(updateUser);
+      this.dialogRef.close();
+      this.toast.success(
+        `Profile ${this.user.email} đã cập nhật`,
+        'Cập nhật hồ sơ'
+      );
+    }
   }
 }

@@ -10,7 +10,7 @@ import {
 import { UtilsService } from './utils.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-
+import { AuthenticationService } from './authentication.service'
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +20,8 @@ export class ProfileService {
     private auth: AngularFireAuth,
     private db: AngularFirestore,
     private utils: UtilsService,
-    private HttpClient:HttpClient
+    private HttpClient:HttpClient,
+    private AuthSv:AuthenticationService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -51,6 +52,7 @@ export class ProfileService {
         updated: currentTime,
         actor: this.currentUser.email ?? '',
       },
+      styleUserRead:''
     };
     let contribution: UserContribution = {
       _id: '',
@@ -129,14 +131,18 @@ export class ProfileService {
     await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res=>console.log(res));
   }
 
-  public async get(uid?: string): Promise<UserProfile> {
+  public async get(uid?: string, token?:string): Promise<UserProfile> {
     // let profile = await this.db
     //   .collection('profiles')
     //   .doc(uid ?? this.currentUser?.uid)
     //   .get()
     //   .toPromise();
     // return <UserProfile>profile.data();
-    return this.HttpClient.get<UserProfile>(environment.endpoint + `profile?id=${uid}`).toPromise()
+    console.log({token:token})
+    return this.HttpClient.get<UserProfile>(environment.endpoint + `profile?id=${uid}`, {
+      headers: new HttpHeaders()
+        .set('Authorization', token ?? '')
+    }).toPromise()
   }
 
 

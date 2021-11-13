@@ -7,7 +7,6 @@ import { ContributionService } from 'src/app/services/contribution.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { UserContribution, UserProfile } from 'src/models/user-profile.model';
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -27,7 +26,7 @@ export class ProfileComponent implements OnInit {
     public contributeSv: ContributionService,
     private profileSv: ProfileService,
     private skillService: SkillService,
-    private router: Router
+    private router: Router,
   ) { }
   ngOnInit(): void {
     setTimeout(async () => {
@@ -65,7 +64,7 @@ export class ProfileComponent implements OnInit {
       let res = await this.profileSv.getUid(localStorage.getItem('userId') ?? '')
       this.uid = res._id
     }
-    this.userProfile = await this.profileSv.get(this.uid);
+    this.userProfile = await this.profileSv.get(this.uid, this.authSv.token);
   }
   public async getContribute() {
     this.contribute = await this.contributeSv.getUID(this.userProfile.uid);
