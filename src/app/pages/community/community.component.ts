@@ -32,9 +32,9 @@ export class CommunityComponent implements OnInit {
     private profileSv: ProfileService,
     private skillSv: SkillService,
     private roleService: RoleService,
-    private auth: AuthenticationService,
     private httpClient: HttpClient,
     private utils: UtilsService,
+    private auth: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +47,6 @@ export class CommunityComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
-    // this.cloneProfileCollection()
   }
   public async getUsers() {
     let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
@@ -75,6 +74,26 @@ export class CommunityComponent implements OnInit {
     this.selectedRoleId = roleId;
     await this.getUsers();
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   async testPost() {

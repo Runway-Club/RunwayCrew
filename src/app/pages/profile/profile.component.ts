@@ -27,7 +27,9 @@ export class ProfileComponent implements OnInit {
     private profileSv: ProfileService,
     private skillService: SkillService,
     private router: Router,
-  ) { }
+  ) {
+    console.log(1)
+  }
   ngOnInit(): void {
     setTimeout(async () => {
       await this.getProfile();
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
       await this.getCommonSkill();
       this.getProgressbar();
       this.loadDone = true;
-    }, 0);
+    }, 1000);
     this.activatedRouter.queryParams.subscribe(async (queries) => {
       this.uid = queries['id'];
       this.auth.authState.subscribe(async (state) => {

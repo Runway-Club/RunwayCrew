@@ -40,13 +40,6 @@ export class ATCService {
           } else {
             atc = true;
           }
-          // let atc = (
-          //   await this.db
-          //     .collection('atc')
-          //     .doc(this.currentUser.uid)
-          //     .get()
-          //     .toPromise()
-          // ).exists;
           resolve(atc);
         }
       });

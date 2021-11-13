@@ -52,14 +52,22 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private dialog: NbDialogService,
     private auth: AuthenticationService,
-    private profileService: ProfileService,
     private atcService: ATCService,
     private sidebarService: NbSidebarService,
-    private menuService: NbMenuService,
     private router: Router,
-    private toast: NbToastrService,
     private authService: AngularFireAuth
   ) {
+    authService.onIdTokenChanged(async function (user) {
+      if (user) {
+        auth.token = await (await user.getIdTokenResult()).token
+      }
+    })
+    authService.onAuthStateChanged(async function (user) {
+      if (user) {
+        auth.token = await (await user.getIdTokenResult()).token
+      }
+    });
+
 
     this.authService.authState.subscribe((state) => {
       if (state) {
@@ -86,7 +94,10 @@ export class AppComponent implements AfterViewInit {
       } else {
         this.menus.shift();
       }
+
+
     });
+
   }
   ngAfterViewInit(): void {
     // throw new Error('Method not implemented.');

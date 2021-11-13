@@ -138,7 +138,6 @@ export class ProfileService {
     //   .get()
     //   .toPromise();
     // return <UserProfile>profile.data();
-    console.log({token:token})
     return this.HttpClient.get<UserProfile>(environment.endpoint + `profile?id=${uid}`, {
       headers: new HttpHeaders()
         .set('Authorization', token ?? '')
