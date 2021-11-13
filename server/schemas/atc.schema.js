@@ -16,7 +16,8 @@ const atcSchema = new mongoose.Schema({
     roles :[],
     selectedRoles :[],
     uid : '',
-    id:''
+    id:'',
+    styleUserRead:''
 });
 
 

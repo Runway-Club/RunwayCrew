@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
     selectedRoles: [],
     uid: '',
     id: '',
+    styleUserRead:''
 });
 
 

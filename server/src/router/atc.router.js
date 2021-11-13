@@ -11,9 +11,12 @@ const shareService = require('../service/share.service')
 router.get('/', verifyToken, async (req, res) => {
 
     let user = await shareService.getUserOfToken(req)
-    console.log(`UID [${user.uid}] call get/atc`)
     
+    let isAtc = await atcDB.findOne({uid:user.uid})
 
+    if(!isAtc){
+        return res.status(403).status({message: `You isn't ATC!`})
+    }
     let { id } = req.query;
     if (!id) {
         res.status(200).send(await atcDB.find());
@@ -43,8 +46,17 @@ router.get('/uid', async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken ,async (req, res) => {
     try {
+
+        let user = await shareService.getUserOfToken(req)
+    
+        let isAtc = await atcDB.findOne({uid:user.uid})
+    
+        if(!isAtc){
+            return res.status(403).status({message: `You isn't ATC!`})
+        }
+
         let dataATC = ATCModel.anyToATC(req.body, false)
         let newATC = new atcDB(dataATC)
         newATC.save().then(savedDoc => {
@@ -60,8 +72,16 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put('/', async (req, res) => {
+router.put('/', verifyToken,  async (req, res) => {
     try {
+        let user = await shareService.getUserOfToken(req)
+    
+        let isAtc = await atcDB.findOne({uid:user.uid})
+    
+        if(!isAtc){
+            return res.status(403).status({message: `You isn't ATC!`})
+        }
+
         let dataATC = ATCModel.anyToATC(req.body, true)
         if (dataATC._id == '') {
             return res.status(400).send({ message: `[_id] missing` });
@@ -80,9 +100,17 @@ router.put('/', async (req, res) => {
     }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/',verifyToken, async (req, res) => {
     let _id = req.query.id
     try {
+        let user = await shareService.getUserOfToken(req)
+    
+        let isAtc = await atcDB.findOne({uid:user.uid})
+    
+        if(!isAtc){
+            return res.status(403).status({message: `You isn't ATC!`})
+        }
+        
         if (req.query.id == undefined) {
             res.status(400)
             res.send({ mess: `[id] field is missing` })

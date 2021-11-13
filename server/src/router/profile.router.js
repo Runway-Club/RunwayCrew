@@ -1,27 +1,87 @@
 const app = require('express');
 const profilesSchema = require('../../schemas/profile.schema')
-
+const atcSchema = require('../../schemas/atc.schema')
 
 let mongoose = require('mongoose');
 const router = app.Router();
 
 const ProfileDB = mongoose.model('profiles', profilesSchema)
+const atcDB = mongoose.model('atc', atcSchema);
 
 const ProfileModel = require('../../model/profile.model')
 const shareService = require('../service/share.service');
+const verifyToken = require('../verify-token');
+const admin = require('firebase-admin');
+
 
 router.get("/", async (req, res) => {
     try {
         const { id } = req.query;
+        const idToken = req.header('Authorization')
         if (id) {
-            ProfileDB.findById(id, (err, doc) => {
-                if (err) {
-                    return res.status(404).send({ mess: `ID [${id}] not found` })
+            if (!idToken) {
+                ProfileDB.findById(id, (err, doc)=>{
+                    if(err){
+                        return res.status(404).send({ mess: `ID [${id}] not found` })
+                    }
+                    if( doc.styleUserRead === 'Everyone'){
+                        return res.status(200).send(doc)
+                    }else{
+                        doc.email = undefined
+                        doc.name = undefined
+                        doc.gender = undefined
+                        doc.dob = undefined
+                        doc.phoneNumber = undefined
+                        doc.address = undefined
+                        doc.facebook = undefined
+                        doc.linkIn = undefined
+                        return res.status(200).send(doc)
+                    }
+                })
+            }else{
+                admin.auth().verifyIdToken(idToken).then(async function (decodedClaims) {
+
+                    let user = decodedClaims
+
+                    let currentUser = await ProfileDB.findOne({uid:user.uid})
+
+                    let currentUserAtc = await atcDB.findOne({uid:user.uid})
+
+                    ProfileDB.findById(id, (err, doc) => {
+                        if (err) {
+                            return res.status(404).send({ mess: `ID [${id}] not found` })
+                        }
+                        else {
+                            if(currentUser.uid === doc.uid){
+                                return res.status(200).send(doc)
+                            }
+                            else if(currentUserAtc){
+                                return res.status(200).send(doc)
+                            }
+                            else if(currentUser.roles.length !== 0 && doc.styleUserRead === 'Core Member'){
+                                return res.status(200).send(doc)
+                            }
+                            else if(currentUser.roles.length === 0 && doc.styleUserRead === 'Member'){
+                                return res.status(200).send(doc)
+                            }else if(doc.styleUserRead === 'Member and Core Member'){
+                                return res.status(200).send(doc)
+                            }else{
+                                doc.email = undefined
+                                doc.name = undefined
+                                doc.gender = undefined
+                                doc.dob = undefined
+                                doc.phoneNumber = undefined
+                                doc.address = undefined
+                                doc.facebook = undefined
+                                doc.linkIn = undefined
+                                return res.status(200).send(doc)
+                            }
+                        }
+                    })
+                    }).catch(function (error) {
+                        res.status(401).send('UNAUTHORIZED REQUEST!');
+                    });
                 }
-                else {
-                    return res.status(200).send(doc)
-                }
-            })
         }
         else {
             return res.status(200).send(await ProfileDB.find())

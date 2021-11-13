@@ -15,6 +15,7 @@ const profile = new mongoose.Schema({
     roles: [],
     selectedRoles: [],
     uid: '',
-    id:''
+    id:'',
+    styleUserRead:''
 })
 module.exports = profile;
