@@ -143,8 +143,5 @@ export class AppComponent implements AfterViewInit {
   clickMenu(i: number) {
     // console.log(this.menus[i].link);
     this.selectedMenu = i;
-    this.router.navigate([this.menus[i].link], {
-      queryParams: this.menus[i].query,
-    });
   }
 }

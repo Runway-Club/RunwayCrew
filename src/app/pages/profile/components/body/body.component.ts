@@ -18,7 +18,6 @@ export class BodyComponent {
   isUpdate: boolean = false;
   updateBtn: string = 'Update';
   currentUser: any;
-  isPermit: boolean = false;
   
   @Input() userProfile?: UserProfile;
   @Input()
@@ -32,9 +31,10 @@ export class BodyComponent {
   ) {}
 
   ngOnInit(): void {
-    setTimeout(async () => {
-      this.currentUser = (await this.authService.user)?.uid;
-    }, 500);
+    // setTimeout(async () => {
+    //   this.currentUser =  this.authService.user?.uid;
+    // }, 500);
+    this.currentUser =  this.authService.user?.uid;
   }
 
   async onUpdate() {
@@ -69,7 +69,6 @@ export class BodyComponent {
   }
   checkEditPermission() {
     if (this.currentUser == this.userProfile?.uid) {
-      this.isPermit = !this.isPermit;
       return true;
     }
     return false;
