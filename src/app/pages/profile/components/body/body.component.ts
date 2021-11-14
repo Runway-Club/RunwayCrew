@@ -19,8 +19,8 @@ export class BodyComponent {
   updateBtn: string = 'Update';
   currentUser: any;
   isPermit: boolean = false;
+  
   @Input() userProfile?: UserProfile;
-
   @Input()
   uid = '';
 
@@ -35,7 +35,6 @@ export class BodyComponent {
     setTimeout(async () => {
       this.currentUser = (await this.authService.user)?.uid;
     }, 500);
-    console.log(this.userProfile)
   }
 
   async onUpdate() {
@@ -86,5 +85,36 @@ export class BodyComponent {
       closeOnBackdropClick: true,
       closeOnEsc: true,
     });
+  }
+
+  sharingOpts = [
+    {
+      value: 'Everyone',
+      description: 'Tất cả mọi người truy cập Runway-Crew',
+      checked: false
+    },
+    {
+      value: 'Member',
+      description: 'Các thành viên nhưng chưa có vai trò',
+      checked: false
+    },
+    {
+      value: 'Core Member',
+      description: 'Các thành viên đã có vai trò',
+      checked: false
+    },
+    {
+      value: 'Member and Core Member',
+      description: 'Tất cả mọi người đã đăng nhập',
+      checked: false
+    }
+  ];
+  getMessDenied(value: string){
+    for(let e of this.sharingOpts){
+      if(e.value == value){
+        return `Người dùng này chỉ cho phép "${e.value} (${e.description})" xem thông tin cá nhân của mình`
+      }
+    }
+    return ''
   }
 }

@@ -25,7 +25,6 @@ export interface UserProfile extends RegistrationProfile {
   contribMetadata?: Metadata,
   styleUserRead: string
 }
-
 export interface UserContribution {
   _id:string,
   id:string,

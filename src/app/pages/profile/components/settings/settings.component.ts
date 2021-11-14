@@ -34,7 +34,7 @@ export class  SettingsComponent implements OnInit {
     },
     {
       value: 'Member and Core Member',
-      description: 'Các thành viên chưa có vai trò và đã có vai trò',
+      description: '',
       checked: false
     }
   ];
