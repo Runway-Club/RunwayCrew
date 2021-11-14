@@ -20,8 +20,8 @@ export class ProfileService {
     private auth: AngularFireAuth,
     private db: AngularFirestore,
     private utils: UtilsService,
-    private HttpClient:HttpClient,
-    private AuthSv:AuthenticationService
+    private HttpClient: HttpClient,
+    private AuthSv: AuthenticationService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -52,13 +52,13 @@ export class ProfileService {
         updated: currentTime,
         actor: this.currentUser.email ?? '',
       },
-      styleUserRead:''
+      styleUserRead: ''
     };
     let contribution: UserContribution = {
       _id: '',
-      id:'',
+      id: '',
       uid: this.currentUser.uid,
-      achievements:[],
+      achievements: [],
       email: this.currentUser.email ?? '',
       credit: 0,
       skills: [],
@@ -67,7 +67,7 @@ export class ProfileService {
     };
     // Create data
 
-    await this.HttpClient.post(environment.endpoint + 'profile',profile).toPromise()
+    await this.HttpClient.post(environment.endpoint + 'profile', profile).toPromise()
     await this.HttpClient.post(environment.endpoint + 'contri', profile).toPromise()
     // await this.db.collection('profiles').doc(this.currentUser.uid).set(profile);
     // await this.db
@@ -103,7 +103,7 @@ export class ProfileService {
     //   .update(updated);
     let body = {
       ...registration,
-      profileMetadata : {
+      profileMetadata: {
         updated: currentTime
       }
     }
@@ -123,15 +123,15 @@ export class ProfileService {
     //   });
     const body = {
       ...profile,
-      profileMetadata:{
+      profileMetadata: {
         updated: Date.now(),
       }
     }
     console.log(body)
-    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res=>console.log(res));
+    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => console.log(res));
   }
 
-  public async get(uid?: string, token?:string): Promise<UserProfile> {
+  public async get(uid?: string, token?: string): Promise<UserProfile> {
     // let profile = await this.db
     //   .collection('profiles')
     //   .doc(uid ?? this.currentUser?.uid)
@@ -153,7 +153,7 @@ export class ProfileService {
   public getAll(): Observable<UserProfile[]> {
     // return this.utils.getAll<UserProfile>('profiles');
     return this.HttpClient
-    .get<UserProfile[]>(environment.endpoint + "profile");
+      .get<UserProfile[]>(environment.endpoint + "profile");
   }
 
   public async isRegistrated(): Promise<boolean> {
@@ -163,18 +163,9 @@ export class ProfileService {
           this.currentUser = state;
           let registrated = false;
           let user = await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${state.uid}`).toPromise()
-          if(user == ''){
-            registrated = false;
-          }else{
+          if (user != null) {
             registrated = true;
           }
-          // let registrated = await (
-          //   await this.db
-          //     .collection('profiles')
-          //     .doc(this.currentUser.uid)
-          //     .get()
-          //     .toPromise()
-          // ).exists;
           resolve(registrated);
         }
       });
