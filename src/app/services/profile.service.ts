@@ -52,7 +52,7 @@ export class ProfileService {
         updated: currentTime,
         actor: this.currentUser.email ?? '',
       },
-      styleUserRead:''
+      styleUserRead:'Everyone'
     };
     let contribution: UserContribution = {
       _id: '',

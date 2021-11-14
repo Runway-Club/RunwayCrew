@@ -14,7 +14,7 @@ const verifyToken = require('../verify-token');
 const admin = require('firebase-admin');
 
 
-router.get("/1", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const { id } = req.query;
         const idToken = req.header('Authorization')
@@ -93,7 +93,7 @@ router.get("/1", async (req, res) => {
     }
 });
 
-router.get("/", async (req, res) => {
+router.get("/1", async (req, res) => {
     try {
         const { id } = req.query;
         const idToken = req.header('Authorization')

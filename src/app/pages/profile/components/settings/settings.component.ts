@@ -83,11 +83,8 @@ export class  SettingsComponent implements OnInit {
         styleUserRead: this.formControl.value
       }
       await this.ProfileService.update(updateUser);
-      this.dialogRef.close();
-      this.toast.success(
-        `Profile ${this.user.email} đã cập nhật`,
-        'Cập nhật hồ sơ'
-      );
+      await this.dialogRef.close();
+      window.location.reload()
     }
   }
 }
