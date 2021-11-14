@@ -2,7 +2,7 @@
   <div class='side-menu' [ngStyle]="{animationName:showSidemenu?'showSidebarAnim':'hideSidebarAnim'}">
     <div class='menu'>
       <button *ngFor="let menu of menus; let i = index;" nbButton ghost [routerLink]='menu.link'
-        [queryParams]="menu.query" (click)="clickMenu(i)" [status]='selectedMenu==i?"primary":"basic"'>
+      (click)="selectedMenu = i" [status]='selectedMenu==i?"primary":"basic"'>
         <span class="material-icons-outlined">
           {{menu.icon}}
         </span>
@@ -10,6 +10,7 @@
       </button>
     </div>
   </div>
+
   <div class="main-container"
     [ngStyle]="{animationName:showSidemenu?'showSidebarAnimForMain':'hideSidebarAnimForMain'}">
     <div class='main-zone' [ngStyle]="{animationName:showSidemenu?'showSidebarAnimForMain':'hideSidebarAnimForMain'}">

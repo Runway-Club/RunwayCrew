@@ -126,8 +126,8 @@ router.get("/1", async (req, res) => {
             });
             let currentUser = await ProfileDB.findOne({ uid: user.uid })
             let currentUserIsATC = await atcDB.findOne({ uid: user.uid }) ? true : false
-            //atc
-            if (currentUserIsATC)
+            //atc hoặc chủ profile
+            if (currentUserIsATC || user.uid == currentUser.uid)
                 return res.status(200).send(doc)
             //Member
             if (doc.styleUserRead == 'Member' && currentUser.roles.length == 0)
