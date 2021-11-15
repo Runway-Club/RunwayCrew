@@ -2,16 +2,16 @@
   style="margin-bottom: 0;border-radius: 15px;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);border-radius: 15px;">
   <nb-card-header style="display: flex; flex-direction: row;">
     <h5 *ngIf="userProfile.email" >Information</h5>
-    <h5 *ngIf="!checkEditPermission() && !userProfile.email"> {{getMessDenied(userProfile!.styleUserRead)}}</h5>
+    <h5 *ngIf="!isUserCanEdit && !userProfile.email"> Người dùng này chỉ cho phép "{{getUserReadStyle(userProfile.styleUserRead)}}" xem thông tin cá nhân của mình</h5>
     <div style="flex: 1 auto;"></div>
     <div style="float: right;">
 
 
-      <button *ngIf="checkEditPermission()" style="margin-right: 5px;" nbButton type="button" status='primary' value="Edit" outline shape='semi-round' size="small" (click)="onSettings(userProfile)">
+      <button *ngIf="isUserCanEdit" style="margin-right: 5px;" nbButton type="button" status='primary' value="Edit" outline shape='semi-round' size="small" (click)="onSettings(userProfile)">
         <nb-icon icon="settings-2-outline"> </nb-icon>
       </button>
 
-      <button *ngIf="checkEditPermission()" nbButton type="button" status='primary' value="Edit" (click)="onEdit()"
+      <button *ngIf="isUserCanEdit" nbButton type="button" status='primary' value="Edit" (click)="onEdit()"
         outline shape='semi-round' size="small" [disabled]="updateBtn=='Update'?false:true">
         <nb-icon icon="edit-outline"> </nb-icon>
       </button>
@@ -27,10 +27,9 @@
 
     <form *ngIf="userProfile.email" class="form-registration" (ngSubmit)="onUpdate()">
 
-      <nb-form-field *ngIf="checkEditPermission()" >
+      <nb-form-field *ngIf="isUserCanEdit" >
         <label>Những ai có thể thấy thông tin của tôi</label>
-        <input type="text" nbInput disabled [(ngModel)]="userProfile!.styleUserRead" fullWidth
-          [ngModelOptions]="{standalone: true}" style="color: #000;">
+        <input type="text" nbInput disabled  fullWidth [value]="getUserReadStyle(userProfile.styleUserRead)" style="color: #000;">
       </nb-form-field>
 
       <nb-form-field>

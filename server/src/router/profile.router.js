@@ -13,87 +13,7 @@ const shareService = require('../service/share.service');
 const verifyToken = require('../verify-token');
 const admin = require('firebase-admin');
 
-
 router.get("/", async (req, res) => {
-    try {
-        const { id } = req.query;
-        const idToken = req.header('Authorization')
-        if (id) {
-            if (!idToken) {
-                ProfileDB.findById(id, (err, doc) => {
-                    if (err) {
-                        return res.status(404).send({ mess: `ID [${id}] not found` })
-                    }
-                    if (doc.styleUserRead === 'Everyone') {
-                        return res.status(200).send(doc)
-                    } else {
-                        doc.email = undefined
-                        doc.name = undefined
-                        doc.gender = undefined
-                        doc.dob = undefined
-                        doc.phoneNumber = undefined
-                        doc.address = undefined
-                        doc.facebook = undefined
-                        doc.linkIn = undefined
-                        return res.status(200).send(doc)
-                    }
-                })
-            } else {
-                admin.auth().verifyIdToken(idToken).then(async function (decodedClaims) {
-
-                    let user = decodedClaims
-
-                    let currentUser = await ProfileDB.findOne({ uid: user.uid })
-
-                    let currentUserAtc = await atcDB.findOne({ uid: user.uid })
-
-                    ProfileDB.findById(id, (err, doc) => {
-                        if (err) {
-                            return res.status(404).send({ mess: `ID [${id}] not found` })
-                        }
-                        else {
-                            if (currentUser.uid === doc.uid) {
-                                return res.status(200).send(doc)
-                            }
-                            else if (currentUserAtc) {
-                                return res.status(200).send(doc)
-                            }
-                            else if (currentUser.roles.length !== 0 && doc.styleUserRead === 'Core Member') {
-                                return res.status(200).send(doc)
-                            }
-                            else if (currentUser.roles.length === 0 && doc.styleUserRead === 'Member') {
-                                return res.status(200).send(doc)
-                            } else if (doc.styleUserRead === 'Member and Core Member') {
-                                return res.status(200).send(doc)
-                            } else {
-                                doc.email = undefined
-                                doc.name = undefined
-                                doc.gender = undefined
-                                doc.dob = undefined
-                                doc.phoneNumber = undefined
-                                doc.address = undefined
-                                doc.facebook = undefined
-                                doc.linkIn = undefined
-                                return res.status(200).send(doc)
-                            }
-                        }
-                    })
-                }).catch(function (error) {
-                    res.status(400).send('Bad reqest!');
-                });
-            }
-        }
-        else {
-            return res.status(200).send(await ProfileDB.find())
-        }
-    } catch (err) {
-        console.log(err)
-        res.status(500)
-        res.send({ mess: 'Server err' })
-    }
-});
-
-router.get("/1", async (req, res) => {
     try {
         const { id } = req.query;
         const idToken = req.header('Authorization')
@@ -107,40 +27,48 @@ router.get("/1", async (req, res) => {
             let docDenied = new ProfileModel()
             docDenied = { ...doc._doc }
             docDenied.email = undefined
-            docDenied.name = undefined
             docDenied.gender = undefined
             docDenied.dob = undefined
             docDenied.phoneNumber = undefined
             docDenied.address = undefined
             docDenied.facebook = undefined
             docDenied.linkIn = undefined
-            if (doc.styleUserRead == 'Everyone')
+            if (doc.styleUserRead == 'Everyone') {
                 return res.status(200).send(doc)
-            if (!idToken) {
-                if (doc.styleUserRead != 'Everyone')
-                    return res.status(200).send(docDenied)
             }
-            let user = await admin.auth().verifyIdToken(idToken).catch(function (error) {
+            //Người dùng ẩn danh
+            if (!idToken) {
+                if (doc.styleUserRead != 'Everyone') {
+                    return res.status(200).send(docDenied)
+                }
+            }
+            let decodedIdToken = await admin.auth().verifyIdToken(idToken).catch(function (error) {
                 //Token bị quá hạn hoặc không đúng
                 res.status(400).send('Bad reqest!');
             });
-            let currentUser = await ProfileDB.findOne({ uid: user.uid })
-            let currentUserIsATC = await atcDB.findOne({ uid: user.uid }) ? true : false
+            let currentUser = await ProfileDB.findOne({ uid: decodedIdToken.uid })
+            let currentUserIsATC = await atcDB.findOne({ uid: currentUser.uid }) ? true : false
             //atc hoặc chủ profile
-            if (currentUserIsATC || user.uid == currentUser.uid)
+            if (currentUserIsATC || (doc.uid == currentUser.uid)) {
                 return res.status(200).send(doc)
+            }
             //Member
-            if (doc.styleUserRead == 'Member' && currentUser.roles.length == 0)
+            if (doc.styleUserRead == 'Member' && currentUser.roles.length == 0) {
                 return res.status(200).send(doc)
+            }
             //Core Member
-            else if (doc.styleUserRead == 'Core Member' && currentUser.roles.length != 0)
+            else if (doc.styleUserRead == 'Core Member' && currentUser.roles.length != 0) {
                 return res.status(200).send(doc)
+            }
             //Member and Core Member
-            else if (doc.styleUserRead == 'Member and Core Member')
+            else if (doc.styleUserRead == 'Member and Core Member') {
                 return res.status(200).send(doc)
+            }
             //Ngoại lệ bị từ chối quyền xem
-            else
+            else {
                 return res.status(200).send(docDenied)
+            }
+
         })
     } catch (err) {
         console.log(err)

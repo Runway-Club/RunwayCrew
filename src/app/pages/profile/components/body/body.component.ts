@@ -4,7 +4,6 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import {
-  RegistrationProfile,
   UserProfile,
 } from 'src/models/user-profile.model';
 import { SettingsComponent } from '../settings/settings.component';
@@ -17,8 +16,8 @@ import { SettingsComponent } from '../settings/settings.component';
 export class BodyComponent {
   isUpdate: boolean = false;
   updateBtn: string = 'Update';
-  currentUser: any;
-  
+  isUserCanEdit = false;
+
   @Input() userProfile?: UserProfile;
   @Input()
   uid = '';
@@ -28,13 +27,15 @@ export class BodyComponent {
     private toast: NbToastrService,
     private authService: AuthenticationService,
     private dialog: NbDialogService
-  ) {}
+  ) {
+    setTimeout(async () => {
+      this.userProfile?.uid == this.authService.user?.uid ? this.isUserCanEdit = true : this.isUserCanEdit = false
+      console.log(this.userProfile)
+    }, 500);
+  }
 
   ngOnInit(): void {
-    // setTimeout(async () => {
-    //   this.currentUser =  this.authService.user?.uid;
-    // }, 500);
-    this.currentUser =  this.authService.user?.uid;
+    console.log(this.userProfile)
   }
 
   async onUpdate() {
@@ -53,7 +54,7 @@ export class BodyComponent {
     }
   }
   onEdit() {
-    if (!this.checkEditPermission()) {
+    if (!this.isUserCanEdit) {
       this.toast.danger(
         `Bạn không có quyền chỉnh sửa hồ sơ của ${this.userProfile?.email}`,
         'Cập nhật hồ sơ'
@@ -66,12 +67,6 @@ export class BodyComponent {
   onCancel() {
     this.isUpdate = !this.isUpdate;
     this.updateBtn = 'Update';
-  }
-  checkEditPermission() {
-    if (this.currentUser == this.userProfile?.uid) {
-      return true;
-    }
-    return false;
   }
   onSettings(userProfile: UserProfile) {
     // console.log(userProfile)
@@ -108,10 +103,10 @@ export class BodyComponent {
       checked: false
     }
   ];
-  getMessDenied(value: string){
-    for(let e of this.sharingOpts){
-      if(e.value == value){
-        return `Người dùng này chỉ cho phép "${e.value} (${e.description})" xem thông tin cá nhân của mình`
+  getUserReadStyle(value: string) {
+    for (let e of this.sharingOpts) {
+      if (e.value == value) {
+        return `${e.value} (${e.description})`
       }
     }
     return ''

@@ -34,7 +34,7 @@ export class  SettingsComponent implements OnInit {
     },
     {
       value: 'Member and Core Member',
-      description: '',
+      description: 'Tất cả thành viên đã đăng nhập',
       checked: false
     }
   ];

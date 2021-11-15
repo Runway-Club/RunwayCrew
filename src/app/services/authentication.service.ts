@@ -13,12 +13,8 @@ export class AuthenticationService {
 
   constructor(private auth: AngularFireAuth, private httpClient: HttpClient,) {
     this.auth.authState.subscribe((user) => {
-      if (this.user == null && user != null) {
-        this.user = user;
-      } else if (this.user != null) {
-        // this.cookieService.set('email', user?.email ?? "", { expires: 1 });
-      }
       if (user != null) {
+        this.user = user;
         localStorage.setItem('userId', user.uid);
       }
     });

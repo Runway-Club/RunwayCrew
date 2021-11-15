@@ -65,9 +65,7 @@ export class ProfileComponent implements OnInit {
       let res = await this.profileSv.getUid(localStorage.getItem('userId') ?? '')
       this.uid = res._id
     }
-    console.log(this.authSv.token)
     this.userProfile = await this.profileSv.get(this.uid, this.authSv.token);
-    console.log(this.userProfile)
   }
   public async getContribute() {
     this.contribute = await this.contributeSv.getUID(this.userProfile.uid);
