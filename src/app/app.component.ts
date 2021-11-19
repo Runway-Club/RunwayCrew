@@ -45,7 +45,7 @@ export class AppComponent implements AfterViewInit {
   ];
 
   showSidemenu = false;
-  selectedMenu = 0;
+  selectedMenu:any;
 
   uid = '';
 

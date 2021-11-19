@@ -13,7 +13,7 @@ import { Achievement } from 'src/models/achievement.model';
 import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-community',
@@ -34,7 +34,8 @@ export class CommunityComponent implements OnInit {
     private roleService: RoleService,
     private httpClient: HttpClient,
     private utils: UtilsService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private AppComponent:AppComponent
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +48,7 @@ export class CommunityComponent implements OnInit {
       this.roles.length = 0;
       this.roles.push(...roles);
     });
+    this.AppComponent.selectedMenu = 1
   }
   public async getUsers() {
     let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);

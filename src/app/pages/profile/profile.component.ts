@@ -7,6 +7,7 @@ import { ContributionService } from 'src/app/services/contribution.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { SkillService } from 'src/app/services/skill.service';
 import { UserContribution, UserProfile } from 'src/models/user-profile.model';
+import { AppComponent } from '../../app.component'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -27,6 +28,7 @@ export class ProfileComponent implements OnInit {
     private profileSv: ProfileService,
     private skillService: SkillService,
     private router: Router,
+    private AppComponent:AppComponent
   ) {
   }
   ngOnInit(): void {
@@ -52,6 +54,7 @@ export class ProfileComponent implements OnInit {
         }
       });
     });
+    this.AppComponent.selectedMenu = 0
   }
   isMobile() {
     if (window.innerWidth <= 600) {
