@@ -51,7 +51,7 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private dialog: NbDialogService,
-    private auth: AuthenticationService,
+    public auth: AuthenticationService,
     private atcService: ATCService,
     private sidebarService: NbSidebarService,
     private router: Router,
@@ -67,7 +67,6 @@ export class AppComponent implements AfterViewInit {
         auth.token = await (await user.getIdTokenResult()).token
       }
     });
-
 
     this.authService.authState.subscribe((state) => {
       if (state) {
@@ -132,12 +131,27 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  login(){
+    if(!this.auth.token){
+      this.router.navigate(['home']);
+    }else{
+      return;
+    }
+  }
+
   isMobile() {
     if (window.innerWidth <= 600) {
       // console.log(true);
       return true;
     }
     return false;
+  }
+
+  async backProfie(link: string){
+    if(link === './profile'){
+      await this.router.navigate(['/profile'])
+      window.location.reload()
+    }
   }
 
   clickMenu(i: number) {

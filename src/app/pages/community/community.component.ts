@@ -49,6 +49,7 @@ export class CommunityComponent implements OnInit {
       this.roles.push(...roles);
     });
     this.AppComponent.selectedMenu = 1
+    this.AppComponent.showSidemenu = false
   }
   public async getUsers() {
     let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);

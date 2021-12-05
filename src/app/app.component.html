@@ -1,12 +1,12 @@
 <div class="container">
   <div class='side-menu' [ngStyle]="{animationName:showSidemenu?'showSidebarAnim':'hideSidebarAnim'}">
     <div class='menu'>
-      <button *ngFor="let menu of menus; let i = index;" nbButton ghost [routerLink]='menu.link'
+      <button *ngFor="let menu of menus; let i = index;" nbButton ghost [routerLink]='menu.link' 
       (click)="selectedMenu = i" [status]='selectedMenu==i?"primary":"basic"'>
         <span class="material-icons-outlined">
           {{menu.icon}}
         </span>
-        <span class='heading2'>{{menu.name}}</span>
+        <span (click)="backProfie(menu.link)" class='heading2'>{{menu.name}}</span>
       </button>
     </div>
   </div>
@@ -20,19 +20,24 @@
             menu
           </span>
         </button>
-        <h1 class='heading1'>Runway Crew</h1>
+        <h1 style="cursor:pointer;" routerLink="community" class='heading1'>Runway Crew</h1>
         <div style="flex:1 auto;"></div>
         <div *ngIf="!isMobile()">
           <button *ngFor="let menu of menus; let i = index;" nbButton ghost [routerLink]='menu.link'
             (click)="selectedMenu = i" [status]='selectedMenu==i?"primary":"basic"' size='tiny'>
-            <span class="material-icons-outlined">
+            <span (click)="backProfie(menu.link)" class="material-icons-outlined">
               {{menu.icon}}
             </span>
           </button>
         </div>
-        <button nbButton ghost (click)="logout()" size='tiny'>
+        <button *ngIf="auth.token" nbButton ghost (click)="logout()" size='tiny'>
           <span class="material-icons-outlined">
             logout
+          </span>
+        </button>
+        <button *ngIf="!auth.token" nbButton ghost (click)="login()" size='tiny'>
+          <span class="material-icons">
+            input
           </span>
         </button>
         <div style="width: 5px;"></div>
