@@ -14,11 +14,22 @@ const verifyToken = require('../verify-token');
 const admin = require('firebase-admin');
 
 router.get("/", async (req, res) => {
+    //pageSize, pageCount, pageNum, role
+    try {
+        return res.status(200).send(await ProfileDB.find())
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+        res.send({ mess: 'Server err' })
+    }
+})
+
+router.get("/byID", async (req, res) => {
     try {
         const { id } = req.query;
         const idToken = req.header('Authorization')
         if (!id) {
-            return res.status(200).send(await ProfileDB.find())
+            return res.status(400).send({ mess: `ID [null] not found` })
         }
         ProfileDB.findById(id, async (err, doc) => {
             if (err) {
@@ -76,9 +87,6 @@ router.get("/", async (req, res) => {
         res.send({ mess: 'Server err' })
     }
 })
-
-
-
 
 router.get('/community', async (req, res) => {
     try {

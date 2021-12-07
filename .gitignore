@@ -46,3 +46,4 @@ Thumbs.db
 
 .firebase/hosting.*
 server/src/serviceAccountKeys.json
+server/src/config.js

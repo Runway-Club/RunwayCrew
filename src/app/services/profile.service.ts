@@ -138,7 +138,7 @@ export class ProfileService {
     //   .get()
     //   .toPromise();
     // return <UserProfile>profile.data();
-    return this.HttpClient.get<UserProfile>(environment.endpoint + `profile?id=${uid}`, {
+    return this.HttpClient.get<UserProfile>(environment.endpoint + `profile/byID?id=${uid}`, {
       headers: new HttpHeaders()
         .set('Authorization', token ?? '')
     }).toPromise()

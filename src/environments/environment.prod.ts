@@ -10,5 +10,5 @@ export const environment = {
     measurementId: "G-GRZ989634P"
   },
   endpoint:'http://localhost:8080/'
-  //endpoint:'https://server.crew.runwayclub.dev/'
+  // endpoint:'https://server.crew.runwayclub.dev/'
 };
