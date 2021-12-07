@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit {
       });
     });
     this.AppComponent.selectedMenu = 0
+    this.AppComponent.showSidemenu = false
   }
   isMobile() {
     if (window.innerWidth <= 600) {
