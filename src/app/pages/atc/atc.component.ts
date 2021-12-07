@@ -12,5 +12,6 @@ export class AtcComponent implements OnInit {
 
   ngOnInit(): void {
     this.AppComponent.selectedMenu = 2
+    this.AppComponent.showSidemenu = false
   }
 }
