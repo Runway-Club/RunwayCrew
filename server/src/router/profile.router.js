@@ -12,11 +12,11 @@ const ProfileModel = require('../../model/profile.model')
 const shareService = require('../service/share.service');
 const verifyToken = require('../verify-token');
 const admin = require('firebase-admin');
+const PageModel = require('../../model/pagination.model')
 
 router.get("/", async (req, res) => {
-    //pageSize, pageCount, pageNum, role
     try {
-        return res.status(200).send(await ProfileDB.find())
+        res.status(200).send(await ProfileDB.find())
     } catch (err) {
         console.log(err)
         res.status(500)
@@ -90,18 +90,23 @@ router.get("/byID", async (req, res) => {
 
 router.get('/community', async (req, res) => {
     try {
-        let { size, roleId, last } = req.query;
-        if (roleId === 'undefined') {
-            let response = await ProfileDB
-                .find()
-                .sort({ "profileMetadata.updated": 1 })
-                .limit(size)
-            return res.status(200).send(response)
-        } else {
-            let response = await ProfileDB
-                .find({ roles: roleId })
-                .sort({ "profileMetadata.updated": 1 })
-                .limit(size)
+        //pageSize, pageCount, pageNum, role
+        let { err, data } = shareService.parseBodyToObject(new PageModel(), req.query)
+        if (err != null) {
+            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
+        }else{
+
+            let queryRole = { roles: data.role }
+            if(data.role === "undefined"){
+                queryRole = {}
+            }
+            
+            const skipData = parseInt(data.pageNum-1) * parseInt(data.pageSize)
+
+            const response = await ProfileDB
+                .find(queryRole)
+                .skip(skipData)
+                .limit(parseInt(data.pageCount))
             return res.status(200).send(response)
         }
     } catch (err) {
