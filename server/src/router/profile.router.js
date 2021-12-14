@@ -16,7 +16,30 @@ const admin = require('firebase-admin');
 router.get("/", async (req, res) => {
     //pageSize, pageCount, pageNum, role
     try {
-        return res.status(200).send(await ProfileDB.find())
+        let pageSize = req.query.pageSize || 10
+        let pageNum = req.query.pageNum || 0
+        pageSize = pageSize - 0
+        pageNum = pageNum - 0
+        if (!req.query.role) {
+            await ProfileDB.find()
+                .limit(pageSize - 0)
+                .skip(pageSize * pageNum)
+                .exec((err, datas) => {
+                    ProfileDB.countDocuments((err, count) => {
+                        if (err) return res.status(200).send({ mess: 'Server error' })
+                        let pageCount = Math.ceil(count / pageSize) - 1
+                        return res.status(200).send({
+                            data: datas,
+                            pageSize: pageSize,
+                            pageNum: pageNum,
+                            pageCount: pageCount
+                        })
+                    });
+                });
+        }
+        else {
+
+        }
     } catch (err) {
         console.log(err)
         res.status(500)
