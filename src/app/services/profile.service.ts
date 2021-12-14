@@ -4,6 +4,7 @@ import { AngularFirestore, Query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {
   RegistrationProfile,
+  ResPaginateProfile,
   UserContribution,
   UserProfile,
 } from 'src/models/user-profile.model';
@@ -52,7 +53,7 @@ export class ProfileService {
         updated: currentTime,
         actor: this.currentUser.email ?? '',
       },
-      styleUserRead:'Everyone'
+      styleUserRead: 'Everyone'
     };
     let contribution: UserContribution = {
       _id: '',
@@ -151,9 +152,8 @@ export class ProfileService {
   }
 
   public getAll(): Observable<UserProfile[]> {
-    // return this.utils.getAll<UserProfile>('profiles');
     return this.HttpClient
-      .get<UserProfile[]>(environment.endpoint + "profile");
+      .get<UserProfile[]>(environment.endpoint + "profile?pageNum=-1")
   }
 
   public async isRegistrated(): Promise<boolean> {
@@ -173,15 +173,8 @@ export class ProfileService {
   }
 
   public async getPaginate(size: number, roleId?: string, last?: UserProfile): Promise<UserProfile[]> {
-    // let query: Query<any> = this.db.collection("profiles").ref;
-    // if (roleId) {
-    //   query = query.where("roles", 'array-contains', roleId);
-    // }
-    // return (await query
-    //   .limit(size)
-    //   .orderBy("profileMetadata.updated")
-    //   .get()).docs.map((d) => <UserProfile>d.data())
-    return this.HttpClient.get<UserProfile[]>(environment.endpoint + 'profile').toPromise()
+    let res = await this.HttpClient.get<ResPaginateProfile>(environment.endpoint + 'profile').toPromise()
+    return res.data
   }
 
 }

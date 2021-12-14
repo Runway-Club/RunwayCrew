@@ -95,6 +95,9 @@ export class MembersComponent implements OnInit {
     }
     try {
       await this.profileService.updateProfile(this.selectedProfile);
+      if(this.selectedRole?.id == 'atc'){
+        await this.atcService.addToATC(this.selectedProfile);
+      }
       this.selectedProfile = undefined;
       this.selectedRole = undefined;
     } catch (err) {
