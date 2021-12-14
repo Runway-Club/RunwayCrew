@@ -16,10 +16,13 @@ const admin = require('firebase-admin');
 router.get("/", async (req, res) => {
     //pageSize, pageCount, pageNum, role
     try {
-        let pageSize = req.query.pageSize || 10
+        let pageSize = req.query.pageSize || 30
         let pageNum = req.query.pageNum || 0
         pageSize = pageSize - 0
         pageNum = pageNum - 0
+        if(pageNum==-1){
+            return res.status(200).send(await ProfileDB.find())
+        }
         if (!req.query.role) {
             await ProfileDB.find()
                 .limit(pageSize - 0)

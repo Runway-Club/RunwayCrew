@@ -3,7 +3,7 @@ import { Metadata } from "./metadata.model";
 import { Role } from "./role.model";
 
 export interface RegistrationProfile {
-  _id:string,
+  _id: string,
   name: string,
   dob: number,
   gender: string,
@@ -15,7 +15,7 @@ export interface RegistrationProfile {
   email: string
 }
 export interface UserProfile extends RegistrationProfile {
-  _id:string,
+  _id: string,
   uid: string,
   email: string,
   photoUrl: string,
@@ -26,12 +26,19 @@ export interface UserProfile extends RegistrationProfile {
   styleUserRead: string
 }
 export interface UserContribution {
-  _id:string,
-  id:string,
+  _id: string,
+  id: string,
   uid: string,
   email: string,
   credit: number,
   exp: number,
   skills: AchievedSkill[],
   achievements?: Achievement[],
+}
+
+export interface ResPaginateProfile {
+  data: UserProfile[],
+  pageSize: number,
+  pageNum: number
+  pageCount: number
 }

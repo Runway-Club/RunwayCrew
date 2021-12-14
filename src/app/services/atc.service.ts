@@ -47,7 +47,10 @@ export class ATCService {
   }
 
   public async addToATC(profile: UserProfile) {
-    await this.HttpClient.post(environment.endpoint + 'atc', profile).toPromise().then(res => console.log(res));
+    await this.HttpClient.post(environment.endpoint + 'atc', profile, {
+      headers: new HttpHeaders()
+        .set('Authorization', this.authService.token)
+    }).toPromise().then(res => console.log(res));
   }
 
   public async removeFromATC(id: string) {
