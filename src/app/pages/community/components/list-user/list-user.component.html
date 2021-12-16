@@ -1,6 +1,8 @@
 <div style="width:100%;margin: 0%;">
     <div class="container" *ngIf="loadDone">
-        <nb-card class="card" *ngFor="let user of listUser;let i=index">
+        <nb-card class="card" *ngFor="
+            let user of listUser | paginate: { itemsPerPage: params.pageSize, currentPage: params.pageNum, totalItems: 100 };let i=index"
+        >
             <div class="box">
                 <div class="left-box">
                     <img style="border-radius: 100%; display: block;margin:7px 0 0 7px;position: absolute;"
@@ -25,5 +27,5 @@
             </div>
         </nb-card>
     </div>
-    <!-- <pagination-controls style="text-align: center;" (pageChange)="page = $event" ></pagination-controls> -->
+    <pagination-controls style="text-align: center;" (pageChange)="change($event)" (pageChange)="params.pageNum = $event" ></pagination-controls>
 </div>

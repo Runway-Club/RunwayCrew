@@ -44,7 +44,6 @@ export class CommunityComponent implements OnInit {
       if(params){
         this.selectedRoleId = params.role || undefined
         this.params.pageNum = params.pageNum || 0
-        this.params.pageSize = params.pageSize || 30
       }
     })
   }
@@ -67,24 +66,14 @@ export class CommunityComponent implements OnInit {
   }
 
   public params = {
-    pageSize: 0,
+    pageSize: 16,
     pageNum: 0
   }
 
-  isMobile() {
-    if (window.innerWidth <= 600) {
-      // console.log(true);
-      return true;
-    }
-    return false;
-  }
-  pageEvent?: PageEvent;
-  async change(){
-    console.log(this.pageEvent)
-    this.params.pageSize = this.pageEvent?.pageSize || 30
-    this.params.pageNum = this.pageEvent?.pageIndex || 0
-    this.location.replaceState(`?pageSize=${this.params.pageSize}&pageNum=${this.params.pageNum}&role=${this.selectedRoleId}`);
-    await this.getUsers()
+  async changePage(event:any){
+    this.params.pageNum = event
+    this.location.replaceState(`?pageNum=${event}&role=${this.selectedRoleId}`);
+    await this.getUsers();
   }
 
   public async getUsers() {
@@ -111,31 +100,11 @@ export class CommunityComponent implements OnInit {
   }
 
   public async getUserByRole(roleId?: string) {
-    this.location.replaceState(`?pageSize=${this.params.pageSize}&pageNum=${this.params.pageNum}&role=${roleId}`);
+    this.params.pageNum = 0
+    this.location.replaceState(`?pageNum=${this.params.pageNum}&role=${roleId}`);
     this.selectedRoleId = roleId;
     await this.getUsers();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   async testPost() {
     let newATC: UserProfile={
