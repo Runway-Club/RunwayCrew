@@ -27,6 +27,7 @@ export class MembersComponent implements OnInit {
   // filteredRoles!: Observable<string[]>;
   filteredControlOptions!: Observable<Role[]>;
   inputFormControl!: FormControl;
+  rolesFilter = [];
 
   selectedTypeUser = '';
   countRolesOfUser: number = 0;
@@ -207,8 +208,15 @@ export class MembersComponent implements OnInit {
 
   private filter(value: string): Role[] {
     const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
     return this.roles.filter((optionValue) =>
       optionValue.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  change(value: Role) {
+    this.selectedRole = value;
   }
 }

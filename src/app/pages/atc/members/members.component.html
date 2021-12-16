@@ -200,11 +200,31 @@
   <nb-card-header> Cấp vai trò </nb-card-header>
   <nb-card-body *ngIf="loadDoneRoles && loadDoneProfiles">
     <p>Chọn vai trò</p>
-    <nb-select [(ngModel)]="selectedRole" fullWidth>
+    <nb-card-body class="example-items-rows">
+      <input
+        [formControl]="inputFormControl"
+        nbInput
+        type="text"
+        [nbAutocomplete]="autoControl"
+        fullWidth
+      />
+
+      <nb-autocomplete #autoControl>
+        <nb-option
+          *ngFor="let role of filteredControlOptions | async"
+          [value]="role.name"
+          (click)="change(role)"
+        >
+          {{ role.name }}
+        </nb-option>
+      </nb-autocomplete>
+    </nb-card-body>
+
+    <!-- <nb-select [(ngModel)]="selectedRole" fullWidth>
       <nb-option *ngFor="let role of roles" [value]="role">{{
         role.name
       }}</nb-option>
-    </nb-select>
+    </nb-select> -->
     <p>Được cấp cho</p>
     <nb-select [(ngModel)]="selectedProfile" fullWidth>
       <nb-option
