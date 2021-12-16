@@ -19,6 +19,8 @@ import { LevelComponent } from './components/level/level.component';
 import { FormsModule } from '@angular/forms';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination'
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [CommunityComponent, ListUserComponent, LevelComponent],
@@ -36,7 +38,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommunityRoutingModule,
     FormsModule,
     RoundProgressModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule,
+    MatPaginatorModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

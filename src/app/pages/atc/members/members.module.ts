@@ -16,6 +16,7 @@ import {
   NbListModule,
   NbSearchModule,
   NbSelectModule,
+  NbTagModule,
   NbToggleModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -23,14 +24,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
   declarations: [MembersComponent],
   imports: [
     CommonModule,
     MembersRoutingModule,
     FormsModule,
-    Ng2SearchPipeModule,
     NbCardModule,
     NbButtonModule,
     NbInputModule,
@@ -48,6 +48,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatAutocompleteModule,
     ReactiveFormsModule,
     NbAutocompleteModule,
+    NbTagModule,
   ],
 })
 export class MembersModule {}

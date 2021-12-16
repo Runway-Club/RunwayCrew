@@ -8,6 +8,7 @@ import {
   NbButtonModule,
   NbLayoutModule,
   NbTooltipModule,
+  NbTagModule
 } from '@nebular/theme';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -20,7 +21,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbButtonModule,
     NbTooltipModule,
     NbActionsModule,
-    SharedModule
+    SharedModule,
+    NbTagModule
   ],
 })
 export class AtcModule {}

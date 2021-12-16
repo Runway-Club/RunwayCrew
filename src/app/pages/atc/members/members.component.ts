@@ -8,6 +8,7 @@ import { UserProfile } from 'src/models/user-profile.model';
 import { FormControl } from '@angular/forms';
 import { Observable, ObservableInput, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { NbTagComponent } from '@nebular/theme';
 
 @Component({
   selector: 'app-members',
@@ -38,6 +39,7 @@ export class MembersComponent implements OnInit {
   public selectedProfileForReclaim?: UserProfile;
   public selectedProfileForATCZone?: UserProfile;
   public selectedProfileRemoveFromATC!: UserProfile;
+  public selectedMultipleProfile: UserProfile[] = [];
 
   public loadDoneATC = false;
   public loadDoneProfiles = false;
@@ -107,33 +109,60 @@ export class MembersComponent implements OnInit {
     return new Date(time).toLocaleDateString();
   }
 
-  public async assignRole() {
-    if (!this.selectedProfile?.roles) {
-      this.selectedProfile!.roles = [];
-    }
-    if (
-      this.selectedProfile?.roles?.findIndex(
-        (r) => r == this.selectedRole?.id
-      ) == -1
-    ) {
-      if (!this.selectedRole) {
-        return;
-      }
-      this.selectedProfile.roles.push(this.selectedRole.id);
-    }
-    if (!this.selectedProfile) {
+  // check logic for selected multiple profile
+  public checkLogicMultipleProfiles(profile: UserProfile) {
+    let count = 0;
+    if (this.selectedMultipleProfile.length == 0) {
+      this.selectedMultipleProfile.push(profile);
       return;
     }
-    try {
-      await this.profileService.updateProfile(this.selectedProfile);
-      if (this.selectedRole?.id == 'atc') {
-        await this.atcService.addToATC(this.selectedProfile);
+    for (let i = 0; i < this.selectedMultipleProfile.length; i++) {
+      if (profile.uid == this.selectedMultipleProfile[i]?.uid) {
+        count++;
+        break;
       }
-      this.selectedProfile = undefined;
-      this.selectedRole = undefined;
-    } catch (err) {
-      console.log(err);
     }
+    if (count > 0) {
+      return;
+    } else {
+      this.selectedMultipleProfile.push(profile);
+    }
+  }
+  onTagRemove(tagToRemove: NbTagComponent): void {
+    let index = this.selectedMultipleProfile.findIndex(
+      (item: any) => item.name === tagToRemove.text
+    );
+    this.selectedMultipleProfile.splice(index, 1);
+  }
+  public async assignRole() {
+    for (let i = 0; i < this.selectedMultipleProfile.length; i++) {
+      if (!this.selectedMultipleProfile[i]?.roles) {
+        this.selectedMultipleProfile[i]!.roles = [];
+      }
+      if (
+        this.selectedMultipleProfile[i]?.roles?.findIndex(
+          (r) => r == this.selectedRole?.id
+        ) == -1
+      ) {
+        if (!this.selectedRole) {
+          break;
+        }
+        this.selectedMultipleProfile[i].roles.push(this.selectedRole.id);
+        try {
+          await this.profileService.updateProfile(
+            this.selectedMultipleProfile[i]
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (!this.selectedMultipleProfile[i]) {
+        continue;
+      }
+    }
+    this.selectedMultipleProfile = [];
+    this.selectedProfile = undefined;
+    this.selectedRole = undefined;
   }
   public async reclaimRole() {
     if (!this.selectedProfileForReclaim) {
