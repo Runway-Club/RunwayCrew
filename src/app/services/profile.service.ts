@@ -172,8 +172,18 @@ export class ProfileService {
     });
   }
 
-  public async getPaginate(size: number, roleId?: string, last?: UserProfile): Promise<UserProfile[]> {
-    let res = await this.HttpClient.get<ResPaginateProfile>(environment.endpoint + 'profile').toPromise()
+  public async getPaginate(pageSize: number, role: any, pageNum: number): Promise<UserProfile[]> {
+
+    const params = {
+      pageSize: pageSize,
+      role: role,
+      pageNum: pageNum
+    }
+
+    console.log(params)
+
+    let res = await this.HttpClient.get<ResPaginateProfile>(environment.endpoint + 'profile', { params: params}).toPromise()
+   
     return res.data
   }
 

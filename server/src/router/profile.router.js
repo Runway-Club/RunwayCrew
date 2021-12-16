@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
         if(pageNum==-1){
             return res.status(200).send(await ProfileDB.find())
         }
-        if (!req.query.role) {
+        if (req.query.role == 'undefined') {
             await ProfileDB.find()
                 .limit(pageSize - 0)
                 .skip(pageSize * pageNum)
@@ -41,7 +41,22 @@ router.get("/", async (req, res) => {
                 });
         }
         else {
-
+            await ProfileDB
+                .find({roles: req.query.role})
+                .limit(pageSize - 0)
+                .skip(pageSize * pageNum)
+                .exec((err, datas) => {
+                    ProfileDB.countDocuments((err, count) => {
+                        if (err) return res.status(200).send({ mess: 'Server error' })
+                        let pageCount = Math.ceil(count / pageSize) - 1
+                        return res.status(200).send({
+                            data: datas,
+                            pageSize: pageSize,
+                            pageNum: pageNum,
+                            pageCount: pageCount
+                        })
+                    });
+                });
         }
     } catch (err) {
         console.log(err)

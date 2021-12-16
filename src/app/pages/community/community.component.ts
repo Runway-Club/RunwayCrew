@@ -5,7 +5,7 @@ import { SkillService } from 'src/app/services/skill.service';
 import { environment } from '../../../environments/environment.prod';
 import { Role } from 'src/models/role.model';
 import { RegistrationProfile, UserContribution, UserProfile } from 'src/models/user-profile.model';
-
+import {PageEvent} from '@angular/material/paginator';
 import { UtilsService } from 'src/app/services/utils.service';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -14,7 +14,8 @@ import { Contribution } from 'src/models/contribution.model';
 import { Skill } from 'src/models/skill.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AppComponent } from '../../app.component';
-
+import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
@@ -35,10 +36,20 @@ export class CommunityComponent implements OnInit {
     private httpClient: HttpClient,
     private utils: UtilsService,
     private auth: AuthenticationService,
-    private AppComponent:AppComponent
-  ) { }
-
+    private AppComponent:AppComponent,
+    private route: ActivatedRoute,
+    private location: Location
+  ) { 
+    this.route.queryParams.subscribe((params:any) =>{
+      if(params){
+        this.selectedRoleId = params.role || undefined
+        this.params.pageNum = params.pageNum || 0
+      }
+    })
+  }
+  totalLength:any
   ngOnInit(): void {
+
     setTimeout(async () => {
       await this.getUsers();
       await this.getCommonSkill();
@@ -50,10 +61,25 @@ export class CommunityComponent implements OnInit {
     });
     this.AppComponent.selectedMenu = 1
     this.AppComponent.showSidemenu = false
+
+    this.totalLength = this.data.length
   }
+
+  public params = {
+    pageSize: 16,
+    pageNum: 0
+  }
+
+  async changePage(event:any){
+    this.params.pageNum = event
+    this.location.replaceState(`?pageNum=${event}&role=${this.selectedRoleId}`);
+    await this.getUsers();
+  }
+
   public async getUsers() {
-    let users = await this.profileSv.getPaginate(1000, this.selectedRoleId);//, this.data[this.data.length - 1]);
+    let users = await this.profileSv.getPaginate(this.params.pageSize, this.selectedRoleId, this.params.pageNum);//, this.data[this.data.length - 1]);
     if (users.length == 0) {
+      this.data = users
       return false;
     }
     this.data.length = 0;
@@ -74,30 +100,11 @@ export class CommunityComponent implements OnInit {
   }
 
   public async getUserByRole(roleId?: string) {
+    this.params.pageNum = 0
+    this.location.replaceState(`?pageNum=${this.params.pageNum}&role=${roleId}`);
     this.selectedRoleId = roleId;
     await this.getUsers();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   async testPost() {
     let newATC: UserProfile={
