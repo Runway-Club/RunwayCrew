@@ -1,24 +1,33 @@
+.member .parent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-  .member .parent {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.member .box {
+  flex: 1 1 500px; /*  Stretching: */
+  flex: 0 1 200px; /*  No stretching: */
+  margin: 5px;
+}
 
-  .member .box {
-    flex: 1 1 500px; /*  Stretching: */
-    flex: 0 1 200px; /*  No stretching: */
-    margin: 5px;
-  }
+.icon-header-tag {
+  background-color: pink;
+}
+.title {
+  margin: 0;
+  font-size: 1.3rem;
+}
 
-  .icon-header-tag {
-    background-color: pink;
-  }
-  .title {
-    margin: 0;
-    font-size: 1.3rem;
-  }
-  
-  .width-card {
-    width: 23%;
-  }
+.width-card {
+  width: 23%;
+}
+.search-hero {
+  margin: auto;
+}
+
+.form-control {
+  box-shadow: 0 10px 40px 0 #b0c1d9;
+}
+.form-control::placeholder {
+  font-family: FontAwesome;
+}
