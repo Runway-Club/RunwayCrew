@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MembersRoutingModule } from './members-routing.module';
 import { MembersComponent } from './members.component';
 
-import { NbAccordionModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbToggleModule, NbUserModule } from '@nebular/theme';
+import { NbTagModule,NbAccordionModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbToggleModule, NbUserModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -27,7 +27,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbSelectModule,
     NbToggleModule,
     NbUserModule,
-    SharedModule
+    SharedModule,
+    NbTagModule
   ]
 })
 export class MembersModule { }
