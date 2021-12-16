@@ -13,20 +13,20 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                 <span class="title">ATC Members</span>
             </div>
         </nb-card-body>
-        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC" >
+        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC">
             <app-spinner></app-spinner>
         </nb-card-body>
     </nb-card>
 
     <!-- Users -->
     <nb-card style="border-radius: 10px; " status="info">
-        <nb-card-header *ngIf="loadDoneProfiles" >
+        <nb-card-header *ngIf="loadDoneProfiles">
             <nb-select [(selected)]="selectedTypeUser" outline (selectedChange)="changeTypeUser()"
                 placeholder='Chọn vai trò'>
                 <nb-option *ngFor='let r of roles' [value]='r.id'>{{r.name}}</nb-option>
             </nb-select>
         </nb-card-header>
-        <nb-card-body  *ngIf="loadDoneProfiles" style="display: flex; align-items: center; justify-content: center; ">
+        <nb-card-body *ngIf="loadDoneProfiles" style="display: flex; align-items: center; justify-content: center; ">
             <button nbButton size="giant" shape="round" outline>
                 <nb-icon icon="people" status="info"></nb-icon>
             </button>
@@ -35,19 +35,19 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                 <span class="title">Người dùng</span>
             </div>
         </nb-card-body>
-        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneProfiles" >
+        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneProfiles">
             <app-spinner></app-spinner>
         </nb-card-body>
     </nb-card>
 
     <!-- Add to ATC Zone -->
     <nb-card style="border-radius: 10px; " status="success">
-        <nb-card-header *ngIf="loadDoneATC" >
+        <nb-card-header *ngIf="loadDoneATC">
             <nb-select [(selected)]="selectedProfileForATCZone" outline placeholder='Chọn thành viên'>
                 <nb-option *ngFor='let profile of profiles' [value]='profile'>{{profile.name}}</nb-option>
             </nb-select>
         </nb-card-header>
-        <nb-card-body  *ngIf="loadDoneATC" style="display: flex; align-items: center; justify-content: center">
+        <nb-card-body *ngIf="loadDoneATC" style="display: flex; align-items: center; justify-content: center">
             <button *ngIf='selectedProfileForATCZone' nbButton size="giant" shape="round" outline (click)='addToATC()'
                 nbTooltip='Thêm'>
                 <nb-icon icon="person-add-outline" status="success" [options]="{ animation: { type: 'pulse' } }">
@@ -57,19 +57,19 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                 <span class="title">Thêm thành viên vào ATC Zone </span>
             </div>
         </nb-card-body>
-        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC" >
+        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC">
             <app-spinner></app-spinner>
         </nb-card-body>
     </nb-card>
 
     <!-- Remove ATC Members -->
     <nb-card style="border-radius: 10px; " status="danger">
-        <nb-card-header  *ngIf="loadDoneATC" >
+        <nb-card-header *ngIf="loadDoneATC">
             <nb-select [(selected)]="selectedProfileRemoveFromATC" outline placeholder='Chọn thành viên'>
                 <nb-option *ngFor='let profile of atcMembers' [value]='profile'>{{profile.name}}</nb-option>
             </nb-select>
         </nb-card-header>
-        <nb-card-body  *ngIf="loadDoneATC" style="display: flex; align-items: center; justify-content: center">
+        <nb-card-body *ngIf="loadDoneATC" style="display: flex; align-items: center; justify-content: center">
             <button *ngIf='selectedProfileRemoveFromATC' nbButton size="giant" shape="round" outline
                 (click)='removeFromATC(selectedProfileRemoveFromATC._id)'>
                 <nb-icon icon="person-remove-outline" status="danger" [options]="{ animation: { type: 'shake' } }">
@@ -79,7 +79,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                 <span class="title">Trục xuất</span>
             </div>
         </nb-card-body>
-        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC" >
+        <nb-card-body style="margin-top: 15px;" *ngIf="!loadDoneATC">
             <app-spinner></app-spinner>
         </nb-card-body>
     </nb-card>
@@ -88,7 +88,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
     <nb-card-header>
         Danh sách các thành viên trong hệ thống
     </nb-card-header>
-    <nb-card-body *ngIf="loadDoneProfiles" >
+    <nb-card-body *ngIf="loadDoneProfiles">
         <nb-list style="width: 100%;">
             <nb-list-item *ngFor="let profile of profiles" style="width: 100%;">
                 <div style="width: 100%;display: flex; flex-direction: row; justify-content: space-between;">
@@ -120,7 +120,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
             </nb-list-item>
         </nb-list>
     </nb-card-body>
-    <nb-card-body *ngIf="!loadDoneProfiles" >
+    <nb-card-body *ngIf="!loadDoneProfiles">
         <app-spinner></app-spinner>
     </nb-card-body>
 </nb-card>
@@ -129,27 +129,45 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
     <nb-card-header>
         Cấp vai trò
     </nb-card-header>
-    <nb-card-body *ngIf="loadDoneRoles && loadDoneProfiles" >
+    <nb-card-body *ngIf="loadDoneRoles && loadDoneProfiles">
         <p>Chọn vai trò</p>
         <nb-select [(ngModel)]="selectedRole" fullWidth>
             <nb-option *ngFor="let role of roles" [value]='role'>{{role.name}}</nb-option>
         </nb-select>
         <p>Được cấp cho</p>
         <nb-select [(ngModel)]="selectedProfile" fullWidth>
-            <nb-option *ngFor="let profile of profiles" [value]='profile'>
+            <nb-option *ngFor="let profile of profiles" [value]='profile' (click)="checkLogicMultipleProfiles(profile)">
                 <!-- {{profile.uid}}: {{profile.name}} -->
                 <nb-user [picture]='profile.photoUrl' [name]='profile.name'>
                 </nb-user>
             </nb-option>
         </nb-select>
+        <div *ngIf="selectedMultipleProfile.length>0">
+
+            <nb-card style="margin-top: 2%;" [size]="'tiny'" >
+                <nb-card-header>Thành viên được chọn sẽ có vai trò {{selectedRole?.name}}</nb-card-header>
+                <nb-card-body>
+                    <nb-list>
+                        <nb-list-item style="justify-content: space-between;" *ngFor="let mulfipleProfile of selectedMultipleProfile;let i = index">
+                            <nb-user [name]="mulfipleProfile.name" [picture]="mulfipleProfile.photoUrl">
+                            </nb-user>
+                            <button nbButton status="danger" (click)="selectedMultipleProfile.splice(i,1)">X</button>
+                        </nb-list-item>
+                    </nb-list>
+                </nb-card-body>
+            </nb-card>
+        </div>
+
         <p></p>
-        <nb-card *ngIf="selectedRole && selectedProfile">
+        <div *ngIf="selectedRole && selectedProfile && selectedMultipleProfile.length>0">
+            <button style="float:right;" nbButton status='primary' (click)="assignRole()">Duyệt</button>
+        </div>
+        <!-- <nb-card >
             <nb-card-body>
                 <p>Thành viên <b>{{selectedProfile?.name}}</b> nhận vai trò <b>{{selectedRole?.name}}</b></p>
 
-                <button style="float:right;" nbButton status='primary' (click)="assignRole()">Duyệt</button>
             </nb-card-body>
-        </nb-card>
+        </nb-card> -->
     </nb-card-body>
     <nb-card-body *ngIf="!loadDoneRoles && !loadDoneProfiles">
         <app-spinner></app-spinner>
@@ -160,7 +178,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
     <nb-card-header>
         Thu hồi vai trò
     </nb-card-header>
-    <nb-card-body  *ngIf="loadDoneProfiles" >
+    <nb-card-body *ngIf="loadDoneProfiles">
 
         <p>Thành viên</p>
         <nb-select [(ngModel)]="selectedProfileForReclaim" fullWidth>
@@ -185,7 +203,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
             </nb-card-body>
         </nb-card>
     </nb-card-body>
-    <nb-card-body *ngIf="!loadDoneProfiles" >
+    <nb-card-body *ngIf="!loadDoneProfiles">
         <app-spinner></app-spinner>
     </nb-card-body>
 </nb-card>
