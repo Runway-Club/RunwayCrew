@@ -142,7 +142,14 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                 </nb-user>
             </nb-option>
         </nb-select>
-        <div *ngIf="selectedMultipleProfile.length>0">
+        <nb-card *ngIf="selectedMultipleProfile.length>0" style="margin-top: 2%;">
+            <nb-card-header>Thành viên được chọn sẽ có vai trò {{selectedRole?.name}}</nb-card-header>
+            <nb-tag-list style="margin: 1%;" (tagRemove)="onTagRemove($event)">
+                <nb-tag *ngFor="let mulfipleProfile of selectedMultipleProfile"  [text]="mulfipleProfile.name"
+                    [removable]="selectedMultipleProfile.length > 0"></nb-tag>
+            </nb-tag-list>
+        </nb-card>
+        <!-- <div *ngIf="selectedMultipleProfile.length>0">
 
             <nb-card style="margin-top: 2%;" [size]="'tiny'" >
                 <nb-card-header>Thành viên được chọn sẽ có vai trò {{selectedRole?.name}}</nb-card-header>
@@ -156,7 +163,7 @@ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); ">
                     </nb-list>
                 </nb-card-body>
             </nb-card>
-        </div>
+        </div> -->
         <p></p>
         <!-- <nb-card >
             <nb-card-body>
