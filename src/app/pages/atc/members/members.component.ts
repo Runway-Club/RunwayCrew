@@ -29,6 +29,7 @@ export class MembersComponent implements OnInit {
   public selectedProfileForReclaim?: UserProfile;
   public selectedProfileForATCZone?: UserProfile;
   public selectedProfileRemoveFromATC!: UserProfile;
+  public selectedMultipleProfile: UserProfile[] = [];
 
   public loadDoneATC = false;
   public loadDoneProfiles = false;
@@ -76,30 +77,56 @@ export class MembersComponent implements OnInit {
     return new Date(time).toLocaleDateString();
   }
 
-  public async assignRole() {
-    if (!this.selectedProfile?.roles) {
-      this.selectedProfile!.roles = [];
-    }
-    if (
-      this.selectedProfile?.roles?.findIndex(
-        (r) => r == this.selectedRole?.id
-      ) == -1
-    ) {
-      if (!this.selectedRole) {
-        return;
-      }
-      this.selectedProfile.roles.push(this.selectedRole.id);
-    }
-    if (!this.selectedProfile) {
+  // check logic for selected multiple profile
+  public checkLogicMultipleProfiles(profile: UserProfile) {
+    let count = 0;
+    if (this.selectedMultipleProfile.length == 0) {
+      this.selectedMultipleProfile.push(profile);
       return;
     }
-    try {
-      await this.profileService.updateProfile(this.selectedProfile);
-      this.selectedProfile = undefined;
-      this.selectedRole = undefined;
-    } catch (err) {
-      console.log(err);
+    for (let i = 0; i < this.selectedMultipleProfile.length; i++) {
+      if (profile.uid == this.selectedMultipleProfile[i]?.uid) {
+        count++;
+        break;
+      }
     }
+    if (count > 0) {
+      return
+    } else {
+      this.selectedMultipleProfile.push(profile);
+    }
+  }
+
+  public async assignRole() {
+
+    for (let i = 0; i < this.selectedMultipleProfile.length; i++) {
+      if (!this.selectedMultipleProfile[i]?.roles) {
+        this.selectedMultipleProfile[i]!.roles = [];
+      }
+      if (
+        this.selectedMultipleProfile[i]?.roles?.findIndex(
+          (r) => r == this.selectedRole?.id
+        ) == -1
+      ) {
+        if (!this.selectedRole) {
+          break;
+        }
+        this.selectedMultipleProfile[i].roles.push(this.selectedRole.id);
+        try {
+          
+          await this.profileService.updateProfile(this.selectedMultipleProfile[i]);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (!this.selectedMultipleProfile[i]) {
+        continue;
+      }
+    }
+    this.selectedMultipleProfile = [];
+    this.selectedProfile = undefined;
+    this.selectedRole = undefined;
+
   }
   public async reclaimRole() {
     if (!this.selectedProfileForReclaim) {
