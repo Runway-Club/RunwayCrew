@@ -4,14 +4,29 @@ import { CommonModule } from '@angular/common';
 import { MembersRoutingModule } from './members-routing.module';
 import { MembersComponent } from './members.component';
 
-import { NbTagModule,NbAccordionModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbToggleModule, NbUserModule } from '@nebular/theme';
-import { FormsModule } from '@angular/forms';
+import {
+  NbAccordionModule,
+  NbAutocompleteModule,
+  NbButtonModule,
+  NbCardModule,
+  NbDialogModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbListModule,
+  NbSearchModule,
+  NbSelectModule,
+  NbTagModule,
+  NbToggleModule,
+  NbUserModule,
+} from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-  declarations: [
-    MembersComponent
-  ],
+  declarations: [MembersComponent],
   imports: [
     CommonModule,
     MembersRoutingModule,
@@ -28,7 +43,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbToggleModule,
     NbUserModule,
     SharedModule,
-    NbTagModule
-  ]
+    NbSearchModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    NbAutocompleteModule,
+    NbTagModule,
+  ],
 })
-export class MembersModule { }
+export class MembersModule {}

@@ -5,6 +5,9 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { Role } from 'src/models/role.model';
 import { UserProfile } from 'src/models/user-profile.model';
+import { FormControl } from '@angular/forms';
+import { Observable, ObservableInput, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { NbTagComponent } from '@nebular/theme';
 
 @Component({
@@ -18,7 +21,14 @@ export class MembersComponent implements OnInit {
     private atcService: ATCService,
     private roleService: RoleService,
     private authSevice: AuthenticationService
-  ) { }
+  ) {}
+  // myControl = new FormControl();
+  // roleName!: Role['name'];
+  // filteredRoles!: Observable<string[]>;
+  filteredControlOptions!: Observable<Role[]>;
+  inputFormControl!: FormControl;
+  rolesFilter = [];
+
   selectedTypeUser = '';
   countRolesOfUser: number = 0;
   public profiles: UserProfile[] = [];
@@ -37,6 +47,11 @@ export class MembersComponent implements OnInit {
   public loadDoneRoles = false;
 
   async ngOnInit(): Promise<void> {
+    // this.filteredRoles = this.myControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => this._filter(value))
+    // );
+
     this.profileService.getAll().subscribe((profiles) => {
       this.profiles.length = 0;
       this.profiles.push(...profiles);
@@ -47,12 +62,29 @@ export class MembersComponent implements OnInit {
       this.roles.push(...roles);
       this.loadDoneRoles = true;
     });
-    this.atcService.getATCMembers(this.authSevice.token).subscribe((profiles) => {
-      this.atcMembers.length = 0;
-      this.atcMembers.push(...profiles);
-      this.loadDoneATC = true;
-    });
+
+    this.filteredControlOptions = of(this.roles);
+    this.inputFormControl = new FormControl();
+    this.filteredControlOptions = this.inputFormControl.valueChanges.pipe(
+      startWith(''),
+      map((filterString) => this.filter(filterString))
+    );
+
+    this.atcService
+      .getATCMembers(this.authSevice.token)
+      .subscribe((profiles) => {
+        this.atcMembers.length = 0;
+        this.atcMembers.push(...profiles);
+        this.loadDoneATC = true;
+      });
   }
+
+  // public _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.roleName.filter((role) =>
+  //     role.toLowerCase().includes(filterValue)
+  //   )
+  // }
 
   public getRoleString(profile: UserProfile) {
     if (!profile.roles) {
@@ -92,17 +124,18 @@ export class MembersComponent implements OnInit {
       }
     }
     if (count > 0) {
-      return
+      return;
     } else {
       this.selectedMultipleProfile.push(profile);
     }
   }
   onTagRemove(tagToRemove: NbTagComponent): void {
-    let index = this.selectedMultipleProfile.findIndex((item: any) => item.name === tagToRemove.text);
+    let index = this.selectedMultipleProfile.findIndex(
+      (item: any) => item.name === tagToRemove.text
+    );
     this.selectedMultipleProfile.splice(index, 1);
   }
   public async assignRole() {
-
     for (let i = 0; i < this.selectedMultipleProfile.length; i++) {
       if (!this.selectedMultipleProfile[i]?.roles) {
         this.selectedMultipleProfile[i]!.roles = [];
@@ -117,7 +150,9 @@ export class MembersComponent implements OnInit {
         }
         this.selectedMultipleProfile[i].roles.push(this.selectedRole.id);
         try {
-          await this.profileService.updateProfile(this.selectedMultipleProfile[i]);
+          await this.profileService.updateProfile(
+            this.selectedMultipleProfile[i]
+          );
         } catch (error) {
           console.log(error);
         }
@@ -129,7 +164,6 @@ export class MembersComponent implements OnInit {
     this.selectedMultipleProfile = [];
     this.selectedProfile = undefined;
     this.selectedRole = undefined;
-
   }
   public async reclaimRole() {
     if (!this.selectedProfileForReclaim) {
@@ -165,8 +199,24 @@ export class MembersComponent implements OnInit {
     window.location.reload();
   }
   public changeTypeUser() {
-    this.countRolesOfUser = (this.profiles.map((profile) => {
-      return profile.roles.filter(i => i === this.selectedTypeUser).length
-    })).filter(i => i == 1).length;
+    this.countRolesOfUser = this.profiles
+      .map((profile) => {
+        return profile.roles.filter((i) => i === this.selectedTypeUser).length;
+      })
+      .filter((i) => i == 1).length;
+  }
+
+  private filter(value: string): Role[] {
+    const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
+    return this.roles.filter((optionValue) =>
+      optionValue.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  change(value: Role) {
+    this.selectedRole = value;
   }
 }
