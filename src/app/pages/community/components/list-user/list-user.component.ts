@@ -73,6 +73,7 @@ export class ListUserComponent implements OnInit {
       }
     }
   }
+  
   getProfile(id: string){
     this.Router.navigate(['profile'], { queryParams: {id} })
   }
