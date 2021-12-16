@@ -5,6 +5,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { RoleService } from 'src/app/services/role.service';
 import { Role } from 'src/models/role.model';
 import { UserProfile } from 'src/models/user-profile.model';
+import { NbTagComponent } from '@nebular/theme';
 
 @Component({
   selector: 'app-members',
@@ -95,6 +96,12 @@ export class MembersComponent implements OnInit {
     } else {
       this.selectedMultipleProfile.push(profile);
     }
+
+  }
+
+  onTagRemove(tagToRemove: NbTagComponent): void {
+    let index = this.selectedMultipleProfile.findIndex((item:any) => item.name === tagToRemove.text);
+    this.selectedMultipleProfile.splice(index,1);
   }
 
   public async assignRole() {
