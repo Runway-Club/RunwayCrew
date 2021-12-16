@@ -12,11 +12,37 @@ const ProfileModel = require('../../model/profile.model')
 const shareService = require('../service/share.service');
 const verifyToken = require('../verify-token');
 const admin = require('firebase-admin');
-const PageModel = require('../../model/pagination.model')
 
 router.get("/", async (req, res) => {
+    //pageSize, pageCount, pageNum, role
     try {
-        res.status(200).send(await ProfileDB.find())
+        let pageSize = req.query.pageSize || 30
+        let pageNum = req.query.pageNum || 0
+        pageSize = pageSize - 0
+        pageNum = pageNum - 0
+        if(pageNum==-1){
+            return res.status(200).send(await ProfileDB.find())
+        }
+        if (!req.query.role) {
+            await ProfileDB.find()
+                .limit(pageSize - 0)
+                .skip(pageSize * pageNum)
+                .exec((err, datas) => {
+                    ProfileDB.countDocuments((err, count) => {
+                        if (err) return res.status(200).send({ mess: 'Server error' })
+                        let pageCount = Math.ceil(count / pageSize) - 1
+                        return res.status(200).send({
+                            data: datas,
+                            pageSize: pageSize,
+                            pageNum: pageNum,
+                            pageCount: pageCount
+                        })
+                    });
+                });
+        }
+        else {
+
+        }
     } catch (err) {
         console.log(err)
         res.status(500)
@@ -90,23 +116,18 @@ router.get("/byID", async (req, res) => {
 
 router.get('/community', async (req, res) => {
     try {
-        //pageSize, pageCount, pageNum, role
-        let { err, data } = shareService.parseBodyToObject(new PageModel(), req.query)
-        if (err != null) {
-            return res.status(400).send({ mess: `Some field is missing: [${err}]. Please, check your data.` })
-        }else{
-
-            let queryRole = { roles: data.role }
-            if(data.role === "undefined"){
-                queryRole = {}
-            }
-            
-            const skipData = parseInt(data.pageNum-1) * parseInt(data.pageSize)
-
-            const response = await ProfileDB
-                .find(queryRole)
-                .skip(skipData)
-                .limit(parseInt(data.pageCount))
+        let { size, roleId, last } = req.query;
+        if (roleId === 'undefined') {
+            let response = await ProfileDB
+                .find()
+                .sort({ "profileMetadata.updated": 1 })
+                .limit(size)
+            return res.status(200).send(response)
+        } else {
+            let response = await ProfileDB
+                .find({ roles: roleId })
+                .sort({ "profileMetadata.updated": 1 })
+                .limit(size)
             return res.status(200).send(response)
         }
     } catch (err) {
