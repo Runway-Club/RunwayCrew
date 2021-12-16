@@ -7,7 +7,7 @@ import { Role } from 'src/models/role.model';
 import { Skill } from 'src/models/skill.model';
 import { UserContribution, UserProfile } from 'src/models/user-profile.model';
 import { Router } from '@angular/router';
-
+import {PageEvent} from '@angular/material/paginator';
 @Component({
   selector: 'app-list-user',
   templateUrl: './list-user.component.html',
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class ListUserComponent implements OnInit {
   @Input() listUser!: UserProfile[];
   @Input() commonSkill!: any[];
-
+  @Input() params: any;
   skills: Skill[] = [];
   roles: Role[] = [];
   public skill!: UserContribution;
@@ -26,6 +26,11 @@ export class ListUserComponent implements OnInit {
   public loadDone = false;
   public progressBar: number = 0;
   public exp: any[] = [];
+
+  pageEvent!: PageEvent;
+  // length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 20];
 
   constructor(
     private skillSv: SkillService,

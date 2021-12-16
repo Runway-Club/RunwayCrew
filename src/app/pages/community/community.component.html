@@ -18,10 +18,21 @@
                         </span>
                     </button>
                 </div>
+                <mat-paginator 
+                    [length]="100"
+                    [pageSize]="params.pageSize"
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page"
+                    (page)= "pageEvent = $event"
+                    (page)="change()"
+                    style="border-radius: 10px;"
+                    *ngIf="!isMobile()"
+                >
+            </mat-paginator>
             </div>
         </div>
         <div class="list-container">
-            <app-list-user [commonSkill]="this.commonSkill" [listUser]="data"></app-list-user>
+            <app-list-user [commonSkill]="this.commonSkill" [params]="params" [listUser]="data"></app-list-user>
         </div>
         <!-- <div class="card paginate">
             <button nbButton (click)="goPrevious()" ghost style="margin-right:10px;">
