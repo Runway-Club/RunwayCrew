@@ -60,7 +60,24 @@
   <!-- Add to ATC Zone -->
   <nb-card style="border-radius: 10px" status="success">
     <nb-card-header *ngIf="loadDoneATC">
-      <nb-select
+      <input
+        [formControl]="inputProfilesControl"
+        nbInput
+        type="text"
+        [nbAutocomplete]="autoControlProfiles"
+        fullWidth
+      />
+
+      <nb-autocomplete #autoControlProfiles>
+        <nb-option
+          *ngFor="let profile of filteredProfilesOptions | async"
+          [value]="profile.name"
+          (click)="selectedForATC(profile)"
+        >
+          {{ profile.name }}
+        </nb-option>
+      </nb-autocomplete>
+      <!-- <nb-select
         [(selected)]="selectedProfileForATCZone"
         outline
         placeholder="Chọn thành viên"
@@ -68,7 +85,7 @@
         <nb-option *ngFor="let profile of profiles" [value]="profile">{{
           profile.name
         }}</nb-option>
-      </nb-select>
+      </nb-select> -->
     </nb-card-header>
     <nb-card-body
       *ngIf="loadDoneATC"
@@ -200,25 +217,24 @@
   <nb-card-header> Cấp vai trò </nb-card-header>
   <nb-card-body *ngIf="loadDoneRoles && loadDoneProfiles">
     <p>Chọn vai trò</p>
-    <nb-card-body class="example-items-rows">
-      <input
-        [formControl]="inputRolesControl"
-        nbInput
-        type="text"
-        [nbAutocomplete]="autoControlRoles"
-        fullWidth
-      />
 
-      <nb-autocomplete #autoControlRoles>
-        <nb-option
-          *ngFor="let role of filteredRolesOptions | async"
-          [value]="role.name"
-          (click)="changeRole(role)"
-        >
-          {{ role.name }}
-        </nb-option>
-      </nb-autocomplete>
-    </nb-card-body>
+    <input
+      [formControl]="inputRolesControl"
+      nbInput
+      type="text"
+      [nbAutocomplete]="autoControlRoles"
+      fullWidth
+    />
+
+    <nb-autocomplete #autoControlRoles>
+      <nb-option
+        *ngFor="let role of filteredRolesOptions | async"
+        [value]="role.name"
+        (click)="changeRole(role)"
+      >
+        {{ role.name }}
+      </nb-option>
+    </nb-autocomplete>
 
     <!-- <nb-select [(ngModel)]="selectedRole" fullWidth>
       <nb-option *ngFor="let role of roles" [value]="role">{{
@@ -226,27 +242,26 @@
       }}</nb-option>
     </nb-select> -->
     <p>Được cấp cho</p>
-    <nb-card-body class="example-items-rows">
-      <input
-        [formControl]="inputProfilesControl"
-        nbInput
-        type="text"
-        [nbAutocomplete]="autoControlProfiles"
-        fullWidth
-      />
 
-      <nb-autocomplete #autoControlProfiles>
-        <nb-option
-          *ngFor="let profile of filteredProfilesOptions | async"
-          [value]="profile.name || profile.email"
-          (click)="changeProfile(profile)"
-          (click)="checkLogicMultipleProfiles(profile)"
-        >
-          <nb-user [picture]="profile.photoUrl" [name]="profile.name">
-          </nb-user>
-        </nb-option>
-      </nb-autocomplete>
-    </nb-card-body>
+    <input
+      [formControl]="inputProfilesControl"
+      nbInput
+      type="text"
+      [nbAutocomplete]="autoControlProfiles"
+      fullWidth
+    />
+
+    <nb-autocomplete #autoControlProfiles>
+      <nb-option
+        *ngFor="let profile of filteredProfilesOptions | async"
+        [value]="profile.name || profile.email"
+        (click)="changeProfile(profile)"
+        (click)="checkLogicMultipleProfiles(profile)"
+      >
+        <nb-user [picture]="profile.photoUrl" [name]="profile.name"> </nb-user>
+      </nb-option>
+    </nb-autocomplete>
+
     <!-- <nb-select [(ngModel)]="selectedProfile" fullWidth>
       <nb-option
         *ngFor="let profile of profiles"

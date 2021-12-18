@@ -243,4 +243,7 @@ export class MembersComponent implements OnInit {
   changeProfile(value: UserProfile) {
     this.selectedProfile = value;
   }
+  selectedForATC(value: UserProfile) {
+    this.selectedProfileForATCZone = value;
+  }
 }
