@@ -15,8 +15,11 @@ export class ShareService {
 
 
   constructor(readonly snackBar: MatSnackBar) { }
-  
-  openSnackBar(message: string, action = this.defaultSnackBarAction, config: MatSnackBarConfig = this.defautlSnackBarConfig) {
+
+  openSnackBar(message: string, isSuscess: boolean = true, action = this.defaultSnackBarAction, config: MatSnackBarConfig = this.defautlSnackBarConfig) {
+    if(!isSuscess){
+      this.defautlSnackBarConfig.panelClass = ['red-snackbar'];
+    }
     this.snackBar.open(message, action, config);
   }
 }
