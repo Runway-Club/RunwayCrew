@@ -12,6 +12,7 @@ import { UtilsService } from './utils.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { AuthenticationService } from './authentication.service'
+import { ShareService } from './share.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,7 +23,8 @@ export class ProfileService {
     private db: AngularFirestore,
     private utils: UtilsService,
     private HttpClient: HttpClient,
-    private AuthSv: AuthenticationService
+    private AuthSv: AuthenticationService,
+    private shareSer:ShareService
   ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -108,7 +110,15 @@ export class ProfileService {
         updated: currentTime
       }
     }
-    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise()
+    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => {console.log(res)
+      this.shareSer.openSnackBar("successfully update profile!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to update profile!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async updateProfile(profile: UserProfile) {
@@ -129,7 +139,15 @@ export class ProfileService {
       }
     }
     console.log(body)
-    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => console.log(res));
+    await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => {console.log(res)
+      this.shareSer.openSnackBar("successfully create achievement!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to create achievement!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async get(uid?: string, token?: string): Promise<UserProfile> {
@@ -173,17 +191,13 @@ export class ProfileService {
   }
 
   public async getPaginate(pageSize: number, role: any, pageNum: number): Promise<UserProfile[]> {
-
     const params = {
       pageSize: pageSize,
       role: role,
       pageNum: pageNum
     }
-
     console.log(params)
-
     let res = await this.HttpClient.get<ResPaginateProfile>(environment.endpoint + 'profile', { params: params}).toPromise()
-   
     return res.data
   }
 

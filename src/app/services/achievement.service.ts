@@ -7,13 +7,19 @@ import { UtilsService } from './utils.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod'
 import { map } from 'rxjs/operators';
+import { ShareService } from './share.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AchievementService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private utils: UtilsService, private HttpClient:HttpClient) { }
+  constructor(private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private utils: UtilsService,
+    private HttpClient: HttpClient,
+    private shareSer:ShareService
+  ) { }
 
   public async get(id: string): Promise<Achievement> {
     // return this.utils.get("achievements", id);
@@ -36,14 +42,25 @@ export class AchievementService {
     let current = Date.now();
     let body = {
       ...achievement,
-      metadata : {
+      metadata: {
         actor: user.email,
         created: current,
         updated: current
       }
     }
     console.log(body)
-    await this.HttpClient.post(environment.endpoint + 'achievements', body).toPromise().then(res=>console.log(res));
+
+      await this.HttpClient.post(environment.endpoint + 'achievements', body).toPromise().then(res => {
+        console.log(res);
+        this.shareSer.openSnackBar("successfully create achievement!");
+      }).catch((err)=>{
+        this.shareSer.openSnackBar("failed to create achievement!","close",{
+          horizontalPosition: 'end', verticalPosition: 'bottom',
+          duration: 1 * 2000,
+          panelClass: ['red-snackbar']
+        });
+      });
+
   }
 
   public async update(achievement: Achievement) {
@@ -54,22 +71,39 @@ export class AchievementService {
     }
     let body = {
       ...achievement,
-      metadata : {
+      metadata: {
         ...achievement.metadata,
         actor: user.email,
         updated: Date.now()
       }
     }
     console.log(body)
-    await this.HttpClient.put(environment.endpoint + 'achievements', body).toPromise().then(res=>console.log(res));
+    await this.HttpClient.put(environment.endpoint + 'achievements', body).toPromise().then(res => {console.log(res)
+      this.shareSer.openSnackBar("successfully update achievement!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to update achievement!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async delete(achievementId: string) {
     // await this.utils.delete("achievements", achievementId);
-    await this.HttpClient.delete(environment.endpoint + 'achievements' +`?id=${achievementId}`,{
+    await this.HttpClient.delete(environment.endpoint + 'achievements' + `?id=${achievementId}`, {
       observe: 'response',
       responseType: 'blob',
-    }).toPromise();
+    }).toPromise().then(res=>{
+      this.shareSer.openSnackBar("successfully delete achievement!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to delete achievement!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+
+    });
   }
 
   public async getPaginate(after: number, size: number) {

@@ -16,3 +16,14 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.white-snackbar {
+  background: #fff;
+  color: black;
+}
+
+.red-snackbar {
+  background: rgb(255, 98, 98);
+  color: black;
+}
+

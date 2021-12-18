@@ -4,6 +4,7 @@ import { Role } from 'src/models/role.model';
 import { UtilsService } from './utils.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { ShareService } from './share.service';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class RoleService {
 
-  constructor(private utils: UtilsService, private HttpClient:HttpClient) { }
+  constructor(private utils: UtilsService, private HttpClient:HttpClient,private shareSer:ShareService) { }
 
   public async get(id: string): Promise<Role> {
     // return this.utils.get<Role>("roles", id);
@@ -44,7 +45,16 @@ export class RoleService {
         updated: current
       }
     }
-    await this.HttpClient.post(environment.endpoint + 'roles', body).toPromise().then(res=>console.log(res));
+    await this.HttpClient.post(environment.endpoint + 'roles', body).toPromise().then(res=>{
+      console.log(res);
+      this.shareSer.openSnackBar(`success give role to ${body.metadata.actor}!`);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,"close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async update(role: Role) {
@@ -60,7 +70,15 @@ export class RoleService {
         updated: Date.now()
       }
     }
-    await this.HttpClient.put(environment.endpoint + 'roles', body).toPromise().then(res=>console.log(res));
+    await this.HttpClient.put(environment.endpoint + 'roles', body).toPromise().then(res=>{console.log(res)
+      this.shareSer.openSnackBar(`success give role to ${body.metadata.actor}!`);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,"close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async delete(roleId: string) {
@@ -68,6 +86,14 @@ export class RoleService {
     await this.HttpClient.delete(environment.endpoint + 'roles' +`?id=${roleId}`,{
       observe: 'response',
       responseType: 'blob',
-    }).toPromise();
+    }).toPromise().then(res=>{
+      this.shareSer.openSnackBar(`success delete role  ${roleId}!`);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`failed give role to ${roleId}!`,"close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 }
