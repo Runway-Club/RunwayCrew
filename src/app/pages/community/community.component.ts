@@ -29,7 +29,7 @@ export class CommunityComponent implements OnInit {
   public selectedRoleId?: string = undefined;
   public lasts: UserProfile[] = [];
   public loadDone = false;
-
+  public totalItems!: number;
   constructor(
     private profileSv: ProfileService,
     private skillSv: SkillService,
@@ -62,7 +62,6 @@ export class CommunityComponent implements OnInit {
     });
     this.AppComponent.selectedMenu = 1
     this.AppComponent.showSidemenu = false
-
     this.totalLength = this.data.length
   }
 
@@ -79,12 +78,13 @@ export class CommunityComponent implements OnInit {
 
   public async getUsers() {
     let users = await this.profileSv.getPaginate(this.params.pageSize, this.selectedRoleId, this.params.pageNum);//, this.data[this.data.length - 1]);
-    if (users.length == 0) {
-      this.data = users
+    this.totalItems = users.totalItems
+    if (users.data.length == 0) {
+      this.data = users.data
       return false;
     }
     this.data.length = 0;
-    this.data.push(...users);
+    this.data.push(...users.data);
     return true;
   }
   public async getCommonSkill() {

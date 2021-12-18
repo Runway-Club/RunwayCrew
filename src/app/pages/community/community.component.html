@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="list-container">
-            <app-list-user (changePageEvent)="changePage($event)" [commonSkill]="this.commonSkill" [params]="params" [listUser]="data"></app-list-user>
+            <app-list-user (changePageEvent)="changePage($event)" [commonSkill]="this.commonSkill" [totalItems]="totalItems" [params]="params" [listUser]="data"></app-list-user>
         </div>
         <!-- <div class="card paginate">
             <button nbButton (click)="goPrevious()" ghost style="margin-right:10px;">

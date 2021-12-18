@@ -35,7 +35,8 @@ router.get("/", async (req, res) => {
                             data: datas,
                             pageSize: pageSize,
                             pageNum: pageNum,
-                            pageCount: pageCount
+                            pageCount: pageCount,
+                            totalItems: count
                         })
                     });
                 });
@@ -53,7 +54,8 @@ router.get("/", async (req, res) => {
                             data: datas,
                             pageSize: pageSize,
                             pageNum: pageNum,
-                            pageCount: pageCount
+                            pageCount: pageCount,
+                            totalItems: count
                         })
                     });
                 });
