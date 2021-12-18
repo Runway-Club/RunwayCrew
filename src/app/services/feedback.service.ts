@@ -33,11 +33,7 @@ export class FeedbackService {
     await this.db.collection("feedbacks/atc").doc(current.toString()).set(feedback).then(res => {
       this.shareSer.openSnackBar("succes!");
     }).catch((err) => {
-      this.shareSer.openSnackBar("failed!", "close", {
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed!", false);
     });
   }
 
@@ -55,11 +51,7 @@ export class FeedbackService {
       }).then(res => {
         this.shareSer.openSnackBar("successfully update!");
       }).catch((err) => {
-        this.shareSer.openSnackBar("failed to update!", "close", {
-          horizontalPosition: 'end', verticalPosition: 'bottom',
-          duration: 1 * 2000,
-          panelClass: ['red-snackbar']
-        });
+        this.shareSer.openSnackBar("failed to update!", false);
       });
     }
   }

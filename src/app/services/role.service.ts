@@ -49,11 +49,7 @@ export class RoleService {
       console.log(res);
       this.shareSer.openSnackBar(`success give role to ${body.metadata.actor}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,false);
     });
   }
 
@@ -73,11 +69,7 @@ export class RoleService {
     await this.HttpClient.put(environment.endpoint + 'roles', body).toPromise().then(res=>{console.log(res)
       this.shareSer.openSnackBar(`success give role to ${body.metadata.actor}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`failed give role to ${body.metadata.actor}!`,false);
     });
   }
 
@@ -89,11 +81,7 @@ export class RoleService {
     }).toPromise().then(res=>{
       this.shareSer.openSnackBar(`success delete role  ${roleId}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`failed give role to ${roleId}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`failed give role to ${roleId}!`,false);
     });
   }
 }

@@ -113,11 +113,7 @@ export class ProfileService {
     await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => {console.log(res)
       this.shareSer.openSnackBar("successfully update profile!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to update profile!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed to update profile!",false);
     });
   }
 
@@ -142,11 +138,7 @@ export class ProfileService {
     await this.HttpClient.put(environment.endpoint + 'profile', body).toPromise().then(res => {console.log(res)
       this.shareSer.openSnackBar("successfully create achievement!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to create achievement!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed to create achievement!",false);
     });
   }
 

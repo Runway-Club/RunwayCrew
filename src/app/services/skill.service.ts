@@ -48,11 +48,7 @@ export class SkillService {
     await this.HttpClient.post(environment.endpoint + 'skill', body).toPromise().then(res=>{console.log(res);
       this.shareSer.openSnackBar(`success create skill to ${body.metadata.actor}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail create skill to ${body.metadata.actor}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail create skill to ${body.metadata.actor}!`,false);
     });
   }
 
@@ -73,11 +69,7 @@ export class SkillService {
     await this.HttpClient.put(environment.endpoint + 'skill', body).toPromise().then(res=>{console.log(res)
       this.shareSer.openSnackBar(`success update skill to ${body.metadata.actor}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail update skill to ${body.metadata.actor}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail update skill to ${body.metadata.actor}!`,false);
     });
   }
 
@@ -89,11 +81,7 @@ export class SkillService {
     }).toPromise().then(res=>{
       this.shareSer.openSnackBar(`success deleted skill: ${skillId}!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail to delete skill: ${skillId}!`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail to delete skill: ${skillId}!`,false);
     });
   }
 }

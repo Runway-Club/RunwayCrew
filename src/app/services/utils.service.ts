@@ -47,11 +47,7 @@ export class UtilsService {
     await this.db.collection(collectionName).doc(data.id).set(data).then(res=>{
       this.shareSer.openSnackBar(`success!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail to create`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail to create`,false);
     });
   }
   public async update(collectionName: string, data: any) {
@@ -67,23 +63,15 @@ export class UtilsService {
     await this.db.collection(collectionName).doc(data.id).update(data).then(res=>{
       this.shareSer.openSnackBar(`update suscess!`);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail to update`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail to update`,false);
     });
   }
 
   public async delete(collectionName: string, id: string) {
     await this.db.collection(collectionName).doc(id).delete().then(res=>{
-      this.shareSer.openSnackBar(`delete success!`);
+      this.shareSer.openSnackBar(`delete success!`,true);
     }).catch((err)=>{
-      this.shareSer.openSnackBar(`fail to delete`,"close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar(`fail to delete`,false);
     });
   }
 

@@ -79,11 +79,7 @@ export class ContributionService {
     await this.HttpClient.put(environment.endpoint + 'contri', contrib).toPromise().then(res=>{
       this.shareSer.openSnackBar("successfully update!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to update!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed to update!",false);
 
     })
     await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${uid}`).subscribe(async (res:any)=>{
@@ -94,11 +90,7 @@ export class ContributionService {
       await this.HttpClient.put(environment.endpoint + `profile`, body).toPromise().then(res=>{
         this.shareSer.openSnackBar("successfully update!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to update!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed to update!",false);
       })
     })
     // await this.db.collection("contributions").doc(uid).update(contrib);

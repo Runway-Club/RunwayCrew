@@ -54,11 +54,7 @@ export class AchievementService {
         console.log(res);
         this.shareSer.openSnackBar("successfully create achievement!");
       }).catch((err)=>{
-        this.shareSer.openSnackBar("failed to create achievement!","close",{
-          horizontalPosition: 'end', verticalPosition: 'bottom',
-          duration: 1 * 2000,
-          panelClass: ['red-snackbar']
-        });
+        this.shareSer.openSnackBar("failed to create achievement!",false);
       });
 
   }
@@ -81,11 +77,7 @@ export class AchievementService {
     await this.HttpClient.put(environment.endpoint + 'achievements', body).toPromise().then(res => {console.log(res)
       this.shareSer.openSnackBar("successfully update achievement!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to update achievement!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
+      this.shareSer.openSnackBar("failed to update achievement!",false);
     });
   }
 
@@ -97,12 +89,7 @@ export class AchievementService {
     }).toPromise().then(res=>{
       this.shareSer.openSnackBar("successfully delete achievement!");
     }).catch((err)=>{
-      this.shareSer.openSnackBar("failed to delete achievement!","close",{
-        horizontalPosition: 'end', verticalPosition: 'bottom',
-        duration: 1 * 2000,
-        panelClass: ['red-snackbar']
-      });
-
+      this.shareSer.openSnackBar("failed to delete achievement!",false);
     });
   }
 
