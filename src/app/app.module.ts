@@ -13,6 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     NbUserModule,
     NbPopoverModule,
     HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [NbSidebarService, NbMenuService],
   bootstrap: [AppComponent]

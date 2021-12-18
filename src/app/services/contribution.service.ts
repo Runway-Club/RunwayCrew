@@ -6,6 +6,7 @@ import { UserContribution } from 'src/models/user-profile.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
+import { ShareService } from './share.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ContributionService {
   constructor(
     private auth: AngularFireAuth,
     private db: AngularFirestore,
-    private HttpClient:HttpClient
+    private HttpClient:HttpClient,
+    private shareSer:ShareService
     ) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
@@ -74,13 +76,30 @@ export class ContributionService {
       contrib.achievements?.push(achievement);
       contrib.exp += achievement.exp;
     }
-    await this.HttpClient.put(environment.endpoint + 'contri', contrib).toPromise()
+    await this.HttpClient.put(environment.endpoint + 'contri', contrib).toPromise().then(res=>{
+      this.shareSer.openSnackBar("successfully update!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to update!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+
+    })
     await this.HttpClient.get(environment.endpoint + `profile/uid?uid=${uid}`).subscribe(async (res:any)=>{
       const body = {
         ...res[0],
         profileMetadata: { updated: Date.now() }
       }
-      await this.HttpClient.put(environment.endpoint + `profile`, body).toPromise()
+      await this.HttpClient.put(environment.endpoint + `profile`, body).toPromise().then(res=>{
+        this.shareSer.openSnackBar("successfully update!");
+    }).catch((err)=>{
+      this.shareSer.openSnackBar("failed to update!","close",{
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+      })
     })
     // await this.db.collection("contributions").doc(uid).update(contrib);
     // await this.db.collection("profiles").doc(uid).update({ profileMetadata: { updated: Date.now() } });

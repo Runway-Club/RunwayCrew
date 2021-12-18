@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Feedback } from 'src/models/feedback.model';
+import { ShareService } from './share.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedbackService {
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) { }
+  constructor(
+    private auth: AngularFireAuth, 
+    private db: AngularFirestore,
+    private shareSer:ShareService
+    ) { }
 
   public async requireRoles(roleNames: string[]) {
     let current = Date.now();
@@ -25,7 +30,15 @@ export class FeedbackService {
       processed: false,
       timestamp: current
     };
-    await this.db.collection("feedbacks/atc").doc(current.toString()).set(feedback);
+    await this.db.collection("feedbacks/atc").doc(current.toString()).set(feedback).then(res => {
+      this.shareSer.openSnackBar("succes!");
+    }).catch((err) => {
+      this.shareSer.openSnackBar("failed!", "close", {
+        horizontalPosition: 'end', verticalPosition: 'bottom',
+        duration: 1 * 2000,
+        panelClass: ['red-snackbar']
+      });
+    });
   }
 
   public async processFeedback(feedbackId: string, isAtc: boolean) {
@@ -39,6 +52,14 @@ export class FeedbackService {
         processed: true,
         processedTime: current,
         processBy: user.email
+      }).then(res => {
+        this.shareSer.openSnackBar("successfully update!");
+      }).catch((err) => {
+        this.shareSer.openSnackBar("failed to update!", "close", {
+          horizontalPosition: 'end', verticalPosition: 'bottom',
+          duration: 1 * 2000,
+          panelClass: ['red-snackbar']
+        });
       });
     }
   }

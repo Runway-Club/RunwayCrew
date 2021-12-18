@@ -5,7 +5,7 @@ import { SkillService } from 'src/app/services/skill.service';
 import { environment } from '../../../environments/environment.prod';
 import { Role } from 'src/models/role.model';
 import { RegistrationProfile, UserContribution, UserProfile } from 'src/models/user-profile.model';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { UtilsService } from 'src/app/services/utils.service';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -15,7 +15,8 @@ import { Skill } from 'src/models/skill.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AppComponent } from '../../app.component';
 import { ActivatedRoute } from '@angular/router';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
+import { ShareService } from 'src/app/services/share.service';
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
@@ -36,18 +37,18 @@ export class CommunityComponent implements OnInit {
     private httpClient: HttpClient,
     private utils: UtilsService,
     private auth: AuthenticationService,
-    private AppComponent:AppComponent,
+    private AppComponent: AppComponent,
     private route: ActivatedRoute,
-    private location: Location
-  ) { 
-    this.route.queryParams.subscribe((params:any) =>{
-      if(params){
+    private location: Location,
+  ) {
+    this.route.queryParams.subscribe((params: any) => {
+      if (params) {
         this.selectedRoleId = params.role || undefined
         this.params.pageNum = params.pageNum || 0
       }
     })
   }
-  totalLength:any
+  totalLength: any
   ngOnInit(): void {
 
     setTimeout(async () => {
@@ -70,7 +71,7 @@ export class CommunityComponent implements OnInit {
     pageNum: 0
   }
 
-  async changePage(event:any){
+  async changePage(event: any) {
     this.params.pageNum = event
     this.location.replaceState(`?pageNum=${event}&role=${this.selectedRoleId}`);
     await this.getUsers();
@@ -107,27 +108,27 @@ export class CommunityComponent implements OnInit {
   }
 
   async testPost() {
-    let newATC: UserProfile={
-      _id:'',
-      address:'HCM',
-      dob:0,
-      email:'test@gaml.com',
-      gender:'male',
-      name:'',
+    let newATC: UserProfile = {
+      _id: '',
+      address: 'HCM',
+      dob: 0,
+      email: 'test@gaml.com',
+      gender: 'male',
+      name: '',
       phoneNumber: '',
-      photoUrl:'',
-      roles:[],
-      selectedRoles:[],
-      uid:'',
-      contribMetadata:{},
-      facebook:'',
-      linkIn:'',
-      profileMetadata:{},
-      styleUserRead:''
+      photoUrl: '',
+      roles: [],
+      selectedRoles: [],
+      uid: '',
+      contribMetadata: {},
+      facebook: '',
+      linkIn: '',
+      profileMetadata: {},
+      styleUserRead: ''
     }
 
 
-    await this.httpClient.post(environment.endpoint+'atc', newATC).toPromise().then((res) => {
+    await this.httpClient.post(environment.endpoint + 'atc', newATC).toPromise().then((res) => {
       console.log(res)
     })
   }
@@ -164,7 +165,7 @@ export class CommunityComponent implements OnInit {
       for (let i = 0; i < datas.length; i++) {
         const newProfile = {
           ...datas[i],
-          styleUserRead:'Everyone'
+          styleUserRead: 'Everyone'
         }
         await this.httpClient.post(environment.endpoint + "profile", newProfile).toPromise().then(res => {
           console.log(res)
