@@ -25,9 +25,12 @@ export class MembersComponent implements OnInit {
   // myControl = new FormControl();
   // roleName!: Role['name'];
   // filteredRoles!: Observable<string[]>;
-  filteredControlOptions!: Observable<Role[]>;
-  inputFormControl!: FormControl;
+  filteredRolesOptions!: Observable<Role[]>;
+  filteredProfilesOptions!: Observable<UserProfile[]>;
+  inputRolesControl!: FormControl;
+  inputProfilesControl!: FormControl;
   rolesFilter = [];
+  profilesFilter = [];
 
   selectedTypeUser = '';
   countRolesOfUser: number = 0;
@@ -63,11 +66,17 @@ export class MembersComponent implements OnInit {
       this.loadDoneRoles = true;
     });
 
-    this.filteredControlOptions = of(this.roles);
-    this.inputFormControl = new FormControl();
-    this.filteredControlOptions = this.inputFormControl.valueChanges.pipe(
+    this.filteredRolesOptions = of(this.roles);
+    this.inputRolesControl = new FormControl();
+    this.filteredRolesOptions = this.inputRolesControl.valueChanges.pipe(
       startWith(''),
-      map((filterString) => this.filter(filterString))
+      map((filterString) => this.filterRoles(filterString))
+    );
+    this.filteredProfilesOptions = of(this.profiles);
+    this.inputProfilesControl = new FormControl();
+    this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
+      startWith(''),
+      map((filterString) => this.filterProfiles(filterString))
     );
 
     this.atcService
@@ -206,7 +215,7 @@ export class MembersComponent implements OnInit {
       .filter((i) => i == 1).length;
   }
 
-  private filter(value: string): Role[] {
+  private filterRoles(value: string): Role[] {
     const filterValue = value.toLowerCase();
     if (filterValue == '') {
       return [];
@@ -216,7 +225,22 @@ export class MembersComponent implements OnInit {
     );
   }
 
-  change(value: Role) {
+  private filterProfiles(value: string): UserProfile[] {
+    const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
+    return this.profiles.filter(
+      (optionValue) =>
+        optionValue.name.toLowerCase().includes(filterValue) ||
+        optionValue.email.toLowerCase().includes(filterValue)
+    );
+  }
+
+  changeRole(value: Role) {
     this.selectedRole = value;
+  }
+  changeProfile(value: UserProfile) {
+    this.selectedProfile = value;
   }
 }

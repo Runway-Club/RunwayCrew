@@ -202,18 +202,18 @@
     <p>Chọn vai trò</p>
     <nb-card-body class="example-items-rows">
       <input
-        [formControl]="inputFormControl"
+        [formControl]="inputRolesControl"
         nbInput
         type="text"
-        [nbAutocomplete]="autoControl"
+        [nbAutocomplete]="autoControlRoles"
         fullWidth
       />
 
-      <nb-autocomplete #autoControl>
+      <nb-autocomplete #autoControlRoles>
         <nb-option
-          *ngFor="let role of filteredControlOptions | async"
+          *ngFor="let role of filteredRolesOptions | async"
           [value]="role.name"
-          (click)="change(role)"
+          (click)="changeRole(role)"
         >
           {{ role.name }}
         </nb-option>
@@ -226,16 +226,37 @@
       }}</nb-option>
     </nb-select> -->
     <p>Được cấp cho</p>
-    <nb-select [(ngModel)]="selectedProfile" fullWidth>
+    <nb-card-body class="example-items-rows">
+      <input
+        [formControl]="inputProfilesControl"
+        nbInput
+        type="text"
+        [nbAutocomplete]="autoControlProfiles"
+        fullWidth
+      />
+
+      <nb-autocomplete #autoControlProfiles>
+        <nb-option
+          *ngFor="let profile of filteredProfilesOptions | async"
+          [value]="profile.name || profile.email"
+          (click)="changeProfile(profile)"
+          (click)="checkLogicMultipleProfiles(profile)"
+        >
+          <nb-user [picture]="profile.photoUrl" [name]="profile.name">
+          </nb-user>
+        </nb-option>
+      </nb-autocomplete>
+    </nb-card-body>
+    <!-- <nb-select [(ngModel)]="selectedProfile" fullWidth>
       <nb-option
         *ngFor="let profile of profiles"
         [value]="profile"
         (click)="checkLogicMultipleProfiles(profile)"
-      >
-        <!-- {{profile.uid}}: {{profile.name}} -->
-        <nb-user [picture]="profile.photoUrl" [name]="profile.name"> </nb-user>
+      > -->
+    <!-- {{profile.uid}}: {{profile.name}} -->
+    <!-- <nb-user [picture]="profile.photoUrl" [name]="profile.name"> </nb-user>
       </nb-option>
-    </nb-select>
+    </nb-select> -->
     <nb-card *ngIf="selectedMultipleProfile.length > 0" style="margin-top: 2%">
       <nb-card-header
         >Thành viên được chọn sẽ có vai trò
