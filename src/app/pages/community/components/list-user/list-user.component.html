@@ -1,7 +1,7 @@
 <div style="width:100%;margin: 0%;">
     <div class="container" *ngIf="loadDone">
         <nb-card class="card" *ngFor="
-            let user of listUser | paginate: { itemsPerPage: params.pageSize, currentPage: params.pageNum, totalItems: 100 };let i=index"
+            let user of listUser | paginate: { itemsPerPage: params.pageSize, currentPage: params.pageNum, totalItems: totalItems };let i=index"
         >
             <div class="box">
                 <div class="left-box">

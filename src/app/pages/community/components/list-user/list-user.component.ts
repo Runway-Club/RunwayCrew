@@ -17,6 +17,7 @@ export class ListUserComponent implements OnInit {
   @Input() listUser!: UserProfile[];
   @Input() commonSkill!: any[];
   @Input() params: any;
+  @Input() totalItems!:number;
   @Output() changePageEvent = new EventEmitter<number>();
   skills: Skill[] = [];
   roles: Role[] = [];
@@ -27,13 +28,13 @@ export class ListUserComponent implements OnInit {
   public loadDone = false;
   public progressBar: number = 0;
   public exp: any[] = [];
-  public totalLength:any;
   public page:number = 1;
   constructor(
     private skillSv: SkillService,
     private roleService: RoleService,
     private Router:Router
-  ) {}
+  ) {
+  }
 
   loaded!: Promise<boolean>;
 
@@ -50,8 +51,6 @@ export class ListUserComponent implements OnInit {
       this.roles.push(...roles);
       this.loaded = Promise.resolve(true);
     });
-    this.listUser.length = this.totalLength
-    console.log(this.params)
   }
 
   change(event:any){
