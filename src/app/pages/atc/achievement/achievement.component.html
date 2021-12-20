@@ -1,133 +1,211 @@
 <h1>Quản lý các Thành tựu</h1>
-<nb-card status='primary'>
-    <nb-card-header>
-        Các thành tựu trong hệ thống
-    </nb-card-header>
-    <nb-card-body *ngIf="loadDoneAchi" >
-        <nb-list>
-            <nb-list-item *ngFor="let achievement of achievements; let i = index" style="width: 100%;">
-                <nb-accordion style="width: 100%;">
-                    <nb-accordion-item>
-                        <nb-accordion-item-header *ngIf="achievement.name==''">
-                            <i>Thành tựu chưa được đặt tên</i>
-                        </nb-accordion-item-header>
-                        <nb-accordion-item-header *ngIf="achievement.name!=''">{{achievement.name}}
-                        </nb-accordion-item-header>
-                        <nb-accordion-item-body>
-                            <img [src]='achievement.image' style="width:100px;" />
-                            <br>
-                            <button nbButton (click)="uploadImage(i)">Thêm ảnh</button>
-                            <p>Id:</p>
-                            <input nbInput [(ngModel)]='achievement.id' fullWidth>
-                            <p>Tên</p>
-                            <input nbInput [(ngModel)]='achievement.name' fullWidth>
-                            <p>Mô tả</p>
-                            <input nbInput [(ngModel)]='achievement.description' fullWidth>
-                            <p>Kinh nghiệm tích luỹ</p>
-                            <input nbInput type="number" [(ngModel)]='achievement.exp' fullWidth>
-                            <p>Thưởng Avgas</p>
-                            <input nbInput type="number" [(ngModel)]='achievement.credit' fullWidth>
-                            <p>Các kỹ năng đạt được</p>
-                            <nb-list>
-                                <nb-list-item *ngFor="let skill of achievement.skills; let j = index;">
-                                    <nb-select [(ngModel)]="skill.skillId" fullWidth>
-                                        <nb-option *ngFor="let s of skills" [value]='s.id'>
-                                            {{s.id}}: {{s.name}}
-                                        </nb-option>
-                                    </nb-select>
-                                    <div style="flex:1 auto;"></div>
-                                    <p style="margin:10px;">Kinh nghiệm nhận được:</p>
-                                    <input nbInput type="number" [(ngModel)]="skill.exp">
-                                    <button nbButton ghost status='danger' (click)="achievement.skills.splice(j,1)">
-                                        <nb-icon icon='trash-2-outline'></nb-icon>
-                                    </button>
-                                </nb-list-item>
-                                <nb-list-item>
-                                    <button nbButton (click)="addNewSkill(achievement)">Thêm kỹ năng</button>
-                                </nb-list-item>
-                            </nb-list>
-                            <p>Tạo ngày: {{achievement.metadata?.created}}</p>
-                            <p>Cập nhật ngày: {{achievement.metadata?.updated}}</p>
-                            <p>Tác giả: {{achievement.metadata?.actor}}</p>
-                        </nb-accordion-item-body>
-                        <nb-accordion-item-body>
-                            <button nbButton style="float:left;" status='danger'
-                                (click)="deleteAchievement(achievement._id)">Xoá</button>
-                            <button nbButton style="float: right;" (click)="saveAchievement(i)"
-                                status='primary'>Lưu</button>
-                        </nb-accordion-item-body>
-                    </nb-accordion-item>
-                </nb-accordion>
-            </nb-list-item>
-        </nb-list>
-    </nb-card-body>
-    <nb-card-body *ngIf="!loadDoneAchi" >
-        <app-spinner></app-spinner>
-    </nb-card-body>
-    <nb-card-footer>
-        <button nbButton (click)="addEmptyAchievement()">
-            <nb-icon icon='plus-outline'></nb-icon>
-            Thêm thành tựu
-        </button>
-    </nb-card-footer>
-</nb-card>
 <nb-card status="primary">
-    <nb-card-header>
-        Xác nhận thành tựu cho thành viên
-    </nb-card-header>
-    <nb-card-body>
-        <i>Lưu ý: Thành tựu không thể thu hồi!</i>
-    </nb-card-body>
-    <nb-card-body *ngIf="loadDoneSkills && loadDoneProfiles" >
-        <p>Chọn thành tựu</p>
-        <nb-select [(ngModel)]="selectedProvidingAchievement" fullWidth>
-            <nb-option *ngFor="let achievement of achievements" [value]="achievement">
-                {{achievement.id}}: {{achievement.name}}
-            </nb-option>
-        </nb-select>
-        <p>Cấp cho</p>
-        <nb-select [(ngModel)]="selectedProvidedUser" fullWidth>
-            <nb-option *ngFor="let profile of profiles" [value]="profile">
-                {{profile._id}}: {{profile.email}}
-            </nb-option>
-        </nb-select>
-        <p>Lưu thành tựu vào hồ sơ thành viên</p>
-        <nb-toggle [(ngModel)]="!skipAchievement"></nb-toggle>
-    </nb-card-body>
-    <nb-card-body *ngIf="!loadDoneSkills && !loadDoneProfiles" >
-        <app-spinner></app-spinner>
-    </nb-card-body>
-    <nb-card-body *ngIf="selectedProvidingAchievement && selectedProvidedUser">
-        <nb-card>
-            <nb-card-header>
-                {{selectedProvidedUser.name}} -> {{selectedProvidingAchievement.name}}
-            </nb-card-header>
-            <nb-card-body>
-                <h2 style="font-size:1rem;">Thành tựu</h2>
-                <img [src]='selectedProvidingAchievement.image' style="width: 30px;">
-                <p>Thành tựu: {{selectedProvidingAchievement.name}}</p>
-                <p>Kinh nghiệm tích luỹ: {{selectedProvidingAchievement.exp}}</p>
-                <p>Avgas: {{selectedProvidingAchievement.credit}}</p>
-                <p>Kỹ năng tích luỹ</p>
-                <nb-list style="width:100%">
-                    <nb-list-item *ngFor="let skill of selectedProvidingAchievement.skills">
-                        <img [src]='getSkillById(skill.skillId)?.image' style="width:28px;">
-                        <p>{{getSkillById(skill.skillId)?.name}}</p>
-                        <div style="flex:1 auto;"></div>
-                        <p>EXP: {{skill.exp}}</p>
-                    </nb-list-item>
-                </nb-list>
-                <h2 style="font-size:1rem;">Được nhận bởi</h2>
-                <img [src]='selectedProvidedUser.photoUrl' style="width:30px;">
-                <p style="font-weight:bold">
-                    {{selectedProvidedUser.name}}</p>
-            </nb-card-body>
-            <nb-card-footer>
-                <button nbButton status='primary' style="float: right;" (click)="provideAchievement()">Cấp thành
-                    tựu</button>
-            </nb-card-footer>
-        </nb-card>
+  <nb-card-header> Các thành tựu trong hệ thống </nb-card-header>
+  <nb-card-body *ngIf="loadDoneAchi">
+    <nb-list>
+      <nb-list-item
+        *ngFor="let achievement of achievements; let i = index"
+        style="width: 100%"
+      >
+        <nb-accordion style="width: 100%">
+          <nb-accordion-item>
+            <nb-accordion-item-header *ngIf="achievement.name == ''">
+              <i>Thành tựu chưa được đặt tên</i>
+            </nb-accordion-item-header>
+            <nb-accordion-item-header *ngIf="achievement.name != ''"
+              >{{ achievement.name }}
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <img [src]="achievement.image" style="width: 100px" />
+              <br />
+              <button nbButton (click)="uploadImage(i)">Thêm ảnh</button>
+              <p>Id:</p>
+              <input nbInput [(ngModel)]="achievement.id" fullWidth />
+              <p>Tên</p>
+              <input nbInput [(ngModel)]="achievement.name" fullWidth />
+              <p>Mô tả</p>
+              <input nbInput [(ngModel)]="achievement.description" fullWidth />
+              <p>Kinh nghiệm tích luỹ</p>
+              <input
+                nbInput
+                type="number"
+                [(ngModel)]="achievement.exp"
+                fullWidth
+              />
+              <p>Thưởng Avgas</p>
+              <input
+                nbInput
+                type="number"
+                [(ngModel)]="achievement.credit"
+                fullWidth
+              />
+              <p>Các kỹ năng đạt được</p>
+              <nb-list>
+                <nb-list-item
+                  *ngFor="let skill of achievement.skills; let j = index"
+                >
+                  <nb-select [(ngModel)]="skill.skillId" fullWidth>
+                    <nb-option *ngFor="let s of skills" [value]="s.id">
+                      {{ s.id }}: {{ s.name }}
+                    </nb-option>
+                  </nb-select>
+                  <div style="flex: 1 auto"></div>
+                  <p style="margin: 10px">Kinh nghiệm nhận được:</p>
+                  <input nbInput type="number" [(ngModel)]="skill.exp" />
+                  <button
+                    nbButton
+                    ghost
+                    status="danger"
+                    (click)="achievement.skills.splice(j, 1)"
+                  >
+                    <nb-icon icon="trash-2-outline"></nb-icon>
+                  </button>
+                </nb-list-item>
+                <nb-list-item>
+                  <button nbButton (click)="addNewSkill(achievement)">
+                    Thêm kỹ năng
+                  </button>
+                </nb-list-item>
+              </nb-list>
+              <p>Tạo ngày: {{ achievement.metadata?.created }}</p>
+              <p>Cập nhật ngày: {{ achievement.metadata?.updated }}</p>
+              <p>Tác giả: {{ achievement.metadata?.actor }}</p>
+            </nb-accordion-item-body>
+            <nb-accordion-item-body>
+              <button
+                nbButton
+                style="float: left"
+                status="danger"
+                (click)="deleteAchievement(achievement._id)"
+              >
+                Xoá
+              </button>
+              <button
+                nbButton
+                style="float: right"
+                (click)="saveAchievement(i)"
+                status="primary"
+              >
+                Lưu
+              </button>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+  <nb-card-body *ngIf="!loadDoneAchi">
+    <app-spinner></app-spinner>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton (click)="addEmptyAchievement()">
+      <nb-icon icon="plus-outline"></nb-icon>
+      Thêm thành tựu
+    </button>
+  </nb-card-footer>
+</nb-card>
 
-    </nb-card-body>
+<!--Thêm thành tựu cho thành viên-->
+<nb-card status="primary">
+  <nb-card-header> Xác nhận thành tựu cho thành viên </nb-card-header>
+  <nb-card-body>
+    <i>Lưu ý: Thành tựu không thể thu hồi!</i>
+  </nb-card-body>
+  <nb-card-body *ngIf="loadDoneSkills && loadDoneProfiles">
+    <p>Chọn thành tựu</p>
+    <input
+      [formControl]="inputAchiControl"
+      nbInput
+      type="text"
+      [nbAutocomplete]="autoControlAchi"
+      fullWidth
+    />
 
+    <nb-autocomplete #autoControlAchi>
+      <nb-option
+        *ngFor="let achievement of filteredAchiOptions | async"
+        [value]="achievement.name"
+        (click)="AchivsSelected(achievement)"
+      >
+        {{ achievement.name }}
+      </nb-option>
+    </nb-autocomplete>
+    <!-- <nb-select [(ngModel)]="selectedProvidingAchievement" fullWidth>
+      <nb-option *ngFor="let achievement of achievements" [value]="achievement">
+        {{ achievement.name }}
+      </nb-option>
+    </nb-select> -->
+    <p>Cấp cho</p>
+    <input
+      [formControl]="inputProfilesControl"
+      nbInput
+      type="text"
+      [nbAutocomplete]="autoControlProfiles"
+      fullWidth
+    />
+
+    <nb-autocomplete #autoControlProfiles>
+      <nb-option
+        *ngFor="let profile of filteredProfilesOptions | async"
+        [value]="profile.name || profile.email"
+        (click)="selectedProfiles(profile)"
+      >
+        <nb-user [picture]="profile.photoUrl" [name]="profile.name"> </nb-user>
+      </nb-option>
+    </nb-autocomplete>
+    <!-- <nb-select [(ngModel)]="selectedProvidedUser" fullWidth>
+      <nb-option *ngFor="let profile of profiles" [value]="profile">
+        {{ profile.name }}
+      </nb-option>
+    </nb-select> -->
+    <p>Lưu thành tựu vào hồ sơ thành viên</p>
+    <nb-toggle [(ngModel)]="!skipAchievement"></nb-toggle>
+  </nb-card-body>
+  <nb-card-body *ngIf="!loadDoneSkills && !loadDoneProfiles">
+    <app-spinner></app-spinner>
+  </nb-card-body>
+  <nb-card-body *ngIf="selectedProvidingAchievement && selectedProvidedUser">
+    <nb-card>
+      <nb-card-header>
+        {{ selectedProvidedUser.name }} ->
+        {{ selectedProvidingAchievement.name }}
+      </nb-card-header>
+      <nb-card-body>
+        <h2 style="font-size: 1rem">Thành tựu</h2>
+        <img [src]="selectedProvidingAchievement.image" style="width: 30px" />
+        <p>Thành tựu: {{ selectedProvidingAchievement.name }}</p>
+        <p>Kinh nghiệm tích luỹ: {{ selectedProvidingAchievement.exp }}</p>
+        <p>Avgas: {{ selectedProvidingAchievement.credit }}</p>
+        <p>Kỹ năng tích luỹ</p>
+        <nb-list style="width: 100%">
+          <nb-list-item
+            *ngFor="let skill of selectedProvidingAchievement.skills"
+          >
+            <img
+              [src]="getSkillById(skill.skillId)?.image"
+              style="width: 28px"
+            />
+            <p>{{ getSkillById(skill.skillId)?.name }}</p>
+            <div style="flex: 1 auto"></div>
+            <p>EXP: {{ skill.exp }}</p>
+          </nb-list-item>
+        </nb-list>
+        <h2 style="font-size: 1rem">Được nhận bởi</h2>
+        <img [src]="selectedProvidedUser.photoUrl" style="width: 30px" />
+        <p style="font-weight: bold">
+          {{ selectedProvidedUser.name }}
+        </p>
+      </nb-card-body>
+      <nb-card-footer>
+        <button
+          nbButton
+          status="primary"
+          style="float: right"
+          (click)="provideAchievement()"
+        >
+          Cấp thành tựu
+        </button>
+      </nb-card-footer>
+    </nb-card>
+  </nb-card-body>
 </nb-card>

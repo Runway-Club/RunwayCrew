@@ -3,14 +3,25 @@ import { CommonModule } from '@angular/common';
 
 import { AchievementRoutingModule } from './achievement-routing.module';
 import { AchievementComponent } from './achievement.component';
-import { NbAccordionModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule, NbSelectModule, NbToggleModule } from '@nebular/theme';
-import { FormsModule } from '@angular/forms';
+import {
+  NbAccordionModule,
+  NbAutocompleteModule,
+  NbButtonModule,
+  NbCardModule,
+  NbDialogModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbListModule,
+  NbSelectModule,
+  NbToggleModule,
+  NbUserModule,
+} from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AchievementComponent
-  ],
+  declarations: [AchievementComponent],
   imports: [
     CommonModule,
     AchievementRoutingModule,
@@ -25,7 +36,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbDialogModule.forChild(),
     NbSelectModule,
     NbToggleModule,
-    SharedModule
-  ]
+    SharedModule,
+    NbAutocompleteModule,
+    ReactiveFormsModule,
+    NbUserModule,
+  ],
 })
-export class AchievementModule { }
+export class AchievementModule {}
