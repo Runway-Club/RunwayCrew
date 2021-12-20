@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
+import { Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AchievementService } from 'src/app/services/achievement.service';
 import { ContributionService } from 'src/app/services/contribution.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -11,25 +14,42 @@ import { UserProfile } from 'src/models/user-profile.model';
 @Component({
   selector: 'app-achievement',
   templateUrl: './achievement.component.html',
-  styleUrls: ['./achievement.component.scss']
+  styleUrls: ['./achievement.component.scss'],
 })
 export class AchievementComponent implements OnInit {
+  filteredAchiOptions!: Observable<Achievement[]>;
+  filteredProfilesOptions!: Observable<UserProfile[]>;
+  inputAchiControl!: FormControl;
+  inputProfilesControl!: FormControl;
 
   constructor(
     private achievementService: AchievementService,
     private skillService: SkillService,
     private profileService: ProfileService,
     private contributionService: ContributionService,
-    private dialog: NbDialogService) { }
+    private dialog: NbDialogService
+  ) {}
 
   ngOnInit(): void {
+    this.filteredProfilesOptions = of(this.profiles);
+    this.inputProfilesControl = new FormControl();
+    this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
+      startWith(''),
+      map((filterString) => this.filterProfiles(filterString))
+    );
+    this.filteredAchiOptions = of(this.achievements);
+    this.inputAchiControl = new FormControl();
+    this.filteredAchiOptions = this.inputAchiControl.valueChanges.pipe(
+      startWith(''),
+      map((filterString) => this.filterAchivs(filterString))
+    );
     // this.loadPage();
     this.skillService.getAll().subscribe((skills) => {
       if (!skills) {
         return;
       }
       this.skills.length = 0;
-      this.skills.push(...skills)
+      this.skills.push(...skills);
       this.loadDoneSkills = true;
     });
     this.profileService.getAll().subscribe((profiles) => {
@@ -41,7 +61,7 @@ export class AchievementComponent implements OnInit {
       this.achievements.length = 0;
       this.achievements.push(...achievements);
       this.loadDoneAchi = true;
-    })
+    });
   }
   public page = 0;
   public size = 50;
@@ -55,23 +75,33 @@ export class AchievementComponent implements OnInit {
   public loadDoneProfiles = false;
   public loadDoneAchi = false;
 
+  private filterAchivs(value: string): Achievement[] {
+    const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
+    return this.achievements.filter((optionValue) =>
+      optionValue.name.toLowerCase().includes(filterValue)
+    );
+  }
+
   public addEmptyAchievement() {
     this.achievements.push({
-      _id:'',
+      _id: '',
       id: Date.now().toString(),
-      name: "",
-      description: "",
-      image: "",
+      name: '',
+      description: '',
+      image: '',
       exp: 0,
       skills: [],
-      credit: 0
+      credit: 0,
     });
   }
 
   public uploadImage(i: number) {
     this.dialog.open(FileUploadComponent).onClose.subscribe((data) => {
       this.achievements[i].image = data.url;
-    })
+    });
   }
 
   public async deleteAchievement(id: string) {
@@ -81,9 +111,9 @@ export class AchievementComponent implements OnInit {
 
   public async saveAchievement(i: number) {
     const _id = this.achievements[i]._id;
-    if(!_id){
+    if (!_id) {
       await this.achievementService.create(this.achievements[i]);
-    }else{
+    } else {
       await this.achievementService.update(this.achievements[i]);
     }
   }
@@ -96,8 +126,8 @@ export class AchievementComponent implements OnInit {
 
   public async addNewSkill(achievement: Achievement) {
     achievement.skills.push({
-      skillId: "",
-      exp: 0
+      skillId: '',
+      exp: 0,
     });
   }
 
@@ -113,14 +143,33 @@ export class AchievementComponent implements OnInit {
       // console.log(this.selectedProvidingAchievement)
       // console.log(this.selectedProvidedUser?._id)
       // console.log(this.skipAchievement)
-      await this.contributionService.provide(this.selectedProvidingAchievement, this.selectedProvidedUser?.uid, this.skipAchievement)
+      await this.contributionService.provide(
+        this.selectedProvidingAchievement,
+        this.selectedProvidedUser?.uid,
+        this.skipAchievement
+      );
       this.selectedProvidedUser = undefined;
       this.selectedProvidingAchievement = undefined;
       this.skipAchievement = false;
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
     }
   }
-
+  private filterProfiles(value: string): UserProfile[] {
+    const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
+    return this.profiles.filter(
+      (optionValue) =>
+        optionValue.name.toLowerCase().includes(filterValue) ||
+        optionValue.email.toLowerCase().includes(filterValue)
+    );
+  }
+  AchivsSelected(value: Achievement) {
+    this.selectedProvidingAchievement = value;
+  }
+  selectedProfiles(value: UserProfile) {
+    this.selectedProvidedUser = value;
+  }
 }

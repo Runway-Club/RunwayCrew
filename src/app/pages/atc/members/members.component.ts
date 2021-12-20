@@ -7,7 +7,7 @@ import { Role } from 'src/models/role.model';
 import { UserProfile } from 'src/models/user-profile.model';
 import { FormControl } from '@angular/forms';
 import { Observable, ObservableInput, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import { NbTagComponent } from '@nebular/theme';
 
 @Component({
@@ -27,8 +27,10 @@ export class MembersComponent implements OnInit {
   // filteredRoles!: Observable<string[]>;
   filteredRolesOptions!: Observable<Role[]>;
   filteredProfilesOptions!: Observable<UserProfile[]>;
+  filteredATCmemsOptions!: Observable<UserProfile[]>;
   inputRolesControl!: FormControl;
   inputProfilesControl!: FormControl;
+  inputATCmemsControl!: FormControl;
   rolesFilter = [];
   profilesFilter = [];
 
@@ -77,6 +79,12 @@ export class MembersComponent implements OnInit {
     this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
       startWith(''),
       map((filterString) => this.filterProfiles(filterString))
+    );
+    this.filteredATCmemsOptions = of(this.atcMembers);
+    this.inputATCmemsControl = new FormControl();
+    this.filteredATCmemsOptions = this.inputATCmemsControl.valueChanges.pipe(
+      startWith(''),
+      map((filterString) => this.filterATCzone(filterString))
     );
 
     this.atcService
@@ -237,6 +245,18 @@ export class MembersComponent implements OnInit {
     );
   }
 
+  private filterATCzone(value: string): UserProfile[] {
+    const filterValue = value.toLowerCase();
+    if (filterValue == '') {
+      return [];
+    }
+    return this.atcMembers.filter(
+      (optionValue) =>
+        optionValue.name.toLowerCase().includes(filterValue) ||
+        optionValue.email.toLowerCase().includes(filterValue)
+    );
+  }
+
   changeRole(value: Role) {
     this.selectedRole = value;
   }
@@ -245,5 +265,11 @@ export class MembersComponent implements OnInit {
   }
   selectedForATC(value: UserProfile) {
     this.selectedProfileForATCZone = value;
+  }
+  selectedRemoveATC(value: UserProfile) {
+    this.selectedProfileRemoveFromATC = value;
+  }
+  selectedReclaim(value: UserProfile) {
+    this.selectedProfileForReclaim = value;
   }
 }
