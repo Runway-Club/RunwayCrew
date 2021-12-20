@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ShareService } from './share.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class UtilsService {
 
   public currentUser?: firebase.default.User;
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore, private HttpClient:HttpClient) {
+  constructor(private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private HttpClient: HttpClient,
+    private shareSer:ShareService) {
     this.auth.authState.subscribe((state) => {
       if (state != null) {
         this.currentUser = state;
@@ -40,7 +44,11 @@ export class UtilsService {
       created: current,
       updated: current
     };
-    await this.db.collection(collectionName).doc(data.id).set(data);
+    await this.db.collection(collectionName).doc(data.id).set(data).then(res=>{
+      this.shareSer.openSnackBar(`success!`);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`fail to create`,false);
+    });
   }
   public async update(collectionName: string, data: any) {
     let user = this.currentUser;
@@ -52,11 +60,19 @@ export class UtilsService {
       actor: user.email,
       updated: Date.now()
     }
-    await this.db.collection(collectionName).doc(data.id).update(data);
+    await this.db.collection(collectionName).doc(data.id).update(data).then(res=>{
+      this.shareSer.openSnackBar(`update suscess!`);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`fail to update`,false);
+    });
   }
 
   public async delete(collectionName: string, id: string) {
-    await this.db.collection(collectionName).doc(id).delete();
+    await this.db.collection(collectionName).doc(id).delete().then(res=>{
+      this.shareSer.openSnackBar(`delete success!`,true);
+    }).catch((err)=>{
+      this.shareSer.openSnackBar(`fail to delete`,false);
+    });
   }
 
 }
