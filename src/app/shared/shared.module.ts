@@ -8,6 +8,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { SpinnerComponent } from './spinner/spinner.component';
+
+
+
+
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -30,7 +34,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     AngularFireStorageModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    NbListModule
+    NbListModule,
   ],
   exports: [
     NavbarComponent,
