@@ -47,6 +47,10 @@ export class MembersComponent implements OnInit {
   public selectedProfileRemoveFromATC!: UserProfile;
   public selectedMultipleProfile: UserProfile[] = [];
 
+  public totalLength!:number;
+  public page:number = 1;
+  public pageSize:number = 4;
+
   public loadDoneATC = false;
   public loadDoneProfiles = false;
   public loadDoneRoles = false;

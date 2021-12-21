@@ -178,7 +178,7 @@
   <nb-card-header> Danh sách các thành viên trong hệ thống </nb-card-header>
   <nb-card-body *ngIf="loadDoneProfiles">
     <nb-list style="width: 100%">
-      <nb-list-item *ngFor="let profile of profiles" style="width: 100%">
+      <nb-list-item *ngFor="let profile of profiles | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: totalLength}" style="width: 100%">
         <div
           style="
             width: 100%;
@@ -224,6 +224,7 @@
         </div>
       </nb-list-item>
     </nb-list>
+  <pagination-controls  style="float: right;" (pageChange)="page = $event" ></pagination-controls>
   </nb-card-body>
   <nb-card-body *ngIf="!loadDoneProfiles">
     <app-spinner></app-spinner>
