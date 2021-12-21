@@ -1,16 +1,68 @@
-<nb-card style="height: 100%; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);margin: 0; border-radius: 15px;">
-  <nb-card-header>
+<nb-card
+  style="
+    height: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+    margin: 0;
+    border-radius: 15px;
+  "
+>
+  <!-- <nb-card-header style="display: flex; justify-content: space-between">
     <h5>Skills</h5>
-  </nb-card-header>
+    <button nbButton (click)="toggle()">Feedback</button>
+  </nb-card-header> -->
+
   <nb-card-body>
-    <div *ngIf="skills.length == 0" style="font-size: 1rem; width: 100%;">
-      <span><i>Bạn chưa có kỹ năng nào. Hãy chăm chỉ rèn luyện nhé!</i></span>
-    </div>
-    <nb-layout-column *ngIf="skills == undefined">
-      <app-spinner></app-spinner>
-    </nb-layout-column>
-    <div class="list-skill" *ngFor="let skill of skills">
-      <app-detail-skill [item]="skill"></app-detail-skill>
-    </div>
+    <nb-tabset>
+      <nb-tab tabTitle="Skill">
+        <div *ngIf="skills.length == 0" style="font-size: 1rem; width: 100%">
+          <span
+            ><i>Bạn chưa có kỹ năng nào. Hãy chăm chỉ rèn luyện nhé!</i></span
+          >
+        </div>
+        <nb-layout-column *ngIf="skills == undefined">
+          <app-spinner></app-spinner>
+        </nb-layout-column>
+        <div class="list-skill" *ngFor="let skill of skills">
+          <app-detail-skill [item]="skill"></app-detail-skill>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Feedback">
+        <nb-accordion multi>
+          <nb-accordion-item>
+            <nb-accordion-item-header
+              style="display: flex; justify-content: space-between"
+            >
+              Feedback 1<nb-icon icon="trash"></nb-icon>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              A nebula is an interstellar cloud of dust, hydrogen, helium and
+              other ionized gases. Originally, nebula was a name for any diffuse
+              astronomical object, including galaxies beyond the Milky Way.
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+          <nb-accordion-item>
+            <nb-accordion-item-header> Feedback 2 </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              A nebula is an interstellar cloud of dust, hydrogen, helium and
+              other ionized gases. Originally, nebula was a name for any diffuse
+              astronomical object, including galaxies beyond the Milky Way.
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+          <nb-accordion-item>
+            <nb-accordion-item-header> Feedback 3 </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              A nebula is an interstellar cloud of dust, hydrogen, helium and
+              other ionized gases. Originally, nebula was a name for any diffuse
+              astronomical object, including galaxies beyond the Milky Way.
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+        <p style="display: flex; justify-content: center; margin-top: 10px">
+          <nb-icon (click)="openWindow()" icon="plus"></nb-icon>
+        </p>
+      </nb-tab>
+    </nb-tabset>
   </nb-card-body>
 </nb-card>
