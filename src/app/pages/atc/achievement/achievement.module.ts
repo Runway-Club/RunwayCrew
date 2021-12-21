@@ -19,6 +19,7 @@ import {
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 @NgModule({
   declarations: [AchievementComponent],
@@ -40,6 +41,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbAutocompleteModule,
     ReactiveFormsModule,
     NbUserModule,
+    NgxPaginationModule
   ],
 })
 export class AchievementModule {}

@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 @NgModule({
   declarations: [MembersComponent],
@@ -49,6 +50,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ReactiveFormsModule,
     NbAutocompleteModule,
     NbTagModule,
+    NgxPaginationModule
   ],
 })
 export class MembersModule {}

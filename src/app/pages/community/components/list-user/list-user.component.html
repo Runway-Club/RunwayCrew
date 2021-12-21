@@ -1,31 +1,36 @@
 <div style="width:100%;margin: 0%;">
-    <div class="container" *ngIf="loadDone">
-        <nb-card class="card" *ngFor="
-            let user of listUser | paginate: { itemsPerPage: params.pageSize, currentPage: params.pageNum, totalItems: totalItems };let i=index"
-        >
-            <div class="box">
-                <div class="left-box">
-                    <img style="border-radius: 100%; display: block;margin:7px 0 0 7px;position: absolute;"
-                        [src]="user.photoUrl">
-                    <round-progress style="width:110px;height: 110px;" [current]="this.getProgress(user.uid)"
-                        [max]="100" [color]="'#426EF0'" [background]="'#eaeaea'" [radius]="125" [stroke]="10"
-                        [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'">
-                    </round-progress>
-                </div>
-                <div class="right-box">
-                    <div class="name" style="padding-top:10px;">
-                        <a class="profile" (click)="getProfile(user._id)" >{{user.name}}</a>
-                        <h4 *ngIf="!user.name">Chưa có tên</h4>
+    <div *ngIf="loadDone" >
+        <div class="container">
+            <nb-card class="card" *ngFor="
+                let user of listUser | paginate: { itemsPerPage: params.pageSize, currentPage: params.pageNum, totalItems: totalItems };let i=index"
+            >
+                <div class="box">
+                    <div class="left-box">
+                        <img style="border-radius: 100%; display: block;margin:7px 0 0 7px;position: absolute;"
+                            [src]="user.photoUrl">
+                        <round-progress style="width:110px;height: 110px;" [current]="this.getProgress(user.uid)"
+                            [max]="100" [color]="'#426EF0'" [background]="'#eaeaea'" [radius]="125" [stroke]="10"
+                            [responsive]="false" [duration]="800" [animation]="'easeInOutQuart'">
+                        </round-progress>
                     </div>
-                    <app-level (newItemEvent)="getOutput($event)" [skillCommon]="commonSkill" [skill]="skill"
-                        [uid]="user.uid"></app-level>
-                    <div class="list-role" *ngIf="loaded|async">
-                        <img width="30px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
-                            [src]="getRoleById(role)?.image">
+                    <div class="right-box">
+                        <div class="name" style="padding-top:10px;">
+                            <a class="profile" (click)="getProfile(user._id)" >{{user.name}}</a>
+                            <h4 *ngIf="!user.name">Chưa có tên</h4>
+                        </div>
+                        <app-level (newItemEvent)="getOutput($event)" [skillCommon]="commonSkill" [skill]="skill"
+                            [uid]="user.uid"></app-level>
+                        <div class="list-role" *ngIf="loaded|async">
+                            <img width="30px" *ngFor="let role of user.roles" [nbTooltip]="getRoleById(role)?.name??''"
+                                [src]="getRoleById(role)?.image">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nb-card>
+            </nb-card>
+        </div>
+        <pagination-controls style="text-align: center;" (pageChange)="change($event)" (pageChange)="params.pageNum = $event" ></pagination-controls>
     </div>
-    <pagination-controls style="text-align: center;" (pageChange)="change($event)" (pageChange)="params.pageNum = $event" ></pagination-controls>
+    <div *ngIf="!loadDone" >
+        <app-spinner></app-spinner>
+    </div>
 </div>

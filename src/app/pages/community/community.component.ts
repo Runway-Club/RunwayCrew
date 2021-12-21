@@ -16,6 +16,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AppComponent } from '../../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import { ShareService } from 'src/app/services/share.service';
 @Component({
   selector: 'app-community',
@@ -40,6 +41,7 @@ export class CommunityComponent implements OnInit {
     private AppComponent: AppComponent,
     private route: ActivatedRoute,
     private location: Location,
+    private Router:Router
   ) {
     this.route.queryParams.subscribe((params: any) => {
       if (params) {
@@ -79,7 +81,8 @@ export class CommunityComponent implements OnInit {
   public async getUsers() {
     let users = await this.profileSv.getPaginate(this.params.pageSize, this.selectedRoleId, this.params.pageNum);//, this.data[this.data.length - 1]);
     this.totalItems = users.totalItems
-    if (users.data.length == 0) {
+    if (users.data.length == 0 && this.params.pageNum !=0) {
+      this.pageEmpty()
       this.data = users.data
       return false;
     }
@@ -87,6 +90,14 @@ export class CommunityComponent implements OnInit {
     this.data.push(...users.data);
     return true;
   }
+
+  private async pageEmpty(){
+    const FIRST_PAGE = 0;
+    // this.Router.navigate([`/community?pageNum=${FIRST_PAGE}&role=${this.selectedRoleId}`])
+    window.location.href = `/community?pageNum=${FIRST_PAGE}&role=${this.selectedRoleId}`
+    // this.location.replaceState(`/community?pageNum=${FIRST_PAGE}&role=${this.selectedRoleId}`);
+  }
+
   public async getCommonSkill() {
     this.commonSkill = await (await this.skillSv.get('614854c1a58a2a2a3c8e428b')).levels;
   }
@@ -102,7 +113,11 @@ export class CommunityComponent implements OnInit {
 
   public async getUserByRole(roleId?: string) {
     this.params.pageNum = 0
-    this.location.replaceState(`?pageNum=${this.params.pageNum}&role=${roleId}`);
+    if(roleId == undefined){
+      this.location.replaceState('community')
+    }else{
+      this.location.replaceState(`?pageNum=${this.params.pageNum}&role=${roleId}`);
+    }
     this.selectedRoleId = roleId;
     await this.getUsers();
   }

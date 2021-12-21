@@ -6,6 +6,7 @@ import { SkillsComponent } from './skills.component';
 import { NbAccordionModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbListModule } from '@nebular/theme';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbAccordionModule,
     NbIconModule,
     NbDialogModule.forChild(),
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ]
 })
 export class SkillsModule { }

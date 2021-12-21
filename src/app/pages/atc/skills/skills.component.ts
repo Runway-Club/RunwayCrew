@@ -21,10 +21,15 @@ export class SkillsComponent implements OnInit {
       this.skills.length = 0;
       this.skills.push(...skills);
       this.loadDone = true;
+      this.totalLength = this.skills.length
     })
   }
 
   public skills: Skill[] = [];
+
+  public totalLength!:number;
+  public page:number = 1;
+  public pageSize:number = 5;
 
   public addEmptySkill() {
     this.skills.push({
