@@ -18,6 +18,10 @@ import {
   NbSidebarModule,
   NbTooltipModule,
   NbUserModule,
+  NbTabsetModule,
+  NbAccordionComponent,
+  NbAccordionModule,
+  NbWindowModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -31,6 +35,7 @@ import { AppModule } from 'src/app/app.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     RolesComponent,
     ContributionComponent,
     SettingsComponent,
+    FeedbackFormComponent,
   ],
   imports: [
     CommonModule,
@@ -63,8 +69,11 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     NbSidebarModule,
     SharedModule,
     RoundProgressModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    NbTabsetModule,
+    NbAccordionModule,
+    NbWindowModule.forChild(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ProfileModule { }
+export class ProfileModule {}
