@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
-  public feedback: any
+  public feedback: any;
+  public loadDone:boolean = true;
   constructor() {
     this.feedback = [
       {

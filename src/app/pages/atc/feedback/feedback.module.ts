@@ -23,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxPaginationModule } from 'ngx-pagination'
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     FeedbackComponent
@@ -48,7 +50,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatButtonToggleModule,
     MatButtonModule,
     MatIconModule,
-    NbTooltipModule
+    NgxPaginationModule,
+    MatPaginatorModule
   ]
 })
 export class FeedbackModule { }
