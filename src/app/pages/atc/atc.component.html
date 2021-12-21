@@ -1,7 +1,16 @@
 <nb-layout-header subheader>
-    <h2 style="font-size: 1rem; color: grey;">ATC Zone</h2>
-    <nb-actions>
-        <nb-action icon="people-outline" nbTooltip="Quản lý thành viên" routerLink='members'>
+    <span style="height: 100%;">
+        <h2 style="font-size: 1rem; color: grey;">ATC Zone</h2>
+    </span>
+    <mat-button-toggle-group  appearance="legacy">
+        <mat-button-toggle nbTooltip="Quản lý thành viên" routerLink='members'><mat-icon>people_outline</mat-icon></mat-button-toggle>
+        <mat-button-toggle nbTooltip="Quản lý vai trò" routerLink='roles'><mat-icon>work_outline</mat-icon></mat-button-toggle>
+        <mat-button-toggle nbTooltip="Quản lý kỹ năng" routerLink='skills'><mat-icon>local_activity</mat-icon></mat-button-toggle>
+        <mat-button-toggle nbTooltip="Quản lý thành tựu" routerLink='achievements'><mat-icon>military_tech</mat-icon></mat-button-toggle>
+        <mat-button-toggle  nbTooltip="Phản hồi" routerLink='feedback'><mat-icon>textsms</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- <nb-actions>
+        <nb-action nbButton icon="people-outline" nbTooltip="Quản lý thành viên" routerLink='members'>
             Thành viên
         </nb-action>
         <nb-action icon="briefcase-outline" nbTooltip="Quản lý vai trò" routerLink='roles'>
@@ -16,6 +25,6 @@
         <nb-action icon="message-circle-outline" nbTooltip="Phản hồi" routerLink='feedback'>
             Phản hồi
         </nb-action>
-    </nb-actions>
+    </nb-actions> -->
 </nb-layout-header>
 <router-outlet></router-outlet>  

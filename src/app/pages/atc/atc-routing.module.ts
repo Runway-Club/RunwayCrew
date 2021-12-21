@@ -34,6 +34,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('./members/members.module').then((m) => m.MembersModule),
       },
+      {
+        path: 'feedback',
+        canActivate: [AtcGuard],
+        loadChildren: () =>
+          import('./feedback/feedback.module').then((m) => m.FeedbackModule),
+      },
       { path: '**', pathMatch: 'full', redirectTo: 'roles' },
     ],
   },
