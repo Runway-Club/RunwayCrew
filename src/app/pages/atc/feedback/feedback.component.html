@@ -1,0 +1,62 @@
+
+<div *ngIf="loadDone" >
+    
+
+
+<h1>Quản lý các phản hồi</h1>
+<nb-card status="primary">
+    <nb-card-header>
+        Các phản hồi trong hệ thống
+
+
+    </nb-card-header>
+    <nb-card-body>
+
+        <div style="display: flex;align-items: center;justify-content: flex-end;">
+            <div style="display: flex;flex-direction: column;">
+                <button mat-icon-button nbTooltip="lọc theo ngày gần nhất">
+                    <mat-icon>keyboard_arrow_up</mat-icon>
+                </button>
+                <button mat-icon-button nbTooltip="lọc theo ngày xa nhất">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+            </div>
+            <mat-icon style="margin-right: 1%;">filter_alt</mat-icon>
+            <input placeholder="nhập tên người gửi..." nbInput nbTooltip="Tìm kiếm người gửi" />
+        </div>
+        <nb-list>
+            <nb-list-item *ngFor="let item of feedback">
+                <nb-accordion style="width: 100%">
+                    <nb-accordion-item>
+                        <nb-accordion-item-header>
+
+                            <span class="overflow">
+                                {{item.title}}
+                            </span>
+                            <span>
+                                - trạng thái: {{item.status}} - ngày: {{item.date}}
+                            </span>
+
+                        </nb-accordion-item-header>
+                        <nb-accordion-item-body>
+                            <p>Tên người gửi: <strong>{{item.user}}</strong></p>
+                            <p>Tiêu đề:</p>
+                            <p>{{item.title}}</p>
+                            <p>Nội dung:</p>
+                            <p>{{item.description}}</p>
+                            <div style="display: flex;justify-content: flex-start;">
+                                <button nbButton status="primary">Lorem</button>
+                                <button nbButton status="danger" style="margin-left: 1%;">Lorem</button>
+                            </div>
+                        </nb-accordion-item-body>
+                    </nb-accordion-item>
+
+                </nb-accordion>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+</nb-card>
+</div>
+<div *ngIf="!loadDone" >
+    <app-spinner></app-spinner>
+</div>

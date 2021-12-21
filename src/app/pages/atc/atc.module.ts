@@ -10,6 +10,10 @@ import {
   NbTooltipModule,
   NbTagModule
 } from '@nebular/theme';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -22,7 +26,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NbTooltipModule,
     NbActionsModule,
     SharedModule,
-    NbTagModule
+    NbTagModule,
+    MatButtonModule,
+    MatIconModule,
+    MatButtonToggleModule
   ],
 })
-export class AtcModule {}
+export class AtcModule { }
