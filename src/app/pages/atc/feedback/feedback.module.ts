@@ -25,9 +25,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 @NgModule({
   declarations: [
-    FeedbackComponent
+    FeedbackComponent,
+    InfoDialogComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonModule,
     MatIconModule,
     NgxPaginationModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NbTooltipModule
   ]
 })
 export class FeedbackModule { }

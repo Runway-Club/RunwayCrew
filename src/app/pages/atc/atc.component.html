@@ -1,14 +1,15 @@
 <nb-layout-header subheader>
-    <span style="height: 100%;">
-        <h2 style="font-size: 1rem; color: grey;">ATC Zone</h2>
-    </span>
-    <mat-button-toggle-group  appearance="legacy">
-        <mat-button-toggle nbTooltip="Quản lý thành viên" routerLink='members'><mat-icon>people_outline</mat-icon></mat-button-toggle>
-        <mat-button-toggle nbTooltip="Quản lý vai trò" routerLink='roles'><mat-icon>work_outline</mat-icon></mat-button-toggle>
-        <mat-button-toggle nbTooltip="Quản lý kỹ năng" routerLink='skills'><mat-icon>local_activity</mat-icon></mat-button-toggle>
-        <mat-button-toggle nbTooltip="Quản lý thành tựu" routerLink='achievements'><mat-icon>military_tech</mat-icon></mat-button-toggle>
-        <mat-button-toggle  nbTooltip="Phản hồi" routerLink='feedback'><mat-icon>textsms</mat-icon></mat-button-toggle>
-    </mat-button-toggle-group>
+
+    <h2 style="margin-top: 1%;font-size: 1rem; color: grey;">ATC Zone</h2>
+
+    <div style="width: 80%;">
+        <button style="margin-left: 1rem;" *ngFor="let task of taskList" mat-icon-button (click)="click(task)"
+            nbTooltip="{{task.name}}" routerLink="{{task.router}}" [ngClass]="{'gray':!selectedTasks[task.id]}">
+            <nb-icon style="width: 1.5rem;height: 1.5rem;" icon="{{task.icon}}"></nb-icon>
+        </button>
+    </div>
+
+
     <!-- <nb-actions>
         <nb-action nbButton icon="people-outline" nbTooltip="Quản lý thành viên" routerLink='members'>
             Thành viên
@@ -22,7 +23,7 @@
         <nb-action icon="award-outline" nbTooltip="Quản lý thành tựu" routerLink='achievements'>
             Thành tựu
         </nb-action>
-        <nb-action icon="message-circle-outline" nbTooltip="Phản hồi" routerLink='feedback'>
+        <nb-action icon="message-circle-outline" nbTooltip="Phản hồi"   routerLink='feedback'>
             Phản hồi
         </nb-action>
     </nb-actions> -->
