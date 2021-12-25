@@ -39,8 +39,9 @@ export class ListUserComponent implements OnInit {
   loaded!: Promise<boolean>;
 
   ngOnInit(): void {
-    this.loadDone = true;
-
+    setTimeout(async ()=>{
+      this.loadDone = true;
+    },1000)
     this.skillSv.getAll().subscribe((skills) => {
       this.skills.length = 0;
       this.skills.push(...skills);
@@ -54,6 +55,10 @@ export class ListUserComponent implements OnInit {
   }
 
   change(event:any){
+    setTimeout(() => {
+      this.loadDone = true
+    }, 1000);
+    this.loadDone = false
     const page = event - 1;
     this.changePageEvent.emit(page)
   }
