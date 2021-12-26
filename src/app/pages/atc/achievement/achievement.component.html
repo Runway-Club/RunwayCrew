@@ -4,7 +4,7 @@
   <nb-card-body *ngIf="loadDoneAchi">
     <nb-list>
       <nb-list-item
-        *ngFor="let achievement of achievements; let i = index"
+        *ngFor="let achievement of achievements | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: totalLength}; let i = index"
         style="width: 100%"
       >
         <nb-accordion style="width: 100%">
@@ -93,6 +93,7 @@
         </nb-accordion>
       </nb-list-item>
     </nb-list>
+    <pagination-controls  style="float: right;" (pageChange)="page = $event" ></pagination-controls>
   </nb-card-body>
   <nb-card-body *ngIf="!loadDoneAchi">
     <app-spinner></app-spinner>

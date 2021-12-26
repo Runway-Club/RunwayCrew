@@ -5,7 +5,7 @@
     </nb-card-header>
     <nb-card-body *ngIf="loadDone" >
         <nb-list>
-            <nb-list-item *ngFor="let skill of skills; let i = index" style="width: 100%;">
+            <nb-list-item *ngFor="let skill of skills | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: totalLength}; let i = index" style="width: 100%;">
                 <nb-accordion style="width: 100%;">
                     <nb-accordion-item>
                         <nb-accordion-item-header *ngIf="skill.name==''">
@@ -48,6 +48,7 @@
                 </nb-accordion>
             </nb-list-item>
         </nb-list>
+        <pagination-controls  style="float: right;" (pageChange)="page = $event" ></pagination-controls>
     </nb-card-body>
     <nb-card-body *ngIf="!loadDone" >
         <app-spinner></app-spinner>

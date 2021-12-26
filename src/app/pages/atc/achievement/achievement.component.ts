@@ -61,10 +61,14 @@ export class AchievementComponent implements OnInit {
       this.achievements.length = 0;
       this.achievements.push(...achievements);
       this.loadDoneAchi = true;
+      this.totalLength = this.achievements.length
     });
   }
-  public page = 0;
-  public size = 50;
+
+  public page:number = 1;
+  public pageSize:number = 5;
+  public totalLength!:number;
+  
   public achievements: Achievement[] = [];
   public skills: Skill[] = [];
   public selectedProvidingAchievement?: Achievement;

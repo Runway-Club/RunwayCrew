@@ -1,30 +1,28 @@
-
-<div *ngIf="loadDone" >
-    
+<div *ngIf="loadDone">
 
 
-<h1>Quản lý các phản hồi</h1>
-<nb-card status="primary">
-    <nb-card-header>
-        Các phản hồi trong hệ thống
 
+    <h1 style="margin-top: 1%;">Quản lý các phản hồi</h1>
+    <nb-card status="primary">
+        <nb-card-header style="display: flex;align-items: center;">
+            Các phản hồi trong hệ thống
+            <button style="margin-left: auto;" mat-icon-button nbTooltip="lọc theo ngày gần nhất">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-icon-button nbTooltip="lọc theo ngày xa nhất">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
 
-    </nb-card-header>
-    <nb-card-body>
-
-        <div style="display: flex;align-items: center;justify-content: flex-end;">
-            <div style="display: flex;flex-direction: column;">
-                <button mat-icon-button nbTooltip="lọc theo ngày gần nhất">
-                    <mat-icon>keyboard_arrow_up</mat-icon>
-                </button>
-                <button mat-icon-button nbTooltip="lọc theo ngày xa nhất">
-                    <mat-icon>keyboard_arrow_down</mat-icon>
-                </button>
-            </div>
             <mat-icon style="margin-right: 1%;">filter_alt</mat-icon>
-            <input placeholder="nhập tên người gửi..." nbInput nbTooltip="Tìm kiếm người gửi" />
-        </div>
-        <nb-list>
+            <div style="width: 20%;">
+
+                <input fullWidth placeholder="nhập tên người gửi..." nbInput nbTooltip="Tìm kiếm người gửi" />
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+
+
+            <!-- <nb-list>
             <nb-list-item *ngFor="let item of feedback">
                 <nb-accordion style="width: 100%">
                     <nb-accordion-item>
@@ -53,10 +51,47 @@
 
                 </nb-accordion>
             </nb-list-item>
-        </nb-list>
-    </nb-card-body>
-</nb-card>
+        </nb-list> -->
+            <nb-list style="width: 100%;margin-top: 1%;">
+                <nb-list-item style="width: 100%" *ngFor="let item of feedback| paginate: { itemsPerPage: 10, currentPage: 1, totalItems: 30}">
+                    <div style="
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                ">
+                        <div>
+                            <nb-user [name]="item.user">
+                            </nb-user>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-self: center">
+                            <span class="overflow">Tiêu đề: {{item.title}}</span>
+                            <!-- <span>123</span> -->
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-self: center">
+                            <span>Ngày: {{item.date}}</span>
+                            <!-- <span>123</span> -->
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-self: center">
+                            <span>Trạng thái: {{item.status}}</span>
+                            <!-- <span>pending</span> -->
+                        </div>
+                        <div>
+                            <button mat-icon-button style="
+                            border: none;
+                            background: none;
+                            cursor:pointer;" nbTooltip="hiển thị thông tin" (click)="openDialog(item)">
+                                <mat-icon style="color: #426ef0;">info_outline</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </nb-list-item>
+            </nb-list>
+        </nb-card-body>
+        <pagination-controls style="display: flex;justify-content: flex-end;" ></pagination-controls>
+    </nb-card>
+
 </div>
-<div *ngIf="!loadDone" >
+<div *ngIf="!loadDone">
     <app-spinner></app-spinner>
 </div>
