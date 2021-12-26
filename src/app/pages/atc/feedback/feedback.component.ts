@@ -14,21 +14,21 @@ export class FeedbackComponent implements OnInit {
       {
         title: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatibus aliquid. Ea ipsam, numquam repudiandae quidem aliquid nemo optio voluptatum.",
         user: "Lorem",
-        status: "peding",
+        status: "approve",
         date: "1/1/1970",
         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatibus aliquid. Ea ipsam, numquam repudiandae quidem aliquid nemo optio voluptatum."
       }, 
       {
         title: "Lorem ipsum dolor, sit amet consectetur",
         user: "Lorem",
-        status: "peding",
+        status: "pending",
         date: "1/1/1970",
         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatibus aliquid. Ea ipsam, numquam repudiandae quidem aliquid nemo optio voluptatum."
       }, 
       {
         title: "Lorem ipsum dolor, sit amet consectetur",
         user: "Lorem",
-        status: "peding",
+        status: "denied",
         date: "1/1/1970",
         description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, voluptatibus aliquid. Ea ipsam, numquam repudiandae quidem aliquid nemo optio voluptatum."
       }
