@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ContributionService } from 'src/app/services/contribution.service';
 import { AchievedSkill } from 'src/models/achievement.model';
-import { NbSidebarService } from '@nebular/theme';
+import { NbDialogService, NbSidebarService } from '@nebular/theme';
 import { NbWindowService } from '@nebular/theme';
 import { FeedbackFormComponent } from '../feedback-form/feedback-form.component';
+import { FeedbackDialogComponent } from '../feedback-dialog/feedback-dialog.component';
 
 @Component({
   selector: 'app-skills',
@@ -11,13 +12,15 @@ import { FeedbackFormComponent } from '../feedback-form/feedback-form.component'
   styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent implements OnInit {
+  feedbacks = ['Feedback 1', 'Feedback 2', 'Feedback 3'];
   @Input() skills!: AchievedSkill[];
   @Input() uid = '';
   public loadDone = false;
   constructor(
     public contributeSv: ContributionService,
     private sidebarService: NbSidebarService,
-    private windowService: NbWindowService
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService
   ) {}
   ngOnInit(): void {}
   public async get() {
@@ -30,5 +33,8 @@ export class SkillsComponent implements OnInit {
   }
   openWindow() {
     this.windowService.open(FeedbackFormComponent, { title: `Window` });
+  }
+  openDialog() {
+    this.windowService.open(FeedbackDialogComponent, {});
   }
 }

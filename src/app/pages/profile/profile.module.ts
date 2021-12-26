@@ -36,6 +36,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { FeedbackFormComponent } from './components/feedback-form/feedback-form.component';
+import { FeedbackDialogComponent } from './components/feedback-dialog/feedback-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FeedbackFormComponent } from './components/feedback-form/feedback-form.
     ContributionComponent,
     SettingsComponent,
     FeedbackFormComponent,
+    FeedbackDialogComponent,
   ],
   imports: [
     CommonModule,

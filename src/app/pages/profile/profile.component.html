@@ -1,28 +1,52 @@
-<div style="display: flex;flex-direction: row; align-items: center; justify-content: center;">
-    <div class="container" *ngIf="this.loadDone">
-        <div class="Header">
-            <app-header *ngIf="this.loadDone" [progress]="progressBar" [user]="this.userProfile"
-                [contribute]="this.contribute" [uid]='uid' [commonSkill]="this.commonSkill">
-            </app-header>
-        </div>
-        <div [ngClass]="{'body':!isMobile()}">
-            <div class="Left">
-                <div style="margin-bottom:10px" *ngIf="isMobile()">
-                    <app-skills [skills]="this.contribute.skills"></app-skills>
-                </div>
-                <app-roles [roleIds]="this.userProfile.roles" *ngIf="this.loadDone" [uid]='uid'></app-roles>
-                <app-body [userProfile]="this.userProfile" [uid]='uid' style="height: 100%;"></app-body>
-
-            </div>
-            <div class="Right" *ngIf="!isMobile()">
-                <app-skills [skills]="this.contribute.skills" [uid]='uid'></app-skills>
-            </div>
-        </div>
-        <div class="Contribution" [class.mat-elevation-z8]="true">
-            <app-contribution [contributionInfo]="this.contribute" [uid]='uid'></app-contribution>
-        </div>
+<div
+  style="
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <div class="container" *ngIf="this.loadDone">
+    <div class="Header">
+      <app-header
+        *ngIf="this.loadDone"
+        [progress]="progressBar"
+        [user]="this.userProfile"
+        [contribute]="this.contribute"
+        [uid]="uid"
+        [commonSkill]="this.commonSkill"
+      >
+      </app-header>
     </div>
+    <div [ngClass]="{ body: !isMobile() }">
+      <div class="Left">
+        <div style="margin-bottom: 10px" *ngIf="isMobile()">
+          <app-skills [skills]="this.contribute.skills"></app-skills>
+        </div>
+        <app-roles
+          [roleIds]="this.userProfile.roles"
+          *ngIf="this.loadDone"
+          [uid]="uid"
+        ></app-roles>
+        <app-body
+          [userProfile]="this.userProfile"
+          [uid]="uid"
+          style="height: 100%"
+        ></app-body>
+      </div>
+      <div class="Right" *ngIf="!isMobile()">
+        <app-skills [skills]="this.contribute.skills" [uid]="uid"></app-skills>
+      </div>
+    </div>
+    <div class="Contribution">
+      <!-- remove [class.mat-elevation-z8]="true" -->
+      <app-contribution
+        [contributionInfo]="this.contribute"
+        [uid]="uid"
+      ></app-contribution>
+    </div>
+  </div>
 </div>
-<div *ngIf="!this.loadDone" >
-    <app-spinner></app-spinner>
+<div *ngIf="!this.loadDone">
+  <app-spinner></app-spinner>
 </div>
