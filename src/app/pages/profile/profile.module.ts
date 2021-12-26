@@ -22,6 +22,7 @@ import {
   NbAccordionComponent,
   NbAccordionModule,
   NbWindowModule,
+  NbDialogModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SkillsComponent } from './components/skills/skills.component';
@@ -75,6 +76,7 @@ import { FeedbackDialogComponent } from './components/feedback-dialog/feedback-d
     NbTabsetModule,
     NbAccordionModule,
     NbWindowModule.forChild(),
+    NbDialogModule.forChild(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

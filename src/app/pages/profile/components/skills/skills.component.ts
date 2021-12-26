@@ -35,6 +35,6 @@ export class SkillsComponent implements OnInit {
     this.windowService.open(FeedbackFormComponent, { title: `Window` });
   }
   openDialog() {
-    this.windowService.open(FeedbackDialogComponent, {});
+    this.dialogService.open(FeedbackDialogComponent, {});
   }
 }
