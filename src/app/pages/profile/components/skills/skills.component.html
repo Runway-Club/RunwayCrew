@@ -27,40 +27,52 @@
         </div>
       </nb-tab>
       <nb-tab tabTitle="Feedback">
-        <nb-accordion multi>
-          <nb-accordion-item>
-            <nb-accordion-item-header
-              style="display: flex; justify-content: space-between"
+        <nb-list>
+          <nb-list-item *ngFor="let feedback of feedbacks">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              "
             >
-              Feedback 1<nb-icon icon="trash"></nb-icon>
-            </nb-accordion-item-header>
-            <nb-accordion-item-body>
-              A nebula is an interstellar cloud of dust, hydrogen, helium and
-              other ionized gases. Originally, nebula was a name for any diffuse
-              astronomical object, including galaxies beyond the Milky Way.
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-
-          <nb-accordion-item>
-            <nb-accordion-item-header> Feedback 2 </nb-accordion-item-header>
-            <nb-accordion-item-body>
-              A nebula is an interstellar cloud of dust, hydrogen, helium and
-              other ionized gases. Originally, nebula was a name for any diffuse
-              astronomical object, including galaxies beyond the Milky Way.
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-
-          <nb-accordion-item>
-            <nb-accordion-item-header> Feedback 3 </nb-accordion-item-header>
-            <nb-accordion-item-body>
-              A nebula is an interstellar cloud of dust, hydrogen, helium and
-              other ionized gases. Originally, nebula was a name for any diffuse
-              astronomical object, including galaxies beyond the Milky Way.
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-        </nb-accordion>
-        <p style="display: flex; justify-content: center; margin-top: 10px">
-          <nb-icon (click)="openWindow()" icon="plus"></nb-icon>
+              <div style="width: 30%">
+                <span (click)="openDialog()">{{ feedback }}</span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-self: center;
+                "
+              >
+                <span
+                  ><nb-icon icon="checkmark"></nb-icon
+                  ><nb-icon icon="alert-circle-outline"></nb-icon
+                ></span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-self: center;
+                "
+              >
+                <span><nb-icon icon="trash"></nb-icon></span>
+              </div>
+            </div>
+          </nb-list-item>
+        </nb-list>
+        <p
+          fullWidth
+          style="height: fit-content; display: flex; justify-content: center"
+        >
+          <nb-icon
+            style="position: absolute; bottom: 0; font-size: 3rem"
+            (click)="openWindow()"
+            icon="plus-square-outline"
+          ></nb-icon>
         </p>
       </nb-tab>
     </nb-tabset>
