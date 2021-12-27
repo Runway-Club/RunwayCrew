@@ -60,17 +60,25 @@
   <!-- Add to ATC Zone -->
   <nb-card style="border-radius: 10px" status="success">
     <nb-card-header *ngIf="loadDoneATC">
-      <input
+      <!-- <input
         [formControl]="inputProfilesControl"
         nbInput
         type="text"
         [nbAutocomplete]="autoControlProfiles"
         fullWidth
+      /> -->
+
+      <input
+        nbInput
+        type="text"
+        [nbAutocomplete]="autoControlProfiles"
+        fullWidth
+        #box (keyup.enter)="onSearch(box.value)"
       />
 
       <nb-autocomplete #autoControlProfiles>
         <nb-option
-          *ngFor="let profile of filteredProfilesOptions | async"
+          *ngFor="let profile of filteredProfilesOptions"
           [value]="profile.name"
           (click)="selectedForATC(profile)"
         >
@@ -262,16 +270,16 @@
     <p>Được cấp cho</p>
 
     <input
-      [formControl]="inputProfilesControl"
       nbInput
       type="text"
       [nbAutocomplete]="autoControlProfiles"
+      #box (keyup.enter)="onSearch(box.value)"
       fullWidth
     />
-
+    
     <nb-autocomplete #autoControlProfiles>
       <nb-option
-        *ngFor="let profile of filteredProfilesOptions | async"
+        *ngFor="let profile of filteredProfilesOptions"
         [value]="profile.name || profile.email"
         (click)="changeProfile(profile)"
         (click)="checkLogicMultipleProfiles(profile)"
@@ -349,16 +357,16 @@
   <nb-card-body *ngIf="loadDoneProfiles">
     <p>Thành viên</p>
     <input
-      [formControl]="inputProfilesControl"
       nbInput
       type="text"
       [nbAutocomplete]="autoControlProfiles"
+      #box (keyup.enter)="onSearch(box.value)"
       fullWidth
     />
 
     <nb-autocomplete #autoControlProfiles>
       <nb-option
-        *ngFor="let profile of filteredProfilesOptions | async"
+        *ngFor="let profile of filteredProfilesOptions"
         [value]="profile.name"
         (click)="selectedReclaim(profile)"
       >

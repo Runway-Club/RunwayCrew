@@ -67,6 +67,24 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.get('/search', async (req, res)=>{
+    try {
+        const {searchKey} = req.query;
+        if(!searchKey){
+            return res.status(400).send({message: `searchKey is empty !`})
+        }
+        const result = await ProfileDB
+            .find()
+            .or([
+                {'name': {$regex: searchKey}}, 
+                {'email': {$regex: searchKey}}
+            ])
+        return res.status(200).send(result)
+    } catch (err) {
+        return err;
+    }
+})
+
 router.get("/byID", async (req, res) => {
     try {
         const { id } = req.query;

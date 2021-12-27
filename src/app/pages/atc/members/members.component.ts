@@ -26,7 +26,7 @@ export class MembersComponent implements OnInit {
   // roleName!: Role['name'];
   // filteredRoles!: Observable<string[]>;
   filteredRolesOptions!: Observable<Role[]>;
-  filteredProfilesOptions!: Observable<UserProfile[]>;
+  filteredProfilesOptions: UserProfile[] = []
   filteredATCmemsOptions!: Observable<UserProfile[]>;
   inputRolesControl!: FormControl;
   inputProfilesControl!: FormControl;
@@ -78,12 +78,12 @@ export class MembersComponent implements OnInit {
       startWith(''),
       map((filterString) => this.filterRoles(filterString))
     );
-    this.filteredProfilesOptions = of(this.profiles);
-    this.inputProfilesControl = new FormControl();
-    this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
-      startWith(''),
-      map((filterString) => this.filterProfiles(filterString))
-    );
+    // this.filteredProfilesOptions = of(this.profiles);
+    // this.inputProfilesControl = new FormControl();
+    // this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((filterString) => this.filterProfiles(filterString))
+    // );
     this.filteredATCmemsOptions = of(this.atcMembers);
     this.inputATCmemsControl = new FormControl();
     this.filteredATCmemsOptions = this.inputATCmemsControl.valueChanges.pipe(
@@ -98,6 +98,15 @@ export class MembersComponent implements OnInit {
         this.atcMembers.push(...profiles);
         this.loadDoneATC = true;
       });
+  }
+
+  onSearch(value: string) { 
+    if(!value){
+      return;
+    }
+    this.profileService.getSearch(value).subscribe((res: UserProfile[])=>{
+      this.filteredProfilesOptions = res
+    })
   }
 
   // public _filter(value: string): string[] {
