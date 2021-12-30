@@ -8,6 +8,8 @@ const roleDB = mongoose.model('roles', roleSchema);
 const RoleModel = require('../../model/role.model')
 const shareService = require('../service/share.service');
 
+const ROLES = []
+
 router.get('/id', async (req, res) => {
     let { roleId } = req.query;
     if (!roleId) {
@@ -21,6 +23,27 @@ router.get('/id', async (req, res) => {
                 return res.status(200).send(doc[0])
             }
         })
+    }
+})
+
+router.get('/search', async (req, res)=>{
+    try {
+        const {searchKey} = req.query;
+        if(!searchKey){
+            return res.status(400).send({message: `searchKey is empty !`})
+        }
+        if(ROLES.length === 0){
+            let response =  await roleDB.find();     
+            response.map(role=>{
+                ROLES.push(role)
+            })
+        }
+        let result = ROLES.filter(role =>{
+            return role.name.toLowerCase().includes(searchKey.toLowerCase())
+        })
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(500).send(err)
     }
 })
 
@@ -96,6 +119,5 @@ router.delete('/', async (req, res) => {
         return res.status(500).send(`Server err`)
     }
 })
-
 
 module.exports = router;

@@ -25,7 +25,7 @@ export class MembersComponent implements OnInit {
   // myControl = new FormControl();
   // roleName!: Role['name'];
   // filteredRoles!: Observable<string[]>;
-  filteredRolesOptions!: Observable<Role[]>;
+  filteredRolesOptions: Role[] = [];
   filteredProfilesOptions: UserProfile[] = []
   filteredATCmemsOptions!: Observable<UserProfile[]>;
   inputRolesControl!: FormControl;
@@ -72,12 +72,12 @@ export class MembersComponent implements OnInit {
       this.loadDoneRoles = true;
     });
 
-    this.filteredRolesOptions = of(this.roles);
-    this.inputRolesControl = new FormControl();
-    this.filteredRolesOptions = this.inputRolesControl.valueChanges.pipe(
-      startWith(''),
-      map((filterString) => this.filterRoles(filterString))
-    );
+    // this.filteredRolesOptions = of(this.roles);
+    // this.inputRolesControl = new FormControl();
+    // this.filteredRolesOptions = this.inputRolesControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((filterString) => this.filterRoles(filterString))
+    // );
     // this.filteredProfilesOptions = of(this.profiles);
     // this.inputProfilesControl = new FormControl();
     // this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
@@ -106,6 +106,15 @@ export class MembersComponent implements OnInit {
     }
     this.profileService.getSearch(value).subscribe((res: UserProfile[])=>{
       this.filteredProfilesOptions = res
+    })
+  }
+
+  onSearchRole(value: string){
+    if(!value){
+      return;
+    }
+    this.roleService.getSearch(value).subscribe((res: Role[])=>{
+      this.filteredRolesOptions = res
     })
   }
 

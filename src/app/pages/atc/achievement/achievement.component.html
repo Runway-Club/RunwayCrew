@@ -115,16 +115,16 @@
   <nb-card-body *ngIf="loadDoneSkills && loadDoneProfiles">
     <p>Chọn thành tựu</p>
     <input
-      [formControl]="inputAchiControl"
       nbInput
       type="text"
       [nbAutocomplete]="autoControlAchi"
       fullWidth
+      #ach (keyup)="onSearchAchi(ach.value)"
     />
 
     <nb-autocomplete #autoControlAchi>
       <nb-option
-        *ngFor="let achievement of filteredAchiOptions | async"
+        *ngFor="let achievement of filteredAchiOptions"
         [value]="achievement.name"
         (click)="AchivsSelected(achievement)"
       >
@@ -138,16 +138,16 @@
     </nb-select> -->
     <p>Cấp cho</p>
     <input
-      [formControl]="inputProfilesControl"
       nbInput
       type="text"
       [nbAutocomplete]="autoControlProfiles"
       fullWidth
+      #key (keyup)="onSearch(key.value)"
     />
 
     <nb-autocomplete #autoControlProfiles>
       <nb-option
-        *ngFor="let profile of filteredProfilesOptions | async"
+        *ngFor="let profile of filteredProfilesOptions"
         [value]="profile.name || profile.email"
         (click)="selectedProfiles(profile)"
       >
