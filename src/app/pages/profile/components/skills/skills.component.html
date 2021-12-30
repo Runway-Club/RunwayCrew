@@ -36,9 +36,10 @@
                 flex-direction: row;
                 justify-content: space-between;
               "
+              (click)="openDialog()"
             >
               <div style="width: 30%">
-                <span (click)="openDialog()">{{ feedback }}</span>
+                <span>{{ feedback }}</span>
               </div>
               <div
                 style="
@@ -47,10 +48,9 @@
                   align-self: center;
                 "
               >
-                <span
-                  ><nb-icon icon="checkmark"></nb-icon
-                  ><nb-icon icon="alert-circle-outline"></nb-icon
-                ></span>
+                <span style="color: rgb(19, 184, 82)"> Đã duyệt </span>
+                <span style="color: rgb(233, 219, 22)"> Đang duyệt </span>
+                <span style="color: rgb(216, 18, 34)"> Bị từ chối </span>
               </div>
               <div
                 style="
@@ -58,10 +58,9 @@
                   flex-direction: column;
                   align-self: center;
                 "
-              >
-                <span><nb-icon icon="trash"></nb-icon></span>
-              </div>
+              ></div>
             </div>
+            <span><nb-icon icon="trash"></nb-icon></span>
           </nb-list-item>
         </nb-list>
         <p
