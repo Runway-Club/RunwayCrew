@@ -1,12 +1,20 @@
 <div style="display: flex;justify-content: center;">
+    
     <nb-card style="width: 50%;">
-        <nb-card-header>{{data.title}}</nb-card-header>
+        
+        <nb-card-header>{{data.title}}
+            
+        </nb-card-header>
         <nb-card-body>
             {{data.description}}
         </nb-card-body>
         <nb-card-footer>
-            <button nbButton (click)="close()">Close</button>
-            <button nbButton (click)="close()" style="margin-left: 3%;">Done</button>
+            <button nbButton status="success" (click)="close()">Approve</button>
+            <button nbButton status="danger" (click)="close()" style="margin-left: 3%;">Denied</button>
+            
+            <button nbButton (click)="close()" style="margin-left: 3%;">Close</button>
+
+            
         </nb-card-footer>
     </nb-card>
 </div>

@@ -53,7 +53,8 @@
             </nb-list-item>
         </nb-list> -->
             <nb-list style="width: 100%;margin-top: 1%;">
-                <nb-list-item style="width: 100%" *ngFor="let item of feedback| paginate: { itemsPerPage: 10, currentPage: 1, totalItems: 30}">
+                <nb-list-item style="width: 100%"
+                    *ngFor="let item of feedback| paginate: { itemsPerPage: 10, currentPage: 1, totalItems: 30}">
                     <div style="
                     width: 100%;
                     display: flex;
@@ -73,7 +74,14 @@
                             <!-- <span>123</span> -->
                         </div>
                         <div style="display: flex; flex-direction: column; align-self: center">
-                            <span>Trạng thái: {{item.status}}</span>
+                            <span *ngIf="item.status=='approve'">Trạng thái: <p style="color: rgb(0, 216, 0);">
+                                    {{item.status}}</p>
+                            </span>
+                            <span *ngIf="item.status=='pending'">Trạng thái: <p style="color: grey;">{{item.status}}</p>
+                            </span>
+                            <span *ngIf="item.status=='denied'">Trạng thái: <p style="color: red;">{{item.status}}</p>
+                            </span>
+
                             <!-- <span>pending</span> -->
                         </div>
                         <div>
@@ -88,7 +96,7 @@
                 </nb-list-item>
             </nb-list>
         </nb-card-body>
-        <pagination-controls style="display: flex;justify-content: flex-end;" ></pagination-controls>
+        <pagination-controls style="display: flex;justify-content: flex-end;"></pagination-controls>
     </nb-card>
 
 </div>
