@@ -17,8 +17,8 @@ import { UserProfile } from 'src/models/user-profile.model';
   styleUrls: ['./achievement.component.scss'],
 })
 export class AchievementComponent implements OnInit {
-  filteredAchiOptions!: Observable<Achievement[]>;
-  filteredProfilesOptions!: Observable<UserProfile[]>;
+  filteredAchiOptions: Achievement[]=[];
+  filteredProfilesOptions: UserProfile[]=[];
   inputAchiControl!: FormControl;
   inputProfilesControl!: FormControl;
 
@@ -31,18 +31,18 @@ export class AchievementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.filteredProfilesOptions = of(this.profiles);
-    this.inputProfilesControl = new FormControl();
-    this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
-      startWith(''),
-      map((filterString) => this.filterProfiles(filterString))
-    );
-    this.filteredAchiOptions = of(this.achievements);
-    this.inputAchiControl = new FormControl();
-    this.filteredAchiOptions = this.inputAchiControl.valueChanges.pipe(
-      startWith(''),
-      map((filterString) => this.filterAchivs(filterString))
-    );
+    // this.filteredProfilesOptions = of(this.profiles);
+    // this.inputProfilesControl = new FormControl();
+    // this.filteredProfilesOptions = this.inputProfilesControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((filterString) => this.filterProfiles(filterString))
+    // );
+    // this.filteredAchiOptions = of(this.achievements);
+    // this.inputAchiControl = new FormControl();
+    // this.filteredAchiOptions = this.inputAchiControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((filterString) => this.filterAchivs(filterString))
+    // );
     // this.loadPage();
     this.skillService.getAll().subscribe((skills) => {
       if (!skills) {
@@ -79,15 +79,15 @@ export class AchievementComponent implements OnInit {
   public loadDoneProfiles = false;
   public loadDoneAchi = false;
 
-  private filterAchivs(value: string): Achievement[] {
-    const filterValue = value.toLowerCase();
-    if (filterValue == '') {
-      return [];
-    }
-    return this.achievements.filter((optionValue) =>
-      optionValue.name.toLowerCase().includes(filterValue)
-    );
-  }
+  // private filterAchivs(value: string): Achievement[] {
+  //   const filterValue = value.toLowerCase();
+  //   if (filterValue == '') {
+  //     return [];
+  //   }
+  //   return this.achievements.filter((optionValue) =>
+  //     optionValue.name.toLowerCase().includes(filterValue)
+  //   );
+  // }
 
   public addEmptyAchievement() {
     this.achievements.push({
@@ -120,6 +120,24 @@ export class AchievementComponent implements OnInit {
     } else {
       await this.achievementService.update(this.achievements[i]);
     }
+  }
+
+  onSearch(value: string) { 
+    if(!value){
+      return;
+    }
+    this.profileService.getSearch(value).subscribe((res: UserProfile[])=>{
+      this.filteredProfilesOptions = res
+    })
+  }
+
+  onSearchAchi(value: string){
+    if(!value){
+      return;
+    }
+    this.achievementService.getSearch(value).subscribe((res: Achievement[])=>{
+      this.filteredAchiOptions = res
+    })
   }
 
   // public async loadPage() {

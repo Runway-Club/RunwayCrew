@@ -6,6 +6,8 @@ const AchiModel = require('../../model/achievement.model')
 const shareService = require('../service/share.service')
 const achievementDB = mongoose.model('achievements', achievementSchema);
 
+const ACHIEVEMENTS = []
+
 router.get('/', async (req, res) => {
     let { id } = req.query;
     if (!id) {
@@ -18,6 +20,27 @@ router.get('/', async (req, res) => {
                 res.status(200).send(result);
             }
         })
+    }
+})
+
+router.get('/search', async (req, res)=>{
+    try {
+        const {searchKey} = req.query;
+        if(!searchKey){
+            return res.status(400).send({message: `searchKey is empty !`})
+        }
+        if(ACHIEVEMENTS.length === 0){
+            let response =  await achievementDB.find();     
+            response.map(achievement=>{
+                ACHIEVEMENTS.push(achievement)
+            })
+        }
+        let result = ACHIEVEMENTS.filter(achievement =>{
+            return achievement.name.toLowerCase().includes(searchKey.toLowerCase())
+        })
+        return res.status(200).send(result)
+    } catch (err) {
+        return res.status(500).send(err)
     }
 })
 

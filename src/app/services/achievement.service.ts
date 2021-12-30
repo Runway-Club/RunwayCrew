@@ -32,6 +32,10 @@ export class AchievementService {
       .get<Achievement[]>(environment.endpoint + 'achievements');
   }
 
+  public getSearch(searchKey: string): Observable<Achievement[]> {
+    return this.HttpClient
+    .get<Achievement[]>(environment.endpoint + `achievements/search?searchKey=${searchKey}`);
+  }
 
   public async create(achievement: Achievement) {
     // await this.utils.create("achievements", achievement);

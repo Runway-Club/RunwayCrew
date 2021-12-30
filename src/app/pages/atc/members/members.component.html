@@ -73,7 +73,7 @@
         type="text"
         [nbAutocomplete]="autoControlProfiles"
         fullWidth
-        #box (keyup.enter)="onSearch(box.value)"
+        #box (keyup)="onSearch(box.value)"
       />
 
       <nb-autocomplete #autoControlProfiles>
@@ -245,16 +245,16 @@
     <p>Chọn vai trò</p>
 
     <input
-      [formControl]="inputRolesControl"
       nbInput
       type="text"
       [nbAutocomplete]="autoControlRoles"
       fullWidth
+      #box (keyup)="onSearchRole(box.value)"
     />
 
     <nb-autocomplete #autoControlRoles>
       <nb-option
-        *ngFor="let role of filteredRolesOptions | async"
+        *ngFor="let role of filteredRolesOptions"
         [value]="role.name"
         (click)="changeRole(role)"
       >
@@ -273,7 +273,7 @@
       nbInput
       type="text"
       [nbAutocomplete]="autoControlProfiles"
-      #box (keyup.enter)="onSearch(box.value)"
+      #key (keyup)="onSearch(key.value)"
       fullWidth
     />
     
@@ -360,7 +360,7 @@
       nbInput
       type="text"
       [nbAutocomplete]="autoControlProfiles"
-      #box (keyup.enter)="onSearch(box.value)"
+      #box (keyup)="onSearch(box.value)"
       fullWidth
     />
 

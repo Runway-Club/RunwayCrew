@@ -34,6 +34,7 @@ export class AuthenticationService {
   public async signOut() {
     return await this.auth.signOut().then(() => {
       localStorage.removeItem('userId');
+      this.token = ''
       this.shareSher.openSnackBar("Susscess fully logout!");
     });
   }

@@ -30,6 +30,11 @@ export class RoleService {
     .get<Role[]>(environment.endpoint + "roles");
   }
 
+  public getSearch(searchKey: string): Observable<Role[]> {
+    return this.HttpClient
+    .get<Role[]>(environment.endpoint + `roles/search?searchKey=${searchKey}`);
+  }
+
   public async create(role: Role) {
     // await this.utils.create("roles", role);
     let user = this.utils.currentUser;
