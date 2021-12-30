@@ -149,8 +149,9 @@ export class AppComponent implements AfterViewInit {
 
   async backProfie(link: string){
     if(link === './profile'){
-      await this.router.navigate(['/profile'])
-      window.location.reload()
+      // await this.router.navigate(['/profile'])
+      // window.location.reload()
+      window.location.href = "/profile"
     }
   }
 

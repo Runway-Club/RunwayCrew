@@ -33,6 +33,11 @@ export class ProfileService {
     });
   }
 
+  public getSearch(searchKey: string): Observable<UserProfile[]> {
+    return this.HttpClient
+      .get<UserProfile[]>(environment.endpoint + `profile/search?searchKey=${searchKey}`)
+  }
+
   public async create(registration: RegistrationProfile) {
     let currentTime = Date.now();
     // Prepare user data
